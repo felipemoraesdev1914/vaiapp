@@ -19,6 +19,12 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
+// Porta do backend: a mesma definida para o api-server (padrão 8080).
+const apiTarget = `http://localhost:${process.env.API_PORT ?? '8080'}`;
+const apiProxy = {
+  '/api': { target: apiTarget, changeOrigin: true },
+};
+
 const basePath = process.env.BASE_PATH;
 
 if (!basePath) {
@@ -72,10 +78,13 @@ export default defineConfig({
     fs: {
       strict: true,
     },
+    // Encaminha /api ao backend (artifacts/api-server, porta 8080 em .replit-artifact/artifact.toml).
+    proxy: apiProxy,
   },
   preview: {
     port,
     host: '0.0.0.0',
     allowedHosts: true,
+    proxy: apiProxy,
   },
 });

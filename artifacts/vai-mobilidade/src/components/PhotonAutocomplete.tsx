@@ -74,7 +74,13 @@ export function PhotonAutocomplete({ id, label, placeholder, value, icon, invali
         setOpen(true);
       } catch (error) {
         if (error instanceof DOMException && error.name === 'AbortError') return;
-        setRequestError(error instanceof Error ? error.message : 'Falha ao buscar endereços.');
+        // Mensagem amigável ao usuário; o erro técnico vai para o console.
+        console.error('Falha na busca de endereços', error);
+        setRequestError(
+          error instanceof TypeError
+            ? 'Não foi possível buscar endereços. Verifique sua conexão.'
+            : 'A busca de endereços está indisponível agora. Tente novamente.',
+        );
         setOpen(true);
       } finally {
         if (!controller.signal.aborted) setLoading(false);

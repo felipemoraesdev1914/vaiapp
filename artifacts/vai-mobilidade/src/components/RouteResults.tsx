@@ -22,9 +22,19 @@ function clockTime(value: string | Date | null | undefined) {
   return Number.isNaN(date.getTime()) ? '—' : new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(date);
 }
 
+// Mensagens ao usuário em português. Detalhes técnicos ficam no console e nos logs do servidor.
 function errorMessage(error: unknown) {
-  if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') return error.message;
-  return 'Não foi possível consultar as rotas neste momento.';
+  // Erro HTTP da API: usa a mensagem amigável enviada pelo backend, se houver.
+  if (error && typeof error === 'object' && 'status' in error && typeof error.status === 'number') {
+    const data = 'data' in error ? (error as { data?: unknown }).data : undefined;
+    if (data && typeof data === 'object' && 'error' in data && typeof data.error === 'string') return data.error;
+    if (error.status === 400) return 'Confira a origem e o destino e tente novamente.';
+    return 'O serviço de rotas está indisponível agora. Tente novamente em instantes.';
+  }
+  // Falha de rede (sem resposta do servidor).
+  if (error instanceof TypeError) return 'Não foi possível conectar ao VAI. Verifique sua conexão e tente novamente.';
+  console.error('Falha inesperada na busca de rotas', error);
+  return 'Não foi possível consultar as rotas agora. Tente novamente.';
 }
 
 export function RouteResults({ response, selectedRouteId, onSelectRoute, isLoading, error, onRetry }: RouteResultsProps) {
