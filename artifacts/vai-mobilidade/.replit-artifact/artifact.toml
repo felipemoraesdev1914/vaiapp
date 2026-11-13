@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "VAI — Mobilidade Inteligente"
+description = "Planejador de transporte público para Barueri, SP, que ajuda a visualizar trajetos com caminhada e ônibus; a primeira versão apresenta resultados demonstrativos até a conexão com dados oficiais."
+version = "1.0.0"
+id = "artifacts/vai-mobilidade"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22296
+
+[services.development]
+run = "pnpm --filter @workspace/vai-mobilidade run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vai-mobilidade", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vai-mobilidade/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22296"
+BASE_PATH = "/"

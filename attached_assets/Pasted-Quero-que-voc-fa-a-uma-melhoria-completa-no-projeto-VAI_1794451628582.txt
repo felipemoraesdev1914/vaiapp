@@ -1,0 +1,158 @@
+Quero que você faça uma melhoria completa no projeto VAI, mantendo tudo o que já foi desenvolvido. Antes de alterar qualquer coisa, analise a estrutura atual, os componentes, as funcionalidades e a identidade visual do projeto.
+
+O VAI é um aplicativo de mobilidade urbana que inicialmente atenderá Barueri-SP, com foco em ajudar as pessoas a encontrar as melhores rotas utilizando transporte público.
+
+1. FUNCIONAMENTO DA BUSCA DE ROTAS
+
+Atualmente, consigo inserir endereços, mas não existe um botão funcional para calcular a rota.
+
+Implemente:
+
+* Um botão chamado “Encontrar melhor rota”.
+* O botão deve ficar desabilitado até que origem e destino sejam preenchidos corretamente.
+* Ao clicar, o sistema deve processar a busca e apresentar um estado de carregamento.
+* A busca deve enviar os dados para o backend.
+* Apresente mensagens claras quando não encontrar uma rota ou ocorrer algum erro.
+* Permita trocar origem e destino facilmente.
+* Permita realizar novas pesquisas sem precisar recarregar a página.
+
+2. MAPA PERSONALIZADO DO VAI
+
+Quero melhorar bastante a aparência do mapa. Atualmente, ele não está com aparência profissional.
+
+Primeiro, analise a identidade visual que já existe no projeto.
+
+IMPORTANTE: NÃO CRIE UMA NOVA PALETA DE CORES.
+
+O VAI já possui uma identidade visual baseada principalmente em verde-limão claro e branco. Quero que você utilize exatamente as cores já existentes no projeto.
+
+Diretrizes:
+
+* Preserve o verde-limão claro utilizado atualmente.
+* Utilize o mesmo verde nos trajetos, marcadores e elementos de destaque.
+* Mantenha o branco e os tons neutros já utilizados na interface.
+* Não introduza azul, verde escuro ou outras cores que destoem da identidade atual.
+* O mapa deve parecer parte natural do aplicativo.
+
+Na parte técnica:
+
+* Utilize Leaflet com dados geográficos reais do OpenStreetMap.
+* Melhore a qualidade visual do mapa.
+* Utilize ruas e quadras com boa diferenciação e legibilidade.
+* Destaque o caminho percorrido com uma linha verde-limão.
+* Crie marcadores personalizados para origem e destino.
+* Utilize ícones específicos para pontos de ônibus.
+* Adicione zoom e movimentação pelo mapa.
+* Ajuste automaticamente o enquadramento para mostrar toda a rota.
+* Inclua os créditos obrigatórios do provedor de mapas.
+
+Não desenhe ruas ou regiões fictícias. O mapa precisa representar a geografia real.
+
+3. INTEGRAÇÃO COM DADOS REAIS DE ÔNIBUS
+
+Quero que o VAI utilize informações reais de transporte público de Barueri sempre que possível.
+
+Investigue estas fontes oficiais:
+
+* Prefeitura de Barueri: https://portal.barueri.sp.gov.br/cidadao/transporte/transporte
+* ARTESP - Dados abertos e GTFS: https://dadosabertos.artesp.sp.gov.br/group/onibus
+* BB Transporte - Linhas e horários: https://bburbano.com.br/linhas-e-horarios/
+* EMTU - Itinerários e tarifas: https://www.emtu.sp.gov.br/emtu/itinerarios-e-tarifas.fss
+
+Verifique quais dessas fontes oferecem dados que podem ser utilizados tecnicamente.
+
+Se existir um arquivo GTFS disponível:
+
+* Analise os arquivos e sua cobertura geográfica.
+* Verifique se realmente existem dados das linhas municipais de Barueri.
+* Utilize os arquivos de linhas, pontos de parada, viagens e horários.
+* Implemente a leitura e organização desses dados no backend.
+
+Não presuma que o GTFS da ARTESP contém todas as linhas municipais de Barueri. Verifique isso antes.
+
+Se alguma informação não estiver disponível, deixe isso claro. Não invente linhas, horários, pontos ou previsões de chegada.
+
+4. MOTOR DE CÁLCULO DE ROTAS
+
+Crie ou aprimore um módulo chamado routingEngine.
+
+Ele deve:
+
+* Identificar pontos de ônibus próximos à origem.
+* Identificar pontos próximos ao destino.
+* Encontrar linhas que conectem os pontos.
+* Considerar possibilidades de integração entre linhas.
+* Calcular o tempo estimado de caminhada.
+* Calcular o tempo de transporte público quando houver dados disponíveis.
+* Considerar quantidade de baldeações.
+* Comparar as alternativas.
+* Recomendar a melhor opção considerando tempo, caminhada e quantidade de baldeações.
+
+Organize o código para que seja possível adicionar novas fontes de dados no futuro.
+
+5. RESULTADOS DA PESQUISA
+
+Depois de calcular a rota, apresente cartões organizados e profissionais contendo:
+
+* Número ou nome da linha.
+* Ponto de embarque.
+* Ponto de desembarque.
+* Horário de saída, quando disponível.
+* Tempo estimado de caminhada.
+* Tempo estimado no ônibus.
+* Quantidade de baldeações.
+* Previsão de chegada, quando possível.
+* Fonte dos dados e informação sobre a atualização.
+
+Adicione filtros para:
+
+* Menor tempo.
+* Menos caminhada.
+* Menos baldeações.
+
+Ao selecionar uma alternativa, destaque o trajeto correspondente no mapa.
+
+6. EXPERIÊNCIA DO USUÁRIO
+
+Quero uma experiência semelhante à de aplicativos como Google Maps e Cittamobi, mas com identidade própria do VAI.
+
+Melhore:
+
+* Organização dos elementos.
+* Espaçamento.
+* Tipografia.
+* Cartões de resultados.
+* Botões.
+* Campos de origem e destino.
+* Estados de carregamento.
+* Mensagens de erro.
+* Responsividade para celulares.
+
+O aplicativo deve funcionar muito bem em telas de iPhone e Android.
+
+Não transforme o projeto em uma página genérica. Preserve a identidade atual do VAI.
+
+7. ORGANIZAÇÃO E TESTES
+
+* Preserve as funcionalidades que já estão funcionando.
+* Não apague o projeto atual para começar do zero.
+* Organize o código em componentes e módulos.
+* Evite duplicação de código.
+* Verifique se o frontend e o backend estão conectados corretamente.
+* Teste a busca de endereços.
+* Teste o cálculo de rotas.
+* Teste a exibição do mapa.
+* Corrija erros de compilação e execução.
+
+8. RELATÓRIO FINAL
+
+Quando terminar, informe:
+
+1. O que foi implementado.
+2. Quais fontes reais de transporte foram integradas.
+3. Se os horários e linhas de Barueri estão funcionando com dados reais.
+4. Quais funcionalidades ainda dependem de integração externa.
+5. Quais testes foram realizados.
+6. Se existe alguma limitação técnica.
+
+Minha prioridade: quero que o VAI deixe de ser apenas uma demonstração visual e comece a funcionar como um aplicativo real de mobilidade urbana, com rotas úteis, dados confiáveis e uma interface profissional.
