@@ -1,26 +1,15 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 
-const INPUT = "artifacts/api-server/src/data/barueri-cittamobi-geocoded-lines.json";
+const INPUT = "artifacts/api-server/src/data/barueri-cittamobi-lines-source.json";
 const OUTPUT = "artifacts/api-server/src/data/barueri-cittamobi-geocoded-stops.json";
 const CENTER = { lat: -23.5113, lon: -46.8765 };
-const SAMPLE_LIMIT = Number(process.env.GEOCODE_LIMIT ?? 40);
+const REQUEST_LIMIT = Number(process.env.GEOCODE_LIMIT ?? 0);
 const INTERVAL_MS = 1_050;
 
 const source = JSON.parse(await readFile(INPUT, "utf8"));
 const normalize = (value = "") =>
   value.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-
-function stopAddress(stop) {
-  const label = stop.attributes?.["aria-label"] ?? "";
-  const fromLabel = label.replace(/^Ver mapa da parada\s*/i, "").trim();
-  if (fromLabel) return fromLabel;
-
-  const text = stop.text ?? "";
-  const afterSvg = text.replace(/^[\s\S]*?>\s*/, "");
-  const beforeRealtime = afterSvg.split(/\s+Tempo Real\s+/i)[0] ?? "";
-  return beforeRealtime.replace(/\s+/g, " ").trim();
-}
 
 function haversineKm(left, right) {
   const rad = (value) => value * Math.PI / 180;
@@ -32,12 +21,16 @@ function haversineKm(left, right) {
 }
 
 function houseNumber(address) {
-  return address.match(/,\s*(\d+[A-Za-z]?)(?:\s|$|[-,/])/i)?.[1]?.toLowerCase() ?? null;
+  const first = address.split(",")[0] ?? "";
+  const match = first.match(/\b(\d+[A-Za-z]?)\s*$/i);
+  return match ? match[1].toLowerCase() : null;
 }
 
 function addressStreet(address) {
   const first = address.split(",")[0] ?? "";
-  return normalize(first.replace(/^(rua|r\.?|avenida|av\.?|estrada|est\.?|alameda|rodovia)\s*/i, ""));
+  return normalize(first
+    .replace(/^(rua|r\.?|avenida|av\.?|estrada|est\.?|alameda|rodovia)\s*/i, "")
+    .replace(/\s+\d+[A-Za-z]?\s*$/i, ""));
 }
 
 function selectCandidate(address, features) {
@@ -45,12 +38,10 @@ function selectCandidate(address, features) {
   const expectedNumber = houseNumber(address);
   const ranked = features.map((feature) => {
     const properties = feature.properties ?? {};
-    const point = {
-      lat: Number(feature.geometry?.coordinates?.[1]),
-      lon: Number(feature.geometry?.coordinates?.[0]),
-    };
+    const coordinates = feature.geometry?.coordinates ?? [];
+    const point = { lat: Number(coordinates[1]), lon: Number(coordinates[0]) };
     if (!Number.isFinite(point.lat) || !Number.isFinite(point.lon)) {
-      return { feature, properties, point, score: -Infinity, confidence: "none" };
+      return { properties, point, score: -Infinity, confidence: "none" };
     }
 
     const candidateStreet = normalize(properties.street ?? properties.name ?? "");
@@ -58,15 +49,17 @@ function selectCandidate(address, features) {
     const streetMatches = expectedStreet.length >= 5 &&
       (candidateStreet.includes(expectedStreet) || expectedStreet.includes(candidateStreet));
     const numberMatches = Boolean(expectedNumber && candidateNumber === expectedNumber);
-    const city = normalize([properties.city, properties.district, properties.locality].filter(Boolean).join(" "));
+    const city = normalize([
+      properties.city, properties.district, properties.locality, properties.county,
+    ].filter(Boolean).join(" "));
     const cityMatches = city.includes("barueri") ||
       /jandira|santana de parnaiba|itapevi/.test(city);
     const distanceFromCenterKm = haversineKm(point, CENTER);
     const photonScore = Number(properties.score ?? 0);
     const score = photonScore +
-      (streetMatches ? 1.5 : 0) +
-      (numberMatches ? 1.0 : 0) +
-      (cityMatches ? 0.45 : 0) -
+      (streetMatches ? 2 : 0) +
+      (numberMatches ? 2 : 0) +
+      (cityMatches ? 0.5 : 0) -
       Math.max(0, distanceFromCenterKm - 5) * 0.12;
 
     let confidence = "low";
@@ -76,38 +69,34 @@ function selectCandidate(address, features) {
       confidence = "medium";
     }
     return {
-      feature,
-      properties,
-      point,
-      score,
-      confidence,
-      streetMatches,
-      numberMatches,
-      cityMatches,
-      distanceFromCenterKm: Math.round(distanceFromCenterKm * 100) / 100,
+      properties, point, score, confidence, streetMatches, numberMatches,
+      cityMatches, distanceFromCenterKm: Math.round(distanceFromCenterKm * 100) / 100,
     };
   }).sort((left, right) => right.score - left.score);
 
   const best = ranked[0];
   return {
-    selected: best && best.confidence !== "low" ? {
+    selected: best && (best.confidence === "high" || best.confidence === "medium") ? {
       latitude: best.point.lat,
       longitude: best.point.lon,
       confidence: best.confidence,
+      precision: best.confidence === "high" ? "house-number-match" : "street-center-approximation",
       source: "Photon / OpenStreetMap geocoder",
       label: best.properties.name ?? best.properties.street ?? null,
-      city: best.properties.city ?? best.properties.district ?? null,
-      street: best.properties.street ?? null,
+      city: best.properties.city ?? best.properties.district ?? best.properties.locality ?? null,
+      street: best.properties.street ?? best.properties.name ?? null,
       houseNumber: best.properties.housenumber ?? null,
       distanceFromBarueriCenterKm: best.distanceFromCenterKm,
     } : null,
-    candidates: ranked.slice(0, 5).map((candidate) => ({
+    candidates: ranked.slice(0, 3).map((candidate) => ({
       label: candidate.properties.name ?? candidate.properties.street ?? null,
       street: candidate.properties.street ?? null,
       houseNumber: candidate.properties.housenumber ?? null,
-      city: candidate.properties.city ?? candidate.properties.district ?? null,
+      city: candidate.properties.city ?? candidate.properties.district ?? candidate.properties.locality ?? null,
       latitude: candidate.point.lat,
       longitude: candidate.point.lon,
+      osmType: candidate.properties.osm_type ?? null,
+      osmValue: candidate.properties.osm_value ?? null,
       photonScore: candidate.properties.score ?? null,
       matchConfidence: candidate.confidence,
       distanceFromBarueriCenterKm: candidate.distanceFromCenterKm ?? null,
@@ -115,26 +104,31 @@ function selectCandidate(address, features) {
   };
 }
 
-const routeEntries = (source.routes ?? []).map((route, routeIndex) => {
-  const slug = route.url.split("/linha/")[1] ?? "";
-  const match = slug.match(/(?:Benfica|Ralip)Municipal-.*?-([A-Z0-9]+)-/i);
-  const lineCode = match?.[1]?.toUpperCase() ?? "UNKNOWN";
-  const titleMatch = route.title.match(/^Linha\s+(.+?):\s*horários/i);
-  const directionLabel = titleMatch?.[1] ?? route.title;
-
-  const stops = (route.stopsFromHtml ?? []).map((stop) => ({
+const routeEntries = (source.lines ?? []).map((route) => {
+  const seenStopIds = new Set();
+  const stops = (route.stops ?? []).filter((stop) => {
+    if (!stop.id || seenStopIds.has(stop.id)) return false;
+    seenStopIds.add(stop.id);
+    return Boolean((stop.address ?? "").trim());
+  }).map((stop) => ({
     id: stop.id,
     sequence: stop.sequence,
-    address: stopAddress(stop),
-    departureTimes: route.departuresByStopIndex?.[String(stop.sequence - 1)] ?? [],
+    address: stop.address.trim(),
+    mapImage: stop.mapImage ?? null,
+    departureTimes: stop.departureTimes ?? [],
   }));
+
   return {
-    routeId: slug.replace(/-[a-f0-9]{8,}$/i, ""),
+    routeId: route.url.split("/linha/")[1] ?? route.lineCode,
     sourceUrl: route.url,
-    lineCode,
-    directionLabel,
-    serviceId: route.serviceId,
+    lineCode: route.lineCode,
+    operator: route.operator,
+    directionLabel: route.title.replace(/^Linha\s+/i, "").replace(/:\s*horários[\s\S]*$/i, ""),
     agencyId: route.agencyId,
+    serviceId: route.serviceId,
+    observedScheduleDate: route.observedScheduleDate,
+    departureTimeListAtOrigin: route.departureTimeListAtOrigin ?? [],
+    scheduleByDay: route.scheduleByDay ?? [],
     stopCount: stops.length,
     stops,
   };
@@ -143,12 +137,12 @@ const routeEntries = (source.routes ?? []).map((route, routeIndex) => {
 const addressByKey = new Map();
 for (const route of routeEntries) {
   for (const stop of route.stops) {
-    if (!stop.address) continue;
     const key = normalize(stop.address);
     if (key && !addressByKey.has(key)) addressByKey.set(key, stop.address);
   }
 }
-const addresses = [...addressByKey.entries()].slice(0, SAMPLE_LIMIT);
+const allAddresses = [...addressByKey.entries()];
+const addresses = REQUEST_LIMIT > 0 ? allAddresses.slice(0, REQUEST_LIMIT) : allAddresses;
 const results = {};
 let lastRequestAt = 0;
 
@@ -174,13 +168,13 @@ for (let index = 0; index < addresses.length; index += 1) {
   try {
     const response = await fetch(url, {
       headers: {
-        "user-agent": "VAI-Mobilidade/1.0 (Barueri bus stop mapping)",
+        "user-agent": "VAI-Mobilidade/1.0 (Barueri municipal bus stop mapping)",
         "accept": "application/geo+json, application/json",
       },
       signal: AbortSignal.timeout(20_000),
     });
     lastRequestAt = Date.now();
-    if (!response.ok) throw new Error(`HTTP ${response.status}: ${(await response.text()).slice(0, 200)}`);
+    if (!response.ok) throw new Error("HTTP " + response.status + ": " + (await response.text()).slice(0, 200));
     const json = await response.json();
     results[key] = {
       query,
@@ -195,8 +189,8 @@ for (let index = 0; index < addresses.length; index += 1) {
       error: error instanceof Error ? error.message : String(error),
     };
   }
-  if ((index + 1) % 10 === 0 || index + 1 === addresses.length) {
-    console.log(`Geocoded ${index + 1}/${addresses.length}`);
+  if ((index + 1) % 25 === 0 || index + 1 === addresses.length) {
+    console.log("Geocoded " + (index + 1) + "/" + addresses.length);
   }
 }
 
@@ -208,40 +202,40 @@ for (const route of routeEntries) {
   }
 }
 
-const accepted = [...new Set(routeEntries.flatMap(route =>
-  route.stops.filter(stop => stop.coordinates).map(stop => normalize(stop.address))
-))];
-const acceptedHigh = [...new Set(routeEntries.flatMap(route =>
-  route.stops.filter(stop => stop.coordinates?.confidence === "high").map(stop => normalize(stop.address))
-))];
+const matchedKeys = new Set(routeEntries.flatMap((route) =>
+  route.stops.filter((stop) => stop.coordinates).map((stop) => normalize(stop.address))
+));
+const highKeys = new Set(routeEntries.flatMap((route) =>
+  route.stops.filter((stop) => stop.coordinates?.confidence === "high").map((stop) => normalize(stop.address))
+));
 const output = {
-  schemaVersion: 1,
+  schemaVersion: 2,
   generatedAt: new Date().toISOString(),
-  source: "Cittamobi public route pages",
-  scheduleNote: "Departure arrays are copied by stop position from line-departures-v1. Their weekday applicability must be checked before treating them as a permanent weekly calendar.",
-  geocoder: "Photon / OpenStreetMap",
-  geocodingScope: "Sample only; set GEOCODE_LIMIT to all addresses after inspecting quality.",
+  source: "Cittamobi public municipal route pages",
+  coordinateSource: "Photon / OpenStreetMap geocoder",
+  coordinateNote: "High confidence requires a matching street, house number and city. Medium confidence is an approximate street-level coordinate, not an exact bus-stop pole location. Low-confidence and unmatched candidates are not used as stop coordinates.",
+  scheduleNote: "Per-stop times are copied from the route page's line-departures-v1 snapshot (observedScheduleDate). Weekly operating windows and average headways are stored separately. Snapshot times must not be assumed to apply to every day of the week.",
   totalMunicipalDirections: routeEntries.length,
   totalStopRecords: routeEntries.reduce((sum, route) => sum + route.stops.length, 0),
-  uniqueAddressesAvailable: addressByKey.size,
+  uniqueAddressesAvailable: allAddresses.length,
   uniqueAddressesGeocoded: addresses.length,
-  uniqueAddressesMatched: accepted.length,
-  uniqueHighConfidenceMatches: acceptedHigh.length,
+  uniqueAddressesMatched: matchedKeys.size,
+  uniqueHighConfidenceMatches: highKeys.size,
+  uniqueStreetApproximationMatches: matchedKeys.size - highKeys.size,
+  totalDirectionsWithWeeklySchedule: routeEntries.filter((route) => route.scheduleByDay.length === 7).length,
   routes: routeEntries,
   addressResults: results,
 };
 await mkdir("artifacts/api-server/src/data", { recursive: true });
 await writeFile(OUTPUT, JSON.stringify(output, null, 2) + "\n", "utf8");
 console.log(JSON.stringify({
-  sample: addresses.length,
-  totalUniqueAddresses: addressByKey.size,
-  matched: accepted.length,
-  highConfidence: acceptedHigh.length,
+  directions: routeEntries.length,
+  stopRecords: output.totalStopRecords,
+  uniqueAddresses: allAddresses.length,
+  queried: addresses.length,
+  matched: matchedKeys.size,
+  highConfidence: highKeys.size,
+  streetApproximation: matchedKeys.size - highKeys.size,
   errors: Object.values(results).filter((entry) => entry.error).length,
-  sampleMatches: Object.entries(results).slice(0, 6).map(([address, result]) => ({
-    address,
-    selected: result.selected,
-    firstCandidates: result.candidates?.slice(0, 2),
-    error: result.error,
-  })),
+  unmatchedExamples: Object.entries(results).filter((entry) => !entry[1].selected).slice(0, 8).map((entry) => entry[0]),
 }));
