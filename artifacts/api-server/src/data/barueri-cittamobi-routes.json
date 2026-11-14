@@ -32,7 +32,12 @@
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-T172-AldeiadaSerra-b787b95e6a45.pdf",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-JdBelval-b5d30c50b219",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-Tocantins-30e013908b02",
-      "https://linhas-preview.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Eng.NovoAv.Constran-a1afd2c232e9"
+      "https://linhas-preview.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Eng.NovoAv.Constran-a1afd2c232e9",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-EngenhoNovoviaTerm.Barueri-5ebacb41465f",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Valedosolviacentro-e1c77acfa1fb",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-Jd.MariaCristina-9e2d9cfd9faa",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-TerminalBarueri-2352ea953d86",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -54,7 +59,8 @@
       "Revisão de qualidade em 13/11/2026: seis registros preliminares foram retirados por não terem sido conferidos integralmente contra o itinerário público individual; não usar como paradas confirmadas.",
       "Atualização por PDFs públicos individuais do Cittamobi: A113 Terminal Barueri (18 paradas, 04/04/2026), A167 Jardim dos Altos (16, 04/04/2026), A168 Itaqui via Gupe (16), A168 Jardim Graziela via Terminal (17), A168 Jardim Itaquiti via Centro (24), A212 Hospital Geral Bandeirantes (38) e T172 Aldeia da Serra (24, 25/04/2026). Horários preservados como janela operacional e frequência média, não como passagem exata por parada.",
       "T411: dois sentidos transcritos de páginas individuais públicas consultadas em outubro de 2026. O sentido Jardim Belval lista 24 paradas e só publica operação aos domingos no quadro consultado; o sentido Tocantins lista 6 paradas e também só informa quadro de domingo. Não preencher horários ausentes.",
-      "A160 Eng. Novo (Av. Constran): 16 paradas transcritas da página individual pública consultada em 13/11/2026; quadro de dia útil 05:32–22:58, sem frequência média nem operação de sábado/domingo informadas no texto consultado."
+      "A160 Eng. Novo (Av. Constran): 16 paradas transcritas da página individual pública consultada em 13/11/2026; quadro de dia útil 05:32–22:58, sem frequência média nem operação de sábado/domingo informadas no texto consultado.",
+      "Atualização 13/11/2026: acrescentados itinerários completos A160 Engenho Novo via Terminal Barueri (16 paradas), A160 Vale do Sol via Centro (14), A161 Jardim Maria Cristina (23), A161 Terminal Barueri (16) e A162 Chácaras Marco (14), conforme páginas individuais públicas do Cittamobi. Horários preservados apenas na precisão publicada; partidas únicas não foram convertidas em frequência."
     ]
   },
   "routes": [
@@ -1254,6 +1260,194 @@
         "Rua Capitão Francisco César, 1362",
         "Av. Capitão Francisco César, 1620 - Vila Pindorama, Barueri - SP, 06416-000, Brasil",
         "Rua Constantinopla, 582"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A160-ENGENHO-NOVO-VIA-TERMINAL",
+      "lineCode": "A160",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Engenho Novo via Terminal Barueri",
+      "direction": "Vale do Sol para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-EngenhoNovoviaTerm.Barueri-5ebacb41465f",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "05:06",
+          "lastDeparture": "22:35",
+          "averageHeadwayMinutes": 38
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-window-with-variable-daily-headway"
+      },
+      "stops": [
+        "R. Mississipi, 423 - Vale do Sol, Barueri - SP, Brasil",
+        "R. Mississipi, 75 - Vale do Sol, Barueri - SP, Brasil",
+        "Rua Tâmisa, 122",
+        "Estrada Velha De Itapevi, Votupoca, Barueri - São Paulo, 06447, Brasil",
+        "Estrada Velha De Itapevi, Votupoca, Barueri - São Paulo, 06437, Brasil",
+        "Estrada Velha de Itapevi, 1249-1445 - Vila Militar, Barueri - SP, Brasil",
+        "Estr. Velha de Itapevi, 3775 - Vila Militar, Barueri - SP, Brasil",
+        "Av. Zélia, 1289 - Parque dos Camargos, Barueri - SP, 06436-000, Brasil",
+        "Av. Zélia, 715 - Parque dos Camargos, Barueri - SP, 06436-000, Brasil",
+        "Avenida Zélia, 199 - Parque dos Camargos, Barueri - SP, Brasil",
+        "Rua Benedito de Paula Marcondes, 680",
+        "Rua Benedito de Paula Marcondes, 130",
+        "Avenida Municipal, 185",
+        "R. Interna Grupo Bandeirante, 13 - Vila Nova, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 989 - Jardim Sao Pedro, Barueri - SP, 06402-150, Brasil",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A160-VALE-DO-SOL-VIA-CENTRO",
+      "lineCode": "A160",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Vale do Sol via Centro",
+      "direction": "Vale do Sol para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Valedosolviacentro-e1c77acfa1fb",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "05:05",
+          "lastDeparture": "22:25",
+          "averageHeadwayMinutes": null
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-first-and-last-departure-only"
+      },
+      "stops": [
+        "Rua Constantinopla, 582",
+        "Av. Capitão Francisco César, 1620 - Vila Pindorama, Barueri - SP, 06416-000, Brasil",
+        "Rua Capitão Francisco César, 1297",
+        "Av. Capitão Francisco César, 1211 - Vila Pindorama, Barueri - SP, 06415-190, Brasil",
+        "Rua Capitão Francisco César, 605",
+        "R. Cap. Francisco César, 1",
+        "Av. Sebastião Davino dos Réis, 66-358 - Jardim Tupanci, Barueri - SP, 06414-007, Brasil",
+        "Avenida Sebastião Davino dos Reis, 462",
+        "R. da Prata, 463-561 - Jardim dos Camargos, Barueri - SP, Brasil",
+        "R. da Prata, 359 - Jardim dos Camargos, Barueri - SP, Brasil",
+        "Rua Presidente Arthur Costa e Silva 425, Boa Vista, Barueri - São Paulo, 06411-000, Brasil",
+        "Estrada dos Romeiros, 2",
+        "Estrada dos Romeiros",
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A161-JARDIM-MARIA-CRISTINA",
+      "lineCode": "A161",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jardim Maria Cristina",
+      "direction": "Centro para Jardim Maria Cristina",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-Jd.MariaCristina-9e2d9cfd9faa",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "06:38",
+          "lastDeparture": "06:38",
+          "averageHeadwayMinutes": null
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-single-published-departure"
+      },
+      "stops": [
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil",
+        "Av. Henriqueta Mendes Guerra, 158",
+        "Rua Santo Antônio, 224-244, Barueri - SP, Brasil",
+        "Rua Santa Úrsula, 251",
+        "Av. Santa Úrsula, 433",
+        "Rua Gertrudes Silva Ramos, 277",
+        "Avenida Sansão, 39",
+        "Av. Henriqueta Mendes Guerra, 826 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 1168 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410",
+        "Rua Antônio Fernandes Prado, 40",
+        "Rua Antônio Fernandes Prado, 138",
+        "Rua Riachuelo, 18",
+        "Rua Riachuelo, 145",
+        "Rua Riachuelo, 249",
+        "Rua Luís Gianezela, 1",
+        "Rua Getúlio Vargas, 129",
+        "Rua Getúlio Vargas, 283",
+        "Rua Getúlio Vargas, 424",
+        "Rua Getúlio Vargas, 528",
+        "Rua José de Alencar, 52",
+        "Rua Ilha Solteira 76, Belval, Barueri - São Paulo, 06421-050, Brasil",
+        "Rua Presidente Nilo Pecanha 266, Belval, Barueri - São Paulo, 06422-030, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A161-TERMINAL-BARUERI",
+      "lineCode": "A161",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Terminal Barueri",
+      "direction": "Jardim Maria Cristina para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-TerminalBarueri-2352ea953d86",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "12:40",
+          "lastDeparture": "12:40",
+          "averageHeadwayMinutes": null
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-single-published-departure"
+      },
+      "stops": [
+        "Rua Presidente Nilo Pecanha 266, Belval, Barueri - São Paulo, 06422-030, Brasil",
+        "Rua Ilha do Governador, 121",
+        "R. Getúlio Vargas, 750",
+        "Rua Getúlio Vargas, 561",
+        "Rua Getúlio Vargas, 424",
+        "Rua Getúlio Vargas, 283",
+        "Rua Engenheiro Oscar Kesselring, 381",
+        "Avenida Itaqui, Belval, Barueri - São Paulo, 06420, Brasil",
+        "Rua Interna Grupo Bandeirante, 3182",
+        "R. Interna Grupo Bandeirante, 13 - Vila Nova, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 1155 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 873 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 535 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 317 - Centro, Barueri - SP, Brasil",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A162-CHACARAS-MARCO",
+      "lineCode": "A162",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Chácaras Marco",
+      "direction": "Centro para Chácaras Marco",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "15:28",
+          "lastDeparture": "15:28",
+          "averageHeadwayMinutes": null
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-single-published-departure"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Estrada dos Romeiros - Vila Creti, Barueri - SP, República Federativa do Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estr. dos Romeiros, 262",
+        "Acesso para Av Srg. José Siqueira",
+        "Estr. dos Romeiros, 296 - Vila Pindorama, Barueri - SP, 06417-000, Brasil",
+        "Rua Almeida, 66",
+        "R. Almeida, 209",
+        "Rua Carajás, 198-250 - Vila Sao Silvestre, Barueri - SP, 06417-040, Brasil",
+        "Rua Carajás, 329",
+        "Rua Carajás, 632",
+        "Av. Marco, 218-578 - Chácaras Marco, Barueri - SP, Brasil",
+        "Avenida Marco, 218",
+        "Rua Pinheiros, 1-145 - Chácaras Marco, Barueri - SP, 06419-120, Brasil"
       ]
     }
   ]
