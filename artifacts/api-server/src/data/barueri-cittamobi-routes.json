@@ -47,7 +47,10 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarco-fc52db564539",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-Jd.MariaCristina-f33ea9361a3c",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarcoviaTerminalBarueri-4cb234f3bde0"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarcoviaTerminalBarueri-4cb234f3bde0",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-Jd.MariaCristinaviaCamposSalesBaia-9eed6f691800",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C1-Term.BarueriEngenhoNovoCircular1-8a6ca968c844",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C2-Term.BarueriEngenhoNovoCircular2-647107cdf93e"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -73,7 +76,8 @@
       "Atualização 13/11/2026: acrescentados itinerários completos A160 Engenho Novo via Terminal Barueri (16 paradas), A160 Vale do Sol via Centro (14), A161 Jardim Maria Cristina (23), A161 Terminal Barueri (16) e A162 Chácaras Marco (14), conforme páginas individuais públicas do Cittamobi. Horários preservados apenas na precisão publicada; partidas únicas não foram convertidas em frequência.",
       "Atualização 14/11/2026: A170 Baia Duque de Caxias / Jardim Itaquiti (14 paradas) e T173 Terminal de Barueri (18 paradas) transcritas das páginas individuais públicas do Cittamobi. Na A170 foi preservada a janela de dias úteis 09:40–21:35 e frequência média 143 min; para T173 não foi incluída tabela horária, pois ela não foi confirmada nesta captura. A lista T173 preserva a parada inicial duplicada exatamente como publicada na página.",
       "Atualização 14/11/2026: cinco itinerários adicionais transcritos de páginas individuais públicas do Cittamobi: A168 Jd. Graziela (25 paradas), A169 Terminal Barueri (24), A215 Jardim Maria Helena (29), A217 Terminal Barueri/Vale do Sol (24) e T249 Antonio João/Green Valley (17). Endereços e ordem seguem a página consultada, inclusive registros repetidos publicados pela fonte. Quadros de horário e frequências foram registrados somente quando a página os apresentava; A217 tem apenas janela de partida de dias úteis.",
-      "Atualização 14/11/2026: três sentidos A163 foram transcritos de páginas individuais do Cittamobi: Chacara Marco (18 paradas), Jardim Maria Cristina (21) e Chacara Marco via Terminal Barueri (15). Os intervalos de operação foram copiados dos quadros publicados onde disponíveis; o sentido via Terminal não teve tabela horária incluída nesta transcrição."
+      "Atualização 14/11/2026: três sentidos A163 foram transcritos de páginas individuais do Cittamobi: Chacara Marco (18 paradas), Jardim Maria Cristina (21) e Chacara Marco via Terminal Barueri (15). Os intervalos de operação foram copiados dos quadros publicados onde disponíveis; o sentido via Terminal não teve tabela horária incluída nesta transcrição.",
+      "Atualização 14/11/2026: adicionados A163 Jd. Maria Cristina via Campos Sales (Baia), A164C1 e A164C2, com sequências copiadas das páginas públicas individuais. Corrigidos os quadros horários das três variantes A163 já cadastradas, conforme tabelas públicas do Cittamobi (03/11 e 07/11/2026). Circularidades e paradas repetidas foram preservadas conforme a fonte."
     ]
   },
   "routes": [
@@ -1781,11 +1785,11 @@
       "direction": "Centro para Chácaras Marco",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarco-fc52db564539",
       "schedule": {
-        "observedAt": "2026-11-14",
+        "observedAt": "2026-11-03",
         "weekday": {
-          "firstDeparture": "00:12",
+          "firstDeparture": "04:29",
           "lastDeparture": "23:10",
-          "averageHeadwayMinutes": null
+          "averageHeadwayMinutes": 32
         },
         "saturday": {
           "firstDeparture": "05:20",
@@ -1797,7 +1801,7 @@
           "lastDeparture": "22:41",
           "averageHeadwayMinutes": 52
         },
-        "precision": "published-daily-window; weekday-headway-varies-32-to-38-minutes"
+        "precision": "daily-first-last-departure-and-average-headway"
       },
       "stops": [
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
@@ -1828,16 +1832,16 @@
       "direction": "Centro para Jardim Maria Cristina",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-Jd.MariaCristina-f33ea9361a3c",
       "schedule": {
-        "observedAt": "2026-11-14",
+        "observedAt": "2026-11-07",
         "weekday": {
-          "firstDeparture": "00:03",
+          "firstDeparture": "04:47",
           "lastDeparture": "23:05",
-          "averageHeadwayMinutes": 33
+          "averageHeadwayMinutes": 30
         },
         "saturday": {
-          "firstDeparture": "05:16",
+          "firstDeparture": "00:03",
           "lastDeparture": "23:37",
-          "averageHeadwayMinutes": 42
+          "averageHeadwayMinutes": 52
         },
         "sunday": {
           "firstDeparture": "05:12",
@@ -1892,6 +1896,216 @@
         "Av. Vinte e Seis de Março, 873 - Centro, Barueri - SP, Brasil",
         "Av. Vinte e Seis de Março, 535 - Centro, Barueri - SP, Brasil",
         "Avenida Vinte e Seis de Março 427, Centro, Barueri - São Paulo, 06401-050, Brasil",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ],
+      "schedule": {
+        "observedAt": "2026-11-03",
+        "weekday": {
+          "firstDeparture": "04:15",
+          "lastDeparture": "23:48",
+          "averageHeadwayMinutes": 32
+        },
+        "saturday": {
+          "firstDeparture": "05:00",
+          "lastDeparture": "23:10",
+          "averageHeadwayMinutes": 43
+        },
+        "sunday": {
+          "firstDeparture": "05:40",
+          "lastDeparture": "22:25",
+          "averageHeadwayMinutes": 52
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      }
+    },
+    {
+      "routeId": "BARUERI-A163-JD-MARIA-CRISTINA-CAMPOS-SALES-BAIA",
+      "lineCode": "A163",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd. Maria Cristina via Campos Sales (Baia)",
+      "direction": "Chácaras Marco para Centro via Baia",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-Jd.MariaCristinaviaCamposSalesBaia-9eed6f691800",
+      "schedule": {
+        "observedAt": "2026-11-07",
+        "weekday": {
+          "firstDeparture": "04:15",
+          "lastDeparture": "23:25",
+          "averageHeadwayMinutes": 31
+        },
+        "saturday": {
+          "firstDeparture": "04:40",
+          "lastDeparture": "23:00",
+          "averageHeadwayMinutes": 42
+        },
+        "sunday": {
+          "firstDeparture": "04:40",
+          "lastDeparture": "23:01",
+          "averageHeadwayMinutes": 52
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "Rua Pinheiros, 1-145 - Chácaras Marco, Barueri - SP, 06419-120, Brasil",
+        "Rua Broklin, 399",
+        "Rua Broklin, 399",
+        "Rua Broklin, 60",
+        "Estrada Velha da Balsa, 501",
+        "Estrada Velha da Balsa, 700",
+        "Rua Tatuapé, 403",
+        "Rua Tatuapé, 232",
+        "Rua Sumaré, 329",
+        "Avenida Marco, 218",
+        "Av. Marco, 218-578 - Chácaras Marco, Barueri - SP, Brasil",
+        "Rua Carajás, 681",
+        "Rua Carajás, 477",
+        "Rua Carajás, 329",
+        "Rua Carajás, 198-250 - Vila Sao Silvestre, Barueri - SP, 06417-040, Brasil",
+        "Rua Almeida, 167",
+        "Rua São Paulo, 85",
+        "Rua Capitão Francisco César, 239",
+        "R. Cap. Francisco César, 1",
+        "Av. Srg. José Siqueira, 254-260 - Jardim Paraiso, Barueri - SP, 06412-180, Brasil",
+        "Av. Srg. José Siqueira, 101-133 - Jardim Paraiso, Barueri - SP, 06412-180, Brasil",
+        "Estr. dos Romeiros, 629 - Jardim Regina Alice, Barueri - SP, Brasil",
+        "Estrada dos Romeiros, 101",
+        "Estrada dos Romeiros, 2",
+        "Estrada dos Romeiros, 2",
+        "Estrada dos Romeiros",
+        "Avenida Presidente Tancredo de Almeida Neves, 896",
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A164C1-TERMINAL-ENGENHO-NOVO-CIRCULAR-1",
+      "lineCode": "A164C1",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Term. Barueri / Engenho Novo Circular 1",
+      "direction": "Circular com início e fim no Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C1-Term.BarueriEngenhoNovoCircular1-8a6ca968c844",
+      "schedule": {
+        "observedAt": "2026-11-07",
+        "weekday": {
+          "firstDeparture": "04:27",
+          "lastDeparture": "23:10",
+          "averageHeadwayMinutes": 43
+        },
+        "saturday": {
+          "firstDeparture": "04:30",
+          "lastDeparture": "22:05",
+          "averageHeadwayMinutes": 47
+        },
+        "sunday": {
+          "firstDeparture": "06:00",
+          "lastDeparture": "22:30",
+          "averageHeadwayMinutes": 70
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Estrada dos Romeiros",
+        "Rodovia Presidente Castelo Branco, Boa Vista, Barueri - São Paulo, 06411, Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estr. dos Romeiros, 262",
+        "Acesso para Av Srg. José Siqueira",
+        "Estr. dos Romeiros, 296 - Vila Pindorama, Barueri - SP, 06417-000, Brasil",
+        "Rua Almeida, 66",
+        "Rua Tietê, 185-271 - Vila Sao Silvestre, Barueri - SP, 06417-100, Brasil",
+        "Rua Cafelândia, 884",
+        "Rua Cafelândia, 562",
+        "Rua Cafelândia, 208",
+        "Rua Cafelândia, 84",
+        "Rua Major Álvaro Fontes, 1",
+        "Rua Major Álvaro Fontes, 157",
+        "Rua Major Álvaro Fontes, 378",
+        "Rua São Benedito, 163",
+        "Rua Carlos Lacerda, 588",
+        "R. Carlos Lacerda 411 - Vila Engenho Novo Barueri - SP 06415-150 Brasil",
+        "Rua Carlos Lacerda, 248",
+        "Rua Carlos Lacerda, 2",
+        "Rua Marechal Deodoro, 2",
+        "Rua Doutor Adonai, 425",
+        "R. Cap. Francisco César, 697",
+        "R. Cap. Francisco César, 565",
+        "Rua Capitão Francisco César, 239",
+        "Estrada Dos Romeiros 1632, Engenho Novo, Barueri - São Paulo, 06415, Brasil",
+        "Avenida Sargento José Siqueira 340, Cruz Preta, Barueri - São Paulo, 06412-180, Brasil",
+        "Av. Srg. José Siqueira, 101-133 - Jardim Paraiso, Barueri - SP, 06412-180, Brasil",
+        "Estr. dos Romeiros, 629 - Jardim Regina Alice, Barueri - SP, Brasil",
+        "Estrada dos Romeiros, 101",
+        "Estrada dos Romeiros, 2",
+        "Estrada dos Romeiros, 2",
+        "Rua Santa Úrsula, 433",
+        "Rua Santa Úrsula, 251",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A164C2-TERMINAL-ENGENHO-NOVO-CIRCULAR-2",
+      "lineCode": "A164C2",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Term. Barueri / Engenho Novo Circular 2",
+      "direction": "Circular com início e fim no Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C2-Term.BarueriEngenhoNovoCircular2-647107cdf93e",
+      "schedule": {
+        "observedAt": "2026-11-07",
+        "weekday": {
+          "firstDeparture": "04:51",
+          "lastDeparture": "23:50",
+          "averageHeadwayMinutes": 42
+        },
+        "saturday": {
+          "firstDeparture": "06:00",
+          "lastDeparture": "23:05",
+          "averageHeadwayMinutes": 48
+        },
+        "sunday": {
+          "firstDeparture": "06:45",
+          "lastDeparture": "20:45",
+          "averageHeadwayMinutes": 70
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Estrada dos Romeiros",
+        "Rodovia Presidente Castelo Branco, Boa Vista, Barueri - São Paulo, 06411, Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estr. dos Romeiros, 262",
+        "Acesso para Av Srg. José Siqueira",
+        "Estrada dos Romeiros 1650, Cruz Preta, Barueri - São Paulo, 06417-000, Brasil",
+        "Rua Almeida, 66",
+        "R. São Paulo, 175-199 - Vila Engenho Novo, Barueri - SP, 06415-070, Brasil",
+        "Rua São Paulo, 270",
+        "Av. Capitão Francisco César, 876 - Vila Pindorama, Barueri - SP, 06415-130, Brasil",
+        "Rua Marechal Deodoro, 1",
+        "Rua Carlos Lacerda, 2",
+        "Rua Carlos Lacerda, 212",
+        "Rua Carlos Lacerda, 380",
+        "R. Carlos Lacerda, 604",
+        "Rua São Benedito, 178",
+        "Rua Major Álvaro Fontes, 348",
+        "Rua Major Álvaro Fontes, 242",
+        "Rua Major Álvaro Fontes, 98",
+        "Rua Cafelândia, 84",
+        "Rua Cafelândia, 208",
+        "Rua Cafelândia, 360",
+        "Rua Cafelândia, 724",
+        "Rua Cafelândia, 884",
+        "Rua Tietê, 1-91 - Vila Sao Silvestre, Barueri - SP, 06417-100, Brasil",
+        "Rua São Paulo, 85",
+        "Rua Capitão Francisco César, 239",
+        "Estrada Dos Romeiros 1632, Engenho Novo, Barueri - São Paulo, 06415, Brasil",
+        "Av. Srg. José Siqueira, 254-260 - Jardim Paraiso, Barueri - SP, 06412-180, Brasil",
+        "Av. Srg. José Siqueira, 101-133 - Jardim Paraiso, Barueri - SP, 06412-180, Brasil",
+        "Estr. dos Romeiros, 629 - Jardim Regina Alice, Barueri - SP, Brasil",
+        "Estrada dos Romeiros, 101",
+        "Estrada dos Romeiros, 2",
+        "Estrada dos Romeiros, 2",
+        "Rua Santa Úrsula, 433",
+        "Rua Santa Úrsula, 251",
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
       ]
     }
