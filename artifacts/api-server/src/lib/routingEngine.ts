@@ -20,9 +20,11 @@ const WALKING_ROUTER =
 const MAX_WALK_STRAIGHT_LINE_METERS = 2_000;
 // Evaluate a wider set because the geographically closest stop is not always
 // the easiest one to reach on foot (barriers, highways and disconnected streets).
-const MAX_STOPS_TO_EVALUATE_PER_SIDE = 16;
+const MAX_STOPS_TO_EVALUATE_PER_SIDE = 32;
 const MAX_STOPS_PER_SIDE = 8;
 const MAX_ACCESS_WALK_METERS = 1_000;
+const WALKING_CACHE_TTL_MS = 15 * 60 * 1_000;
+const MAX_WALKING_CACHE_ENTRIES = 4_000;
 const MAX_ROUTE_RESULTS = 8;
 const MAX_SEARCH_HORIZON_MS = 18 * 60 * 60 * 1_000;
 const MINIMUM_TRANSFER_SECONDS = 5 * 60;
@@ -76,6 +78,13 @@ type Candidate = {
   transitMinutes: number;
   transferCount: number;
 };
+
+type CachedWalkingPath = {
+  expiresAt: number;
+  promise: Promise<WalkingPath | undefined>;
+};
+
+const walkingPathCache = new Map<string, CachedWalkingPath>();
 
 type OsrmResponse = {
   code?: string;
@@ -178,7 +187,7 @@ function nearestStops(
     .slice(0, MAX_STOPS_TO_EVALUATE_PER_SIDE);
 }
 
-async function walkingPath(
+async function fetchWalkingPath(
   from: GeoPoint,
   to: GeoPoint,
 ): Promise<WalkingPath | undefined> {
@@ -270,6 +279,42 @@ async function walkingPathsForStops(
       .sort((left, right) => left[1].distanceMeters - right[1].distanceMeters)
       .slice(0, MAX_STOPS_PER_SIDE),
   );
+}
+
+function walkingCacheKey(from: GeoPoint, to: GeoPoint): string {
+  const coordinate = (point: GeoPoint) =>
+    `${point.latitude.toFixed(5)},${point.longitude.toFixed(5)}`;
+  return `${coordinate(from)}>${coordinate(to)}`;
+}
+
+async function walkingPath(
+  from: GeoPoint,
+  to: GeoPoint,
+): Promise<WalkingPath | undefined> {
+  const key = walkingCacheKey(from, to);
+  const cached = walkingPathCache.get(key);
+  if (cached && cached.expiresAt > Date.now()) {
+    // Refresh insertion order so frequently reused paths remain in the cache.
+    walkingPathCache.delete(key);
+    walkingPathCache.set(key, cached);
+    return cached.promise;
+  }
+  if (cached) walkingPathCache.delete(key);
+
+  const promise = fetchWalkingPath(from, to).catch((error: unknown) => {
+    walkingPathCache.delete(key);
+    throw error;
+  });
+  walkingPathCache.set(key, {
+    expiresAt: Date.now() + WALKING_CACHE_TTL_MS,
+    promise,
+  });
+  while (walkingPathCache.size > MAX_WALKING_CACHE_ENTRIES) {
+    const oldestKey = walkingPathCache.keys().next().value;
+    if (!oldestKey) break;
+    walkingPathCache.delete(oldestKey);
+  }
+  return promise;
 }
 
 function shapeSegment(
