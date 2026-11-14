@@ -170,7 +170,6 @@ for (let index = 0; index < addresses.length; index += 1) {
   url.searchParams.set("lon", String(CENTER.lon));
   url.searchParams.set("zoom", "13");
   url.searchParams.set("limit", "5");
-  url.searchParams.set("lang", "pt");
 
   try {
     const response = await fetch(url, {
