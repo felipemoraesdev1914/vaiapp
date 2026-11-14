@@ -19,7 +19,10 @@
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ParqueImperialviaEstacaoAntonioJoao-a8d3f94e2248.pdf",
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ValedoSolviaEstacaoAntonioJoao-e3521e60516d.pdf",
       "https://linhas-preview.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-TamboreInaja-a40fdfaf3712",
-      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T241-TerminalBarueri-941eff5a4a4a.pdf"
+      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T241-TerminalBarueri-941eff5a4a4a.pdf",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A111-VilaMarcia-65c57c2d60c0",
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri",
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -35,7 +38,8 @@
       "Os PDFs de itinerário não fornecem coordenadas geográficas; endereços precisam ser geocodificados e validados antes de habilitar cálculo de rotas.",
       "T245: os dois sentidos foram transcritos das listas de paradas e resumos horários dos PDFs públicos do Cittamobi, emitidos em 04/04/2026; páginas dinâmicas consultadas em 07/11/2026 indicam quadro mais recente e devem prevalecer para horários.",
       "T245 Tamboré (Inajá): itinerário público de 54 paradas consultado em 13/10/2026. Horários disponíveis apenas em dias úteis; a frequência varia conforme o dia (38–47 min) e não foi reduzida a uma média única.",
-      "T241 Terminal Barueri: 42 paradas na ordem do itinerário e resumo de operação/frequência transcritos do PDF público do Cittamobi, documento de 04/04/2026. Dados mais antigos que as páginas dinâmicas atualizadas em novembro; manter como referência provisória até revalidar."
+      "T241 Terminal Barueri: 42 paradas na ordem do itinerário e resumo de operação/frequência transcritos do PDF público do Cittamobi, documento de 04/04/2026. Dados mais antigos que as páginas dinâmicas atualizadas em novembro; manter como referência provisória até revalidar.",
+      "Catálogo municipal de Barueri consultado nas páginas públicas 1 e 2; há uma terceira página. A listagem confirma linhas e sentidos, mas cada sentido só entra no conjunto de roteamento depois de transcrição individual das paradas."
     ]
   },
   "routes": [
@@ -753,6 +757,47 @@
         "Avenida Vinte e Seis de Março, 317 - Centro, Barueri - SP",
         "Rua Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
         "Rua Campos Sales, 103-118 - Centro, Barueri - SP, 06401-131, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A111-VILA-MARCIA",
+      "lineCode": "A111",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Vila Márcia",
+      "direction": "Centro para Vila Márcia",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A111-VilaMarcia-65c57c2d60c0",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "06:35",
+          "lastDeparture": "23:00",
+          "averageHeadwayMinutes": 37
+        },
+        "saturday": {
+          "firstDeparture": "06:35",
+          "lastDeparture": "22:50",
+          "averageHeadwayMinutes": 88
+        },
+        "sunday": null,
+        "precision": "published-daily-operating-window-and-average-headway"
+      },
+      "stops": [
+        "Rua Campos Sales, 118 - Centro, Barueri - SP, 06401-000, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 158, Barueri - SP",
+        "Avenida Henriqueta Mendes Guerra, 556 - Vila São João, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 826 - Vila São João, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1168 - Vila São João, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410, Barueri - SP",
+        "Avenida Capitólio, 470, Barueri - SP",
+        "Avenida Capitólio, 541, Barueri - SP",
+        "Avenida Henrique Gonçalves Baptista, 1265-1309, Barueri - SP, Brasil",
+        "Avenida Henrique Gonçalves Baptista, 1600, Barueri - SP",
+        "Avenida Capitólio, 1649, Barueri - SP",
+        "Estrada das Nações, 567, Barueri - SP",
+        "Estrada das Nações, 172, Barueri - SP",
+        "Estrada das Nações, 172, Barueri - SP",
+        "Avenida Barueri Mirim, 25, Barueri - SP",
+        "Estrada Velha de Itu, Jandira - SP, 06618, Brasil"
       ]
     }
   ]
