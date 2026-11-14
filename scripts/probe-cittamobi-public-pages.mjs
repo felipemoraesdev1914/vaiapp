@@ -44,7 +44,7 @@ function extractLinks(html, origin) {
   return found;
 }
 function hiddenInputValue(html, id) {
-  const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const escapedId = id.replace(/[.*+?^${}()|[\]\]/g, "\$&");
   const byIdFirst = html.match(new RegExp(`<input[^>]*id=["']${escapedId}["'][^>]*value=["']([^"']+)["']`, "i"));
   if (byIdFirst) return decode(byIdFirst[1]);
   const valueFirst = html.match(new RegExp(`<input[^>]*value=["']([^"']+)["'][^>]*id=["']${escapedId}["']`, "i"));
@@ -56,7 +56,7 @@ function parseStopsFromHtml(html) {
     const start = Math.max(0, match.index - 500);
     const end = Math.min(html.length, matches[index + 1]?.index ?? match.index + 1800);
     const snippet = html.slice(start, end);
-    const text = stripTags(snippet).replace(/\\s+/g, " ").slice(0, 1000);
+    const text = stripTags(snippet).replace(/\s+/g, " ").slice(0, 1000);
     const attributes = [...snippet.matchAll(/([a-zA-Z_:][-a-zA-Z0-9_:.]*)=["']([^"']*)["']/g)]
       .map((item) => [item[1], decode(item[2])]);
     return {
@@ -68,7 +68,7 @@ function parseStopsFromHtml(html) {
   });
 }
 function parseStopDepartures(html) {
-  const match = html.match(/<script[^>]*id=["']line-departures-v1["'][^>]*>([\\s\\S]*?)<\\/script>/i);
+  const match = html.match(/<script[^>]*id=["']line-departures-v1["'][^>]*>([\s\S]*?)<\/script>/i);
   if (!match) return null;
   try { return JSON.parse(match[1]); } catch { return null; }
 }
