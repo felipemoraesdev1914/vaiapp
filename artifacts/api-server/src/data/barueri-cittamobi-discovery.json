@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "dataset": "barueri-municipal-cittamobi-discovery",
+  "status": "source-verified-pending-full-stop-transcription-and-geocoding",
+  "city": "Barueri",
+  "state": "SP",
+  "country": "BR",
+  "observedAt": "2026-11-14",
+  "source": {
+    "name": "Cittamobi public municipal line pages",
+    "indexPages": [
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri",
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2"
+    ],
+    "notes": [
+      "Each entry is a direction-specific public line page, not a route inferred from the line code alone.",
+      "Stop counts and endpoints are copied from the page summary. The full ordered stop list must be transcribed before routing use.",
+      "No coordinates are claimed here. Geocoding and geographic validation remain pending.",
+      "Municipal operator classification comes from the Cittamobi page label and should be cross-checked against the Prefeitura list."
+    ]
+  },
+  "routes": [
+    {
+      "lineCode": "A165C1",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd. Tupanci via São Luiz",
+      "stopCount": 54,
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C1-Jd.TupanciviaSaoLuiz-fa3778fdd7c4",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "A165C2",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd. Tupanci via Porto",
+      "stopCount": 57,
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C2-Jd.TupanciviaPorto-293405f8b285",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "A174",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd California / Estrada das Rosas",
+      "stopCount": 42,
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A174-JdCaliforniaEstradadasRosas-640b99c01649",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "A216C2",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Hospital regional via Zelia",
+      "stopCount": 23,
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "destination": "Av. Grimaldo Tolaini, 1231, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C2-HospitalregionalviaZelia-becc5dd4fbfa",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "A216C2",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Terminal via Exercito Brasileiro",
+      "stopCount": 9,
+      "origin": "Av. Grimaldo Tolaini, 1231, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C2-TerminalviaExercitoBrasileiro-ad76fb51bb0a",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T242",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Jardim Líbano via Brigadeiro Jordão",
+      "stopCount": 39,
+      "origin": "Rua Campos Sales 118, Centro, Barueri - SP",
+      "destination": "R. Belém, 98 - Votupoca, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T242-JardimLibanoviaBrigadeiroJordao-e98a57bc1efb",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T242",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Barueri",
+      "stopCount": 39,
+      "origin": "Tv. Porto Velho, 218 - Jardim do Líbano, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T242-TerminalBarueri-b3d8ce2db46e",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T243",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Barueri",
+      "stopCount": 30,
+      "origin": "R. Mississipi, 423 - Vale do Sol, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T243-TerminalBarueri-9dac7e1ef1d1",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T243",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Vale do Sol via Phrynea",
+      "stopCount": 26,
+      "origin": "Rua Campos Sales 118, Centro, Barueri - SP",
+      "destination": "R. Mississipi, 450-470 - Vale do Sol, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T243-ValedoSolviaPhrynea-58a273b1a913",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T244",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Vale do Sol via Aldeia de Barueri",
+      "stopCount": 46,
+      "origin": "Alameda Inajá, 38-90 - Tamboré, Barueri - SP",
+      "destination": "R. Mississipi, 450-470 - Vale do Sol, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T244-ValedoSolviaAldeiadeBarueri-cff61404125a",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T244",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Tamboré via Aldeia de Barueri",
+      "stopCount": 46,
+      "origin": "R. Mississipi, 423 - Vale do Sol, Barueri - SP",
+      "destination": "Alameda Inajá, 38-90 - Tamboré, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T244-TamboreviaAldeiadeBarueri-6c0087621d37",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T247",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Tamboré",
+      "stopCount": 51,
+      "origin": "Tv. Porto Velho, 218 - Jardim do Líbano, Barueri - SP",
+      "destination": "Alameda Inajá, 38-90 - Tamboré, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T247-Tambore-70b0985191f4",
+      "status": "summary-verified-full-stops-pending"
+    },
+    {
+      "lineCode": "T247",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Jd. Líbano",
+      "stopCount": 47,
+      "origin": "Alameda Inajá, 38-90 - Tamboré, Barueri - SP",
+      "destination": "Tv. Porto Velho, 218 - Jardim do Líbano, Barueri - SP",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T247-Jd.Libano-a7bbbe47e8de",
+      "status": "summary-verified-full-stops-pending"
+    }
+  ]
+}
