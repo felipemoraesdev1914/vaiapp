@@ -50,7 +50,9 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarcoviaTerminalBarueri-4cb234f3bde0",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-Jd.MariaCristinaviaCamposSalesBaia-9eed6f691800",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C1-Term.BarueriEngenhoNovoCircular1-8a6ca968c844",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C2-Term.BarueriEngenhoNovoCircular2-647107cdf93e"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C2-Term.BarueriEngenhoNovoCircular2-647107cdf93e",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A166C1-Jd.California1-ea46098f14df",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A166C2-Jd.California2-35064410210e"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -77,7 +79,8 @@
       "Atualização 14/11/2026: A170 Baia Duque de Caxias / Jardim Itaquiti (14 paradas) e T173 Terminal de Barueri (18 paradas) transcritas das páginas individuais públicas do Cittamobi. Na A170 foi preservada a janela de dias úteis 09:40–21:35 e frequência média 143 min; para T173 não foi incluída tabela horária, pois ela não foi confirmada nesta captura. A lista T173 preserva a parada inicial duplicada exatamente como publicada na página.",
       "Atualização 14/11/2026: cinco itinerários adicionais transcritos de páginas individuais públicas do Cittamobi: A168 Jd. Graziela (25 paradas), A169 Terminal Barueri (24), A215 Jardim Maria Helena (29), A217 Terminal Barueri/Vale do Sol (24) e T249 Antonio João/Green Valley (17). Endereços e ordem seguem a página consultada, inclusive registros repetidos publicados pela fonte. Quadros de horário e frequências foram registrados somente quando a página os apresentava; A217 tem apenas janela de partida de dias úteis.",
       "Atualização 14/11/2026: três sentidos A163 foram transcritos de páginas individuais do Cittamobi: Chacara Marco (18 paradas), Jardim Maria Cristina (21) e Chacara Marco via Terminal Barueri (15). Os intervalos de operação foram copiados dos quadros publicados onde disponíveis; o sentido via Terminal não teve tabela horária incluída nesta transcrição.",
-      "Atualização 14/11/2026: adicionados A163 Jd. Maria Cristina via Campos Sales (Baia), A164C1 e A164C2, com sequências copiadas das páginas públicas individuais. Corrigidos os quadros horários das três variantes A163 já cadastradas, conforme tabelas públicas do Cittamobi (03/11 e 07/11/2026). Circularidades e paradas repetidas foram preservadas conforme a fonte."
+      "Atualização 14/11/2026: adicionados A163 Jd. Maria Cristina via Campos Sales (Baia), A164C1 e A164C2, com sequências copiadas das páginas públicas individuais. Corrigidos os quadros horários das três variantes A163 já cadastradas, conforme tabelas públicas do Cittamobi (03/11 e 07/11/2026). Circularidades e paradas repetidas foram preservadas conforme a fonte.",
+      "Atualização 14/11/2026: incluídos A166C1 Jardim Califórnia 1 (41 paradas) e A166C2 Jardim Califórnia 2 (45 paradas), transcritos na ordem das páginas individuais do Cittamobi. A tabela A166C1 é de 07/11/2026. Para A166C2, a tabela apresenta frequência e intervalo distintos para cada dia; a janela weekday agregada não deve ser interpretada como partidas diárias idênticas."
     ]
   },
   "routes": [
@@ -2107,6 +2110,153 @@
         "Rua Santa Úrsula, 433",
         "Rua Santa Úrsula, 251",
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A166C1-JARDIM-CALIFORNIA-1",
+      "lineCode": "A166C1",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd. Califórnia 1",
+      "direction": "Circular com início e fim no Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A166C1-Jd.California1-ea46098f14df",
+      "schedule": {
+        "observedAt": "2026-11-07",
+        "weekday": {
+          "firstDeparture": "03:55",
+          "lastDeparture": "23:45",
+          "averageHeadwayMinutes": 34
+        },
+        "saturday": {
+          "firstDeparture": "00:30",
+          "lastDeparture": "22:35",
+          "averageHeadwayMinutes": 60
+        },
+        "sunday": {
+          "firstDeparture": "04:00",
+          "lastDeparture": "23:10",
+          "averageHeadwayMinutes": 71
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Estrada dos Romeiros",
+        "Rodovia Presidente Castelo Branco, Boa Vista, Barueri - São Paulo, 06411, Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estr. dos Romeiros, 262",
+        "Acesso para Av Srg. José Siqueira",
+        "Estrada dos Romeiros 1650, Cruz Preta, Barueri - São Paulo, 06417-000, Brasil",
+        "Rua Almeida, 66",
+        "Rua São Paulo, 85",
+        "Avenida Lourenço Zácaro, 139",
+        "Avenida Lourenço Zácaro, 710",
+        "Avenida Lourenço Zácaro, 943 - Jardim Sao Silvestre, Barueri - SP, Brasil",
+        "Avenida Lourenço Zácaro, 1052",
+        "Rua Atenas, 180",
+        "Rua Atenas, 632",
+        "Rua Lucrécia Borges, 2",
+        "Rua Abaetetuba, 496",
+        "Rua Saracura, 199",
+        "R. Saracura, 2-74 - Jardim California, Barueri - SP, 06409-140, Brasil",
+        "Rua Abaetetuba, 26",
+        "Rua São João do Araguaia, 280",
+        "Rua Santa Cruz do Arare, 113 - Jardim California, Barueri - SP, 06409-120, Brasil",
+        "Rua das Antilhas, 472-608 - Jardim California, Barueri - SP, 06409-070, Brasil",
+        "R. Chaves, 775-849 - Jardim California, Barueri - SP, Brasil",
+        "Rua Chaves, 280",
+        "Rua Chaves, 280",
+        "Rua Copo de Leite, 76",
+        "Rua das Adálias, 199",
+        "R. das Margaridas, 20-42 - Jardim Florida, Barueri - SP, 06407-240, Brasil",
+        "Rua do Cravo, 131",
+        "R. Maria Eliza, 65",
+        "Rua Maria Eliza, 25",
+        "Rua Melquíades Gilardi, 19",
+        "Estrada Doutor Cícero Borges de Morais, 676-684 - Vila Universal, Barueri - SP, Brasil",
+        "Estrada Doutor Cícero Borges de Morais, 714",
+        "Estrada Doutor Cícero Borges de Morais, 227",
+        "Estrada dos Romeiros, 2",
+        "Rua Santa Úrsula, 433",
+        "Rua Santa Úrsula, 251",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A166C2-JARDIM-CALIFORNIA-2",
+      "lineCode": "A166C2",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd. Califórnia 2",
+      "direction": "Circular com início no Terminal e retorno ao Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A166C2-Jd.California2-35064410210e",
+      "schedule": {
+        "observedAt": "2026-11-07",
+        "weekday": {
+          "firstDeparture": "00:05",
+          "lastDeparture": "23:01",
+          "averageHeadwayMinutes": 67
+        },
+        "saturday": {
+          "firstDeparture": "04:30",
+          "lastDeparture": "23:10",
+          "averageHeadwayMinutes": 101
+        },
+        "sunday": {
+          "firstDeparture": "04:30",
+          "lastDeparture": "22:30",
+          "averageHeadwayMinutes": 77
+        },
+        "precision": "weekday-range-aggregated-from-daily-table; daily-frequency-varies"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Estrada dos Romeiros",
+        "Rodovia Presidente Castelo Branco, Boa Vista, Barueri - São Paulo, 06411, Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estrada dos Romeiros, 2",
+        "Estrada Doutor Cícero Borges de Moraes 828, Califórnia, Barueri - São Paulo, 06407-000, Brasil",
+        "Estrada Doutor Cícero Borges de Morais, 260 - Vila Universal, Barueri - SP, Brasil",
+        "Rua Antônio Carlos, 96-158 - Vila Ceres, Barueri - SP, Brasil",
+        "Rua Antônio Carlos, 1-79 - Vila Ceres, Barueri - SP, Brasil",
+        "Rua Maria Eliza, 26",
+        "Rua Maria Eliza, 202",
+        "R. do Cravo, 160",
+        "R. das Margaridas, 20-42 - Jardim Florida, Barueri - SP, 06407-240, Brasil",
+        "Rua das Adálias, 199",
+        "Rua Copo de Leite, 175",
+        "R. Santo Antônio, 13 - Vila Universal, Barueri - SP, 06407-140, Brasil",
+        "Avenida Lourenço Zácaro, 943 - Jardim Sao Silvestre, Barueri - SP, Brasil",
+        "Avenida Lourenço Zácaro, 1052",
+        "Rua Atenas, 180",
+        "Rua Atenas, 632",
+        "Rua Lucrécia Borges, 2",
+        "Rua Abaetetuba, 496",
+        "Rua Saracura, 199",
+        "R. Saracura, 2-74 - Jardim California, Barueri - SP, 06409-140, Brasil",
+        "Rua Abaetetuba, 26",
+        "Rua São João do Araguaia, 280",
+        "Rua Santa Cruz do Arare, 113 - Jardim California, Barueri - SP, 06409-120, Brasil",
+        "Rua Santa Cruz do Arare, 35 - Jardim California, Barueri - SP, 06409-120, Brasil",
+        "Rua das Antilhas, 472-608 - Jardim California, Barueri - SP, 06409-070, Brasil",
+        "R. Chaves, 775-849 - Jardim California, Barueri - SP, Brasil",
+        "Rua Chaves, 280",
+        "Rua Chaves, 150",
+        "Rua Chaves, 1",
+        "Avenida Lourenço Zácaro, 709",
+        "Avenida Lourenço Zácaro, 173",
+        "Rua Capitão Francisco César, 239",
+        "Estrada Dos Romeiros 1632, Engenho Novo, Barueri - São Paulo, 06415, Brasil",
+        "Avenida Sargento José Siqueira 340, Cruz Preta, Barueri - São Paulo, 06412-180, Brasil",
+        "Av. Srg. José Siqueira, 101-133 - Jardim Paraiso, Barueri - SP, 06412-180, Brasil",
+        "Estr. dos Romeiros, 629 - Jardim Regina Alice, Barueri - SP, Brasil",
+        "Estrada dos Romeiros, 101",
+        "Estrada dos Romeiros, 2",
+        "Rua Santa Úrsula, 433",
+        "Rua Santa Úrsula, 251"
+      ],
+      "notes": [
+        "A tabela horária tem linhas diferentes para cada dia útil; o firstDeparture representa o menor horário publicado na semana, não uma partida diária comum. Freq. média dia útil aproximada de 67 min calculada a partir das frequências diárias publicadas."
       ]
     }
   ]
