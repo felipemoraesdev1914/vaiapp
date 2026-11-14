@@ -8,15 +8,17 @@
     "name": "Cittamobi - catálogo público de linhas de Barueri",
     "pages": [
       "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri",
-      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2",
-      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=3"
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2"
     ],
     "observedAt": "2026-11-13",
     "notes": [
       "Códigos agrupados por categoria conforme os rótulos exibidos no catálogo público.",
       "A presença de um código no inventário confirma apenas sua listagem no catálogo, não a validação do itinerário, sentido, operação atual ou coordenadas.",
       "Variações de sentido e letreiro devem ser transcritas individualmente antes de integrar ao motor de rotas.",
-      "Não usar este inventário como fonte de paradas ou horários."
+      "Não usar este inventário como fonte de paradas ou horários.",
+      "Conferência direta do catálogo em 13/11/2026: o catálogo tem duas páginas; a URL page=3 redireciona/exibe a página 2, portanto foi removida como fonte distinta.",
+      "Inventário de códigos revisado para refletir os códigos efetivamente exibidos nas duas páginas do catálogo. Códigos de extensões/sufixos não exibidos foram removidos.",
+      "Nova rodada de inspeção individual de páginas públicas: inventário ampliado com URLs de 24 itinerários e contagem de paradas quando explicitamente informada pela página. A lista de paradas ainda será transcrita e validada antes de entrar no catálogo de roteamento."
     ]
   },
   "municipalLineCodes": [
@@ -44,7 +46,6 @@
     "A216C2",
     "A217",
     "A260",
-    "A267",
     "A268",
     "A631",
     "T131",
@@ -63,26 +64,23 @@
     "T253",
     "T253VP1",
     "T254",
+    "T255",
     "T256",
     "T411",
     "T412",
-    "T642"
+    "T642",
+    "T651",
+    "T652"
   ],
   "intermunicipalLineCodes": [
     "130",
     "264",
-    "264BI1",
     "291",
-    "291BI1",
     "313",
-    "313VP1",
     "345",
     "346",
     "350",
-    "350BI1",
-    "350EX1",
     "417",
-    "419",
     "421",
     "454",
     "463",
@@ -94,16 +92,178 @@
     "489",
     "518",
     "533",
-    "534",
-    "814",
     "815",
     "821",
     "833",
     "850"
   ],
   "counts": {
-    "municipalCodes": 47,
-    "intermunicipalCodes": 31,
-    "totalDistinctCodes": 78
-  }
+    "municipalCodes": 49,
+    "intermunicipalCodes": 23,
+    "totalDistinctCodes": 72
+  },
+  "discoveredItineraries": [
+    {
+      "lineCode": "A160",
+      "headsign": "Eng. Novo (Av. Constran)",
+      "stopsReported": 16,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Eng.NovoAv.Constran-a1afd2c232e9",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A161",
+      "headsign": "Jd. Maria Cristina",
+      "stopsReported": 23,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-Jd.MariaCristina-9e2d9cfd9faa",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A162",
+      "headsign": "Chácaras Marco",
+      "stopsReported": 14,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A163",
+      "headsign": "Chácara Marco",
+      "stopsReported": 18,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarco-fc52db564539",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A164C1",
+      "headsign": "Terminal Barueri / Engenho Novo Circular 1",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C1-Term.BarueriEngenhoNovoCircular1-8a6ca968c844",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A165C1",
+      "headsign": "Jardim Tupanci via São Luiz",
+      "stopsReported": 54,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C1-Jd.TupanciviaSaoLuiz-fa3778fdd7c4",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A166C1",
+      "headsign": "Jardim Califórnia 1",
+      "stopsReported": 41,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A166C1-Jd.California1-ea46098f14df",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A167",
+      "headsign": "Jardim dos Altos",
+      "stopsReported": 16,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A167-JardimdosAltos-c5fbcbf1ad8c",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A168",
+      "headsign": "Jardim Graziela",
+      "stopsReported": 25,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A168-Jd.Graziela-688f6ed74e35",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A169",
+      "headsign": "Terminal Barueri",
+      "stopsReported": 24,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A169-TerminalBarueri-1e4c9cfd220d",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A170",
+      "headsign": "Baia Duque de Caxias / Jardim Itaquiti",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A170-BaiaDuquedeCaxiasJardimItaquiti-535fcc1b9696",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A215",
+      "headsign": "Jardim Maria Helena",
+      "stopsReported": 29,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A215-JardimMariaHelena-26caf1dcc52d",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A216C1",
+      "headsign": "Estrada velha / Hospital Av. Zélia",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C1-EstradavelhaHospitalAv.Zelia-5297b1196c72",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "A217",
+      "headsign": "Terminal Barueri / Vale do Sol",
+      "stopsReported": 24,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueriValedosol-6ad186647dda",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T173",
+      "headsign": "Terminal de Barueri",
+      "stopsReported": 18,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T243",
+      "headsign": "Terminal Barueri",
+      "stopsReported": 30,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T243-TerminalBarueri-9dac7e1ef1d1",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T247",
+      "headsign": "Tamboré",
+      "stopsReported": 51,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T247-Tambore-70b0985191f4",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T249",
+      "headsign": "Antônio João / Green Valley",
+      "stopsReported": 17,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T253",
+      "headsign": "Parque Imperial - Rua da Prata",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T253-ParqueImperial-RuadaPrata-cb7686bdfaef",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T254",
+      "headsign": "Jardim Líbano via Zélia",
+      "stopsReported": 41,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T254-Jd.LibanoviaZelia.-3de627a292e3",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T256",
+      "headsign": "Terminal via Green Valley / Parque Ecológico",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Terminal.viaGreenValleyPq.Ecol.-7778a516e963",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T411",
+      "headsign": "Jardim Belval",
+      "stopsReported": 24,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-JardimBelval-3a206d184afd",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T412",
+      "headsign": "Tamboré via Terminal Barueri",
+      "stopsReported": 72,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T412-TamboreviaTerminalBarueri-a5325fd31cb9",
+      "observedAt": "2026-11-13"
+    },
+    {
+      "lineCode": "T642",
+      "headsign": "Parque Imperial via Alphaville e Santa Cecília",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T642-Pq.ImperialviaAlphavilleeSta.Cecilia-669520d4e796",
+      "observedAt": "2026-11-13"
+    }
+  ]
 }
