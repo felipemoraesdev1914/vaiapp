@@ -26,11 +26,11 @@ function decode(value = "") {
     .replace(/&gt;/g, ">");
 }
 function stripTags(value = "") {
-  return decode(value.replace(/<[^>]+>/g, " ").replace(/\\s+/g, " ")).trim();
+  return decode(value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")).trim();
 }
 function extractLinks(html, origin) {
   const found = [];
-  const regex = /<a\\b[^>]*href=(["'])(.*?)\\1[^>]*>([\\s\\S]*?)<\\/a>/gi;
+  const regex = /<a\b[^>]*href=(["'])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi;
   for (const match of html.matchAll(regex)) {
     try {
       found.push({
@@ -42,20 +42,20 @@ function extractLinks(html, origin) {
   return found;
 }
 function extractScripts(html, origin) {
-  return [...html.matchAll(/<script\\b[^>]*src=(["'])(.*?)\\1/gi)]
+  return [...html.matchAll(/<script\b[^>]*src=(["'])(.*?)\1/gi)]
     .map((match) => {
       try { return new URL(decode(match[2]), origin).href; } catch { return null; }
     })
     .filter(Boolean);
 }
 function extractInlineJson(html) {
-  return [...html.matchAll(/<script\\b([^>]*)>([\\s\\S]*?)<\\/script>/gi)]
+  return [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)]
     .map((match) => ({
       attrs: match[1].slice(0, 300),
       content: match[2].trim(),
     }))
     .filter((item) => item.content.startsWith("{") || item.content.startsWith("[") ||
-      /__NEXT_DATA__|application\\/ld\\+json/i.test(item.attrs))
+      /__NEXT_DATA__|application\/ld\+json/i.test(item.attrs))
     .map((item) => ({
       attrs: item.attrs,
       content: item.content.slice(0, 120_000),
@@ -94,12 +94,12 @@ for (let index = 0; index < queue.length; index += 3) {
   const results = await Promise.all(chunk.map(async (url) => {
     try {
       const html = url === knownRouteUrl ? knownHtml : await get(url);
-      const title = decode(html.match(/<title[^>]*>([\\s\\S]*?)<\\/title>/i)?.[1] ?? "");
+      const title = decode(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? "");
       const links = extractLinks(html, base);
       const scripts = extractScripts(html, base);
       const json = extractInlineJson(html);
       const geoTerms = keywordSnippets(html, [
-        "api\\.cittamobi\\.com\\.br", "serviceId", "stopId", "routeId",
+        "api\.cittamobi\.com\.br", "serviceId", "stopId", "routeId",
         "latitude", "longitude", "coordinates", "stops/service", "m3p",
         "lat", "lng", "mapbox", "polyline", "geometry",
       ]);
@@ -128,10 +128,10 @@ for (let index = 0; index < scriptUrls.length; index += 4) {
       return {
         url, length: source.length,
         apiTerms: keywordSnippets(source, [
-          "api\\.cittamobi\\.com\\.br", "m3p/js/stops", "serviceId",
+          "api\.cittamobi\.com\.br", "m3p/js/stops", "serviceId",
           "stopId", "routeId", "latitude", "longitude", "stops/service",
         ]).slice(0, 80),
-        endpoints: [...new Set(source.match(/https?:\\/\\/[^"'\\s\\\\]+/g) ?? [])]
+        endpoints: [...new Set(source.match(/https?:\/\/[^"'\s\\]+/g) ?? [])]
           .filter((value) => /cittamobi|m3p|api/i.test(value)).slice(0, 100),
       };
     } catch (error) {
