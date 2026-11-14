@@ -14,7 +14,7 @@ permissions:
 jobs:
   geocode:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,14 +22,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Geocode Cittamobi stop addresses
+      - name: Geocode every distinct Cittamobi stop address
         env:
-          GEOCODE_LIMIT: "40"
+          GEOCODE_LIMIT: "0"
         run: node scripts/geocode-barueri-cittamobi-stops.mjs
-      - name: Save geocoding sample
+      - name: Save full geocoded municipal route data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add artifacts/api-server/src/data/barueri-cittamobi-geocoded-stops.json
-          git commit -m "Add Barueri municipal stop geocoding sample"
+          git commit -m "Add geocoded Barueri municipal stop network"
           git push
