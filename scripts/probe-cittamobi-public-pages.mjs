@@ -44,7 +44,7 @@ function extractLinks(html, origin) {
   return found;
 }
 function hiddenInputValue(html, id) {
-  const escapedId = id.replace(/[.*+?^${}()|[\]\]/g, "\$&");
+  const escapedId = id;
   const byIdFirst = html.match(new RegExp(`<input[^>]*id=["']${escapedId}["'][^>]*value=["']([^"']+)["']`, "i"));
   if (byIdFirst) return decode(byIdFirst[1]);
   const valueFirst = html.match(new RegExp(`<input[^>]*value=["']([^"']+)["'][^>]*id=["']${escapedId}["']`, "i"));
