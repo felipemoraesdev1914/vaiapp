@@ -13,6 +13,17 @@ export function clockTime(value: TimeValue): string {
   return date ? new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(date) : '—';
 }
 
+export function formatDuration(minutes: number): string {
+  if (!Number.isFinite(minutes) || minutes < 0) return '—';
+  const rounded = Math.ceil(minutes);
+  if (rounded < 60) return `${rounded} min`;
+  const hours = Math.floor(rounded / 60);
+  const remainder = rounded % 60;
+  return remainder === 0
+    ? `${hours} h`
+    : `${hours} h ${String(remainder).padStart(2, '0')} min`;
+}
+
 export function formatDistance(meters: number): string {
   if (!Number.isFinite(meters) || meters <= 0) return '';
   return meters >= 1000 ? `${(meters / 1000).toFixed(1).replace('.', ',')} km` : `${Math.round(meters)} m`;

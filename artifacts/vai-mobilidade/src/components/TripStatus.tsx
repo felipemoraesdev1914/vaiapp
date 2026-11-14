@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Bus, Footprints, Timer } from 'lucide-react';
 import type { TransitRouteOption } from '@workspace/api-client-react';
+import { formatDuration } from './format';
 
 const REFRESH_MS = 30_000;
 
@@ -51,7 +52,7 @@ export function TripStatus({ route }: { route: TransitRouteOption }) {
     icon = <Bus size={17} />;
     const minutes = Math.max(0, Math.round((nextBoarding.start - now) / 60000));
     title = `Próximo embarque: linha ${nextBoarding.leg.lineCode ?? ''}`.trim();
-    detail = `${nextBoarding.leg.from.label}, horário programado ${clock(nextBoarding.start)}${minutes > 0 ? ` (em ${minutes} min)` : ' (agora)'}.`;
+    detail = `${nextBoarding.leg.from.label}, horário programado ${clock(nextBoarding.start)}${minutes > 0 ? ` (em ${formatDuration(minutes)})` : ' (agora)'}.`;
   }
 
   return (
