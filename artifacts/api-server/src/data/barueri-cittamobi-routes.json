@@ -44,7 +44,10 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A169-TerminalBarueri-1e4c9cfd220d",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A215-JardimMariaHelena-26caf1dcc52d",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueriValedosol-6ad186647dda",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarco-fc52db564539",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-Jd.MariaCristina-f33ea9361a3c",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarcoviaTerminalBarueri-4cb234f3bde0"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -69,7 +72,8 @@
       "A160 Eng. Novo (Av. Constran): 16 paradas transcritas da página individual pública consultada em 13/11/2026; quadro de dia útil 05:32–22:58, sem frequência média nem operação de sábado/domingo informadas no texto consultado.",
       "Atualização 13/11/2026: acrescentados itinerários completos A160 Engenho Novo via Terminal Barueri (16 paradas), A160 Vale do Sol via Centro (14), A161 Jardim Maria Cristina (23), A161 Terminal Barueri (16) e A162 Chácaras Marco (14), conforme páginas individuais públicas do Cittamobi. Horários preservados apenas na precisão publicada; partidas únicas não foram convertidas em frequência.",
       "Atualização 14/11/2026: A170 Baia Duque de Caxias / Jardim Itaquiti (14 paradas) e T173 Terminal de Barueri (18 paradas) transcritas das páginas individuais públicas do Cittamobi. Na A170 foi preservada a janela de dias úteis 09:40–21:35 e frequência média 143 min; para T173 não foi incluída tabela horária, pois ela não foi confirmada nesta captura. A lista T173 preserva a parada inicial duplicada exatamente como publicada na página.",
-      "Atualização 14/11/2026: cinco itinerários adicionais transcritos de páginas individuais públicas do Cittamobi: A168 Jd. Graziela (25 paradas), A169 Terminal Barueri (24), A215 Jardim Maria Helena (29), A217 Terminal Barueri/Vale do Sol (24) e T249 Antonio João/Green Valley (17). Endereços e ordem seguem a página consultada, inclusive registros repetidos publicados pela fonte. Quadros de horário e frequências foram registrados somente quando a página os apresentava; A217 tem apenas janela de partida de dias úteis."
+      "Atualização 14/11/2026: cinco itinerários adicionais transcritos de páginas individuais públicas do Cittamobi: A168 Jd. Graziela (25 paradas), A169 Terminal Barueri (24), A215 Jardim Maria Helena (29), A217 Terminal Barueri/Vale do Sol (24) e T249 Antonio João/Green Valley (17). Endereços e ordem seguem a página consultada, inclusive registros repetidos publicados pela fonte. Quadros de horário e frequências foram registrados somente quando a página os apresentava; A217 tem apenas janela de partida de dias úteis.",
+      "Atualização 14/11/2026: três sentidos A163 foram transcritos de páginas individuais do Cittamobi: Chacara Marco (18 paradas), Jardim Maria Cristina (21) e Chacara Marco via Terminal Barueri (15). Os intervalos de operação foram copiados dos quadros publicados onde disponíveis; o sentido via Terminal não teve tabela horária incluída nesta transcrição."
     ]
   },
   "routes": [
@@ -1767,6 +1771,128 @@
         "Avenida Andrômeda, 3528-3898 - Alphaville Empresarial, Barueri - SP, Brasil",
         "Av. Andrômeda, 3528-3848 - Alphaville Empresarial, Barueri - SP, Brasil",
         "Avenida Andrômeda, 3025"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A163-CHACARAS-MARCO",
+      "lineCode": "A163",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Chacara Marco",
+      "direction": "Centro para Chácaras Marco",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarco-fc52db564539",
+      "schedule": {
+        "observedAt": "2026-11-14",
+        "weekday": {
+          "firstDeparture": "00:12",
+          "lastDeparture": "23:10",
+          "averageHeadwayMinutes": null
+        },
+        "saturday": {
+          "firstDeparture": "05:20",
+          "lastDeparture": "23:30",
+          "averageHeadwayMinutes": 43
+        },
+        "sunday": {
+          "firstDeparture": "05:55",
+          "lastDeparture": "22:41",
+          "averageHeadwayMinutes": 52
+        },
+        "precision": "published-daily-window; weekday-headway-varies-32-to-38-minutes"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Avenida Presidente Tancredo de Almeida Neves, 896",
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil",
+        "Estrada dos Romeiros",
+        "Rodovia Presidente Castelo Branco, Boa Vista, Barueri - São Paulo, 06411, Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estr. dos Romeiros, 262",
+        "Acesso para Av Srg. José Siqueira",
+        "Estrada dos Romeiros 1650, Cruz Preta, Barueri - São Paulo, 06417-000, Brasil",
+        "Estr. dos Romeiros, 296 - Vila Pindorama, Barueri - SP, 06417-000, Brasil",
+        "Rua Almeida, 66",
+        "Rua Carajás, 329",
+        "R. Carajás, 476",
+        "Rua Carajás, 632",
+        "Av. Marco, 218-578 - Chácaras Marco, Barueri - SP, Brasil",
+        "Avenida Marco, 218",
+        "Rua Pinheiros, 1-145 - Chácaras Marco, Barueri - SP, 06419-120, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A163-JARDIM-MARIA-CRISTINA",
+      "lineCode": "A163",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd. Maria Cristina",
+      "direction": "Centro para Jardim Maria Cristina",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-Jd.MariaCristina-f33ea9361a3c",
+      "schedule": {
+        "observedAt": "2026-11-14",
+        "weekday": {
+          "firstDeparture": "00:03",
+          "lastDeparture": "23:05",
+          "averageHeadwayMinutes": 33
+        },
+        "saturday": {
+          "firstDeparture": "05:16",
+          "lastDeparture": "23:37",
+          "averageHeadwayMinutes": 42
+        },
+        "sunday": {
+          "firstDeparture": "05:12",
+          "lastDeparture": "23:33",
+          "averageHeadwayMinutes": 52
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil",
+        "Av. Henriqueta Mendes Guerra, 158",
+        "Rua Santo Antônio, 224-244, Barueri - SP, Brasil",
+        "Rua Santa Úrsula, 251",
+        "Av. Santa Úrsula, 433",
+        "Rua Gertrudes Silva Ramos, 277",
+        "Av. Henriqueta Mendes Guerra, 826 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 1168 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410",
+        "Rua Antônio Fernandes Prado, 138",
+        "Rua Riachuelo, 18",
+        "Rua Riachuelo, 145",
+        "Rua Riachuelo, 249",
+        "Rua Luís Gianezela, 1",
+        "Rua Getúlio Vargas, 129",
+        "Rua Getúlio Vargas, 283",
+        "Rua Getúlio Vargas, 424",
+        "Rua Getúlio Vargas, 528",
+        "Rua José de Alencar, 52",
+        "Rua Ilha Solteira 76, Belval, Barueri - São Paulo, 06421-050, Brasil",
+        "Rua Presidente Nilo Pecanha 266, Belval, Barueri - São Paulo, 06422-030, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A163-CHACARAS-MARCO-VIA-TERMINAL",
+      "lineCode": "A163",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Chacara Marco via Terminal Barueri",
+      "direction": "Jardim Maria Cristina para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A163-ChacaraMarcoviaTerminalBarueri-4cb234f3bde0",
+      "stops": [
+        "Rua Presidente Nilo Pecanha 266, Belval, Barueri - São Paulo, 06422-030, Brasil",
+        "Rua Ilha do Governador, 121",
+        "R. Getúlio Vargas, 750",
+        "Rua Getúlio Vargas, 561",
+        "Rua Getúlio Vargas, 424",
+        "Rua Getúlio Vargas, 129",
+        "Rua Engenheiro Oscar Kesselring, 381",
+        "Avenida Itaqui, Belval, Barueri - São Paulo, 06420, Brasil",
+        "Rua Vereador Isaías Pereira Souto, 85",
+        "R. Interna Grupo Bandeirante, 13 - Vila Nova, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 1155 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 873 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 535 - Centro, Barueri - SP, Brasil",
+        "Avenida Vinte e Seis de Março 427, Centro, Barueri - São Paulo, 06401-050, Brasil",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
       ]
     }
   ]
