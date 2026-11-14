@@ -28,6 +28,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add artifacts/api-server/src/data/barueri-cittamobi-geocoded-lines.json
+          git add artifacts/api-server/src/data/barueri-cittamobi-lines-source.json
           git commit -m "Add Cittamobi public route metadata probe"
           git push
