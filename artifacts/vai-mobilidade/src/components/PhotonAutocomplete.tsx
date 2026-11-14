@@ -18,16 +18,40 @@ type PhotonAutocompleteProps = {
   onChange: (place: Place) => void;
 };
 
+function propertyText(properties: Record<string, unknown>, key: string): string {
+  const value = properties[key];
+  return typeof value === 'string' ? value.trim() : '';
+}
+
 function photonLabel(properties: Record<string, unknown>): string {
-  const parts = [
-    properties.name,
-    properties.street,
-    properties.housenumber,
-    properties.city,
-    properties.district,
-    properties.state,
-  ].filter((part): part is string => typeof part === 'string' && part.trim().length > 0);
-  return [...new Set(parts)].join(', ');
+  const street = propertyText(properties, 'street');
+  const houseNumber = propertyText(properties, 'housenumber');
+  const name = propertyText(properties, 'name');
+  // If Photon supplies a street address, show it first instead of the POI
+  // name (which may be a station, plaza or other nearby landmark).
+  const primary = street
+    ? [street, houseNumber].filter(Boolean).join(', ')
+    : name || houseNumber;
+  const locality = [
+    propertyText(properties, 'district'),
+    propertyText(properties, 'city') || propertyText(properties, 'locality'),
+    propertyText(properties, 'state'),
+    propertyText(properties, 'postcode'),
+  ];
+  return [...new Set([primary, ...locality].filter(Boolean))].join(', ');
+}
+
+function photonRelevance(properties: Record<string, unknown>, query: string): number {
+  const street = propertyText(properties, 'street');
+  const houseNumber = propertyText(properties, 'housenumber');
+  const hasNumberAtEnd = /(?:,|\\s)\\d{1,5}\\s*$/.test(query.trim());
+  let score = 0;
+  if (street) score += 5;
+  if (street && houseNumber) score += 5;
+  if (hasNumberAtEnd && houseNumber) score += 8;
+  if (hasNumberAtEnd && !houseNumber) score -= 8;
+  if (!street && propertyText(properties, 'name')) score -= hasNumberAtEnd ? 5 : 0;
+  return score;
 }
 
 export function PhotonAutocomplete({ id, label, placeholder, value, icon, invalid, onChange }: PhotonAutocompleteProps) {
@@ -63,13 +87,18 @@ export function PhotonAutocomplete({ id, label, placeholder, value, icon, invali
         if (!response.ok) throw new Error('Não foi possível consultar endereços agora.');
         const collection = await response.json() as { features?: PhotonFeature[] };
         const mapped = (collection.features ?? []).flatMap((feature) => {
-          const resultLabel = photonLabel(feature.properties ?? {});
+          const properties = feature.properties ?? {};
+          const resultLabel = photonLabel(properties);
           const coordinates = feature.geometry?.coordinates;
           if (!resultLabel || !Array.isArray(coordinates) || coordinates.length < 2) return [];
           const [longitude, latitude] = coordinates;
           if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return [];
-          return [{ label: resultLabel, place: { label: resultLabel, coordinates: { latitude, longitude } } }];
-        });
+          return [{
+            label: resultLabel,
+            place: { label: resultLabel, coordinates: { latitude, longitude } },
+            relevance: photonRelevance(properties, term),
+          }];
+        }).sort((left, right) => right.relevance - left.relevance);
         setResults(mapped);
         setOpen(true);
       } catch (error) {
