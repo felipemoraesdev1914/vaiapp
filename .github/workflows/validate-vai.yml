@@ -36,6 +36,9 @@ jobs:
       - name: Validate Barueri Cittamobi catalog
         run: node scripts/validate-barueri-cittamobi.mjs
 
+      - name: Validate Barueri line inventory
+        run: node scripts/validate-barueri-cittamobi-inventory.mjs
+
       - name: Typecheck workspace
         run: pnpm run typecheck
 
