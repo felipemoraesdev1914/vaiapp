@@ -1,54 +1,67 @@
 import { mkdir, writeFile } from "node:fs/promises";
 
-const query = `
-[out:json][timeout:90];
-area["name"="Barueri"]["boundary"="administrative"]->.barueri;
-(
-  relation["type"="route"]["route"="bus"](area.barueri);
-  node["highway"="bus_stop"](area.barueri);
-  node["public_transport"="platform"]["bus"="yes"](area.barueri);
-);
-out body;
->;
-out skel qt;
-`;
-
-const endpoints = [
-  "https://overpass-api.de/api/interpreter",
-  "https://overpass.kumi.systems/api/interpreter",
-  "https://overpass.nchc.org.tw/api/interpreter",
+const bbox = "-23.553318,-46.965401,-23.470356,-46.798735";
+// Queries are kept small and bounded to Barueri to avoid Overpass area-index scans.
+const queries = [
+  `[out:json][timeout:75];
+  relation["type"="route"]["route"="bus"](${bbox});
+  out body;
+  >;
+  out skel qt;`,
+  `[out:json][timeout:75];
+  (
+    node["highway"="bus_stop"](${bbox});
+    node["public_transport"="platform"]["bus"="yes"](${bbox});
+    node["public_transport"="platform"]["highway"="bus_stop"](${bbox});
+  );
+  out body;`,
 ];
 
-let payload;
-let errors = [];
-for (const endpoint of endpoints) {
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
-        "user-agent": "VAI-Mobilidade/1.0 (Barueri public transit integration)",
-      },
-      body: new URLSearchParams({ data: query }),
-      signal: AbortSignal.timeout(120_000),
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    payload = await response.json();
-    break;
-  } catch (error) {
-    errors.push(`${endpoint}: ${error instanceof Error ? error.message : String(error)}`);
-  }
-}
-if (!payload) throw new Error(`All Overpass endpoints failed: ${errors.join("; ")}`);
+const endpoints = [
+  "https://overpass.private.coffee/api/interpreter",
+  "https://lz4.overpass-api.de/api/interpreter",
+  "https://overpass-api.de/api/interpreter",
+];
 
-const elements = payload.elements ?? [];
-const nodes = elements.filter((e) => e.type === "node");
-const ways = elements.filter((e) => e.type === "way");
-const relations = elements.filter((e) => e.type === "relation");
+async function fetchQuery(query, label) {
+  const errors = [];
+  for (const endpoint of endpoints) {
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
+          "user-agent": "VAI-Mobilidade/1.0 (Barueri public transit research)",
+        },
+        body: new URLSearchParams({ data: query }),
+        signal: AbortSignal.timeout(95_000),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const payload = await response.json();
+      return { endpoint, payload };
+    } catch (error) {
+      errors.push(`${endpoint}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+  throw new Error(`${label}: all Overpass endpoints failed: ${errors.join("; ")}`);
+}
+
+const routeResult = await fetchQuery(queries[0], "Bus route relations");
+console.log(`Bus relations query succeeded via ${routeResult.endpoint}`);
+const stopResult = await fetchQuery(queries[1], "Bus stops");
+console.log(`Bus stops query succeeded via ${stopResult.endpoint}`);
+
+const routeElements = routeResult.payload.elements ?? [];
+const stopElements = stopResult.payload.elements ?? [];
+const allElements = new Map();
+for (const element of [...routeElements, ...stopElements]) {
+  allElements.set(`${element.type}/${element.id}`, element);
+}
+
+const nodes = [...allElements.values()].filter((e) => e.type === "node");
 const nodeById = new Map(nodes.map((node) => [node.id, node]));
-const stops = nodes
-  .filter((node) => node.tags?.highway === "bus_stop" ||
-    (node.tags?.public_transport === "platform" && node.tags?.bus === "yes"))
+const stops = stopElements
+  .filter((node) => node.type === "node")
   .map((node) => ({
     id: String(node.id),
     name: node.tags?.name ?? null,
@@ -58,8 +71,9 @@ const stops = nodes
     tags: node.tags ?? {},
   }));
 
-const routes = relations
-  .filter((relation) => relation.tags?.route === "bus")
+const ways = [...allElements.values()].filter((e) => e.type === "way");
+const relations = routeElements
+  .filter((relation) => relation.type === "relation" && relation.tags?.route === "bus")
   .map((relation) => ({
     id: String(relation.id),
     ref: relation.tags?.ref ?? null,
@@ -86,30 +100,45 @@ const routes = relations
     }),
   }));
 
-const result = {
+const waysById = new Map(ways.map((way) => [way.id, way]));
+for (const relation of relations) {
+  relation.members = relation.members.map((member) => {
+    if (member.type !== "way") return member;
+    const way = waysById.get(Number(member.ref));
+    return {
+      ...member,
+      nodeRefs: (way?.nodes ?? []).map(String),
+      tags: way?.tags ?? {},
+      coordinates: (way?.nodes ?? [])
+        .map((nodeId) => nodeById.get(nodeId))
+        .filter((node) => Number.isFinite(node?.lat) && Number.isFinite(node?.lon))
+        .map((node) => [node.lon, node.lat]),
+    };
+  });
+}
+
+const output = {
   schemaVersion: 1,
   source: "OpenStreetMap Overpass API",
   generatedAt: new Date().toISOString(),
-  area: "Barueri, SP, Brazil",
+  area: "Barueri, SP, Brazil (bounding box query; may include boundary-edge features)",
+  bbox: [-23.553318, -46.965401, -23.470356, -46.798735],
+  queryEndpoints: { routes: routeResult.endpoint, stops: stopResult.endpoint },
   counts: {
-    elements: elements.length,
+    routeQueryElements: routeElements.length,
+    stopQueryElements: stopElements.length,
+    uniqueElements: allElements.size,
     nodes: nodes.length,
     ways: ways.length,
-    relations: relations.length,
-    busRoutes: routes.length,
+    busRoutes: relations.length,
     busStopNodes: stops.length,
   },
-  routes,
+  routes: relations,
   stops,
-  diagnostics: {
-    overpassEndpoint: endpoints.find((endpoint) => !errors.some((entry) => entry.startsWith(endpoint))) ?? null,
-    failedEndpoints: errors,
-  },
 };
 
 const outputPath = "artifacts/api-server/src/data/barueri-osm-bus-network.json";
 await mkdir("artifacts/api-server/src/data", { recursive: true });
-await writeFile(outputPath, JSON.stringify(result, null, 2) + "\n", "utf8");
-
-console.log(JSON.stringify(result.counts));
+await writeFile(outputPath, JSON.stringify(output, null, 2) + "\n", "utf8");
+console.log(JSON.stringify(output.counts));
 console.log(`Saved ${outputPath}`);
