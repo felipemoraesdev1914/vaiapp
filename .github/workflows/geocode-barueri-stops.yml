@@ -1,0 +1,35 @@
+name: Geocode Barueri municipal bus stops
+
+on:
+  push:
+    branches:
+      - investigate/barueri-osm-transit
+    paths:
+      - scripts/geocode-barueri-cittamobi-stops.mjs
+      - .github/workflows/geocode-barueri-stops.yml
+
+permissions:
+  contents: write
+
+jobs:
+  geocode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: investigate/barueri-osm-transit
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Geocode Cittamobi stop addresses
+        env:
+          GEOCODE_LIMIT: "40"
+        run: node scripts/geocode-barueri-cittamobi-stops.mjs
+      - name: Save geocoding sample
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add artifacts/api-server/src/data/barueri-cittamobi-geocoded-stops.json
+          git commit -m "Add Barueri municipal stop geocoding sample"
+          git push
