@@ -29,7 +29,9 @@
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-A168-JardimGrazielaviaTerminalBarueri-adf78ba45159.pdf",
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-A168-JardimItaquitiviaBarueriCentro-025700a1a36b.pdf",
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-HospitalGeralBandeirantes-92893cc68b0d.pdf",
-      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-T172-AldeiadaSerra-b787b95e6a45.pdf"
+      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-T172-AldeiadaSerra-b787b95e6a45.pdf",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-JdBelval-b5d30c50b219",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-Tocantins-30e013908b02"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -49,7 +51,8 @@
       "Catálogo municipal de Barueri consultado nas páginas públicas 1 e 2; há uma terceira página. A listagem confirma linhas e sentidos, mas cada sentido só entra no conjunto de roteamento depois de transcrição individual das paradas.",
       "A111 Estação Antônio João, A167 Jardim dos Altos, A168 Jardim Graziela, A212 Hospital Geral Bandeirantes, T131 e T411 foram transcritas de páginas individuais públicas do Cittamobi em 13/11/2026. Endereços repetidos/ambíguos foram preservados como publicados; geocodificação e validação em campo pendentes.",
       "Revisão de qualidade em 13/11/2026: seis registros preliminares foram retirados por não terem sido conferidos integralmente contra o itinerário público individual; não usar como paradas confirmadas.",
-      "Atualização por PDFs públicos individuais do Cittamobi: A113 Terminal Barueri (18 paradas, 04/04/2026), A167 Jardim dos Altos (16, 04/04/2026), A168 Itaqui via Gupe (16), A168 Jardim Graziela via Terminal (17), A168 Jardim Itaquiti via Centro (24), A212 Hospital Geral Bandeirantes (38) e T172 Aldeia da Serra (24, 25/04/2026). Horários preservados como janela operacional e frequência média, não como passagem exata por parada."
+      "Atualização por PDFs públicos individuais do Cittamobi: A113 Terminal Barueri (18 paradas, 04/04/2026), A167 Jardim dos Altos (16, 04/04/2026), A168 Itaqui via Gupe (16), A168 Jardim Graziela via Terminal (17), A168 Jardim Itaquiti via Centro (24), A212 Hospital Geral Bandeirantes (38) e T172 Aldeia da Serra (24, 25/04/2026). Horários preservados como janela operacional e frequência média, não como passagem exata por parada.",
+      "T411: dois sentidos transcritos de páginas individuais públicas consultadas em outubro de 2026. O sentido Jardim Belval lista 24 paradas e só publica operação aos domingos no quadro consultado; o sentido Tocantins lista 6 paradas e também só informa quadro de domingo. Não preencher horários ausentes."
     ]
   },
   "routes": [
@@ -1140,6 +1143,78 @@
         "Av. Queimada, 2-66 - Res. Morada dos Lagos, Barueri - SP, 06429-215, Brasil",
         "Av. Queimada, 68-144 - Res. Morada dos Lagos, Barueri - SP, 06429-215, Brasil",
         "Av. Acaraí, 264 - Res. das Estrelas, Barueri - SP, 06429-130, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-T411-JARDIM-BELVAL",
+      "lineCode": "T411",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Jardim Belval",
+      "direction": "Centro para Jardim Belval",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-JdBelval-b5d30c50b219",
+      "schedule": {
+        "observedAt": "2026-10-21",
+        "weekday": null,
+        "saturday": null,
+        "sunday": {
+          "firstDeparture": "06:39",
+          "lastDeparture": "20:19",
+          "averageHeadwayMinutes": 68
+        },
+        "precision": "published-operating-window-and-average-headway"
+      },
+      "stops": [
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil",
+        "Av. Henriqueta Mendes Guerra, 158",
+        "Av. Henriqueta Mendes Guerra, 556 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 826 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 1168 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410",
+        "Avenida Vinte e Seis de Março, 1572",
+        "Avenida Itaqui, 28",
+        "Av. Itaqui, 362",
+        "Avenida Itaqui, 492",
+        "Avenida Itaqui, 752",
+        "Avenida Itaqui, 872",
+        "Rua Santos Dumont, 222",
+        "Rua Tiradentes, 489",
+        "Rua Carlos Gomes, 277",
+        "Rua Carlos Gomes, 143",
+        "R. Diógenes Ribeiro de Lima, 605 - Jardim Belval, Barueri - SP, 06420-250, Brasil",
+        "Rua Diógenes Ribeiro de Lima, 128",
+        "R. Diógenes Ribeiro de Lima, 285-321 - Jardim Belval, Barueri - SP, Brasil",
+        "Rua Pedro de Toledo, 76",
+        "Avenida Capitolio, 1032",
+        "Avenida Capitolio, 1176",
+        "Avenida Henrique Gonçalves Baptista, 1265-1309, Barueri - SP, Brasil",
+        "R. Princesa Isabel, 173-195 - Jardim Belval, Barueri - SP, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-T411-TOCANTINS",
+      "lineCode": "T411",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Tocantins",
+      "direction": "Centro para Alphaville Industrial",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-Tocantins-30e013908b02",
+      "schedule": {
+        "observedAt": "2026-10-21",
+        "weekday": null,
+        "saturday": null,
+        "sunday": {
+          "firstDeparture": "06:15",
+          "lastDeparture": "19:57",
+          "averageHeadwayMinutes": 68
+        },
+        "precision": "published-operating-window-and-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Alameda Tocantins, 905 - Alphaville Industrial, Barueri - SP, Brasil",
+        "Alameda Tocantins, 805",
+        "Alameda Tocantins, 277-425 - Alphaville Industrial, Barueri - SP, Brasil",
+        "Alameda Tocantins, 98",
+        "Alameda Tocantins 267, Alphaville, Barueri - São Paulo, 06455-020, Brasil"
       ]
     }
   ]
