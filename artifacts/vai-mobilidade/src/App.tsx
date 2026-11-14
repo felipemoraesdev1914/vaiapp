@@ -5,6 +5,7 @@ import { BrandHeader } from './components/BrandHeader';
 import { JourneyPlanner } from './components/JourneyPlanner';
 import { MapCanvas } from './components/MapCanvas';
 import { RouteResults } from './components/RouteResults';
+import type { UserLocation } from './components/map/UserLocationLayer';
 import type { Place } from './types/route';
 
 function App() {
@@ -16,12 +17,21 @@ function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const searchRoutes = useSearchTransitRoutes();
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
+  // Índice da etapa escolhida na linha do tempo; null mostra a viagem inteira.
+  const [selectedLegIndex, setSelectedLegIndex] = useState<number | null>(null);
+  const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
   const response = searchRoutes.data;
   const selectedRoute = response?.routes.find((route) => route.id === selectedRouteId) ?? null;
 
   useEffect(() => {
     setSelectedRouteId(response?.routes.find((route) => route.recommended)?.id ?? response?.routes[0]?.id ?? null);
+    setSelectedLegIndex(null);
   }, [response]);
+
+  const selectRoute = (route: TransitRouteOption | null) => {
+    setSelectedRouteId(route?.id ?? null);
+    setSelectedLegIndex(null);
+  };
 
   const runSearch = () => {
     if (!origin.coordinates || !destination.coordinates) return;
@@ -54,6 +64,14 @@ function App() {
       (position) => {
         setIsLocating(false);
         setLocationError('');
+        // O rumo só é usado quando o navegador informa um valor numérico válido.
+        const heading = position.coords.heading;
+        setUserLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          accuracy: position.coords.accuracy,
+          heading: typeof heading === 'number' && Number.isFinite(heading) ? heading : null,
+        });
         onSuccess({
           label: 'Minha localização atual',
           coordinates: {
@@ -103,11 +121,20 @@ function App() {
             isSearching={searchRoutes.isPending}
           />
           <div className="map-column">
-            <MapCanvas origin={origin} destination={destination} centerSignal={centerSignal} selectedRoute={selectedRoute} />
+            <MapCanvas
+              origin={origin}
+              destination={destination}
+              centerSignal={centerSignal}
+              selectedRoute={selectedRoute}
+              selectedLegIndex={selectedLegIndex}
+              userLocation={userLocation}
+            />
             <RouteResults
               response={response}
               selectedRouteId={selectedRoute?.id ?? null}
-              onSelectRoute={(route: TransitRouteOption | null) => setSelectedRouteId(route?.id ?? null)}
+              onSelectRoute={selectRoute}
+              selectedLegIndex={selectedLegIndex}
+              onSelectLeg={setSelectedLegIndex}
               isLoading={searchRoutes.isPending}
               error={searchRoutes.error}
               onRetry={runSearch}

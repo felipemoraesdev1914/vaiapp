@@ -1,6 +1,12 @@
-import { ArrowDown, ArrowUpDown, Bus, Clock3, Footprints, RefreshCw, Route as RouteIcon, Navigation, MapPin, Timer, ChevronDown, ChevronUp } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { ArrowRight, ArrowUpDown, Bus, Footprints, RefreshCw, Route as RouteIcon, ChevronDown, ChevronUp } from 'lucide-react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import type { TransitRouteOption, TransitRouteSearchResponse } from '@workspace/api-client-react';
+import { TripStatus } from './TripStatus';
+import { JourneyTimeline } from './JourneyTimeline';
+import { clockTime, tripStart } from './format';
+
+// Quantidade de alternativas exibidas antes de o usuário expandir a lista.
+const INITIAL_ROUTE_COUNT = 3;
 
 type SortKey = 'fastest' | 'walking' | 'transfers';
 type DurationLimit = 'any' | '30' | '60';
@@ -11,16 +17,12 @@ type RouteResultsProps = {
   response?: TransitRouteSearchResponse;
   selectedRouteId: string | null;
   onSelectRoute: (route: TransitRouteOption | null) => void;
+  selectedLegIndex: number | null;
+  onSelectLeg: (index: number | null) => void;
   isLoading: boolean;
   error: unknown;
   onRetry: () => void;
 };
-
-function clockTime(value: string | Date | null | undefined) {
-  if (!value) return '—';
-  const date = new Date(String(value));
-  return Number.isNaN(date.getTime()) ? '—' : new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(date);
-}
 
 // Mensagens ao usuário em português. Detalhes técnicos ficam no console e nos logs do servidor.
 function errorMessage(error: unknown) {
@@ -37,12 +39,13 @@ function errorMessage(error: unknown) {
   return 'Não foi possível consultar as rotas agora. Tente novamente.';
 }
 
-export function RouteResults({ response, selectedRouteId, onSelectRoute, isLoading, error, onRetry }: RouteResultsProps) {
+export function RouteResults({ response, selectedRouteId, onSelectRoute, selectedLegIndex, onSelectLeg, isLoading, error, onRetry }: RouteResultsProps) {
   const [sort, setSort] = useState<SortKey>('fastest');
   const [durationLimit, setDurationLimit] = useState<DurationLimit>('any');
   const [walkingLimit, setWalkingLimit] = useState<WalkingLimit>('any');
   const [transferLimit, setTransferLimit] = useState<TransferLimit>('any');
   const [detailsOpen, setDetailsOpen] = useState(true);
+  const [showAllRoutes, setShowAllRoutes] = useState(false);
   const routes = useMemo(() => {
     const list = (response?.routes ?? []).filter((route) => (
       (durationLimit === 'any' || route.totalMinutes <= Number(durationLimit))
@@ -57,6 +60,8 @@ export function RouteResults({ response, selectedRouteId, onSelectRoute, isLoadi
   const totalOptions = response?.routes.length ?? 0;
   const sortLabels: Record<SortKey, string> = { fastest: 'Mais rápida', walking: 'Menos caminhada', transfers: 'Menos baldeações' };
   const selectedRoute = routes.find((route) => route.id === selectedRouteId) ?? null;
+  const visibleRoutes = showAllRoutes ? routes : routes.slice(0, INITIAL_ROUTE_COUNT);
+  const hiddenRouteCount = routes.length - visibleRoutes.length;
 
   useEffect(() => {
     if (routes.length === 0) {
@@ -149,49 +154,6 @@ export function RouteResults({ response, selectedRouteId, onSelectRoute, isLoadi
           <span>Amplie os limites ou limpe os filtros para ver todas as rotas encontradas.</span>
         </div>
       )}
-      {!isLoading && !error && routes.length > 0 && (
-        <div className="route-list" data-testid="list-routes">
-          {routes.map((route, index) => (
-            <button
-              type="button"
-              key={route.id}
-              className={`route-option route-card ${route.id === selectedRouteId ? 'selected' : ''}`}
-              aria-pressed={route.id === selectedRouteId}
-              onClick={() => onSelectRoute(route)}
-              data-testid={`card-route-${route.id}`}
-            >
-              <span className="route-glyph"><Bus size={18} /></span>
-              <span className="route-card-main">
-                <span className="route-card-topline">
-                  <span className="route-name">{route.lineCodes.length ? route.lineCodes.join(' · ') : route.label}</span>
-                  {route.recommended && <span className="recommended-tag">Recomendada</span>}
-                  {index === 0 && !route.recommended && <span className="recommended-tag">Mais rápida</span>}
-                </span>
-                <span className="route-times">
-                  <strong>{clockTime(route.departureAt)}</strong><ArrowDown size={12} /><strong>{clockTime(route.arrivalAt)}</strong>
-                  <span>{route.totalMinutes} min</span>
-                </span>
-                <span className="route-places"><span><b>Embarque</b>{route.boardingStop.name}</span><span><b>Desembarque</b>{route.alightingStop.name}</span></span>
-                {route.transferCount > 0 && (
-                  <span className="route-transfer-list" data-testid={`text-route-legs-${route.id}`}>
-                    {route.legs.filter((leg) => leg.mode === 'bus').map((leg, legIndex) => (
-                      <span key={`${route.id}-leg-${legIndex}`}>
-                        <b>Linha {leg.lineCode}</b> {leg.boardingStop?.name} → {leg.alightingStop?.name}
-                      </span>
-                    ))}
-                  </span>
-                )}
-                <span className="route-stats">
-                  <span><Footprints size={13} /> {route.walkingMinutes} min a pé</span>
-                  <span><Bus size={13} /> {route.transitMinutes} min no ônibus</span>
-                  <span><Clock3 size={13} /> {route.transferCount === 0 ? 'Sem baldeações' : `${route.transferCount} ${route.transferCount === 1 ? 'baldeação' : 'baldeações'}`}</span>
-                </span>
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
-
       {!isLoading && !error && selectedRoute && (
         <section className="journey-detail" aria-label="Detalhes da viagem selecionada" data-testid="journey-detail">
           <div className="journey-detail-heading">
@@ -203,65 +165,77 @@ export function RouteResults({ response, selectedRouteId, onSelectRoute, isLoadi
               {detailsOpen ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
             </button>
           </div>
-          <div className="next-instruction">
-            <span className="next-instruction-icon"><Navigation size={19} /></span>
-            <div className="next-instruction-copy">
-              <span>PRIMEIRA ORIENTAÇÃO</span>
-              {selectedRoute.legs[0]?.mode === 'walk' ? (
-                <>
-                  <strong>Caminhe até {selectedRoute.legs[0].to.label}</strong>
-                  <small>{selectedRoute.legs[0].durationMinutes} min a pé{selectedRoute.legs[0].distanceMeters > 0 ? ` · ${selectedRoute.legs[0].distanceMeters >= 1000 ? `${(selectedRoute.legs[0].distanceMeters / 1000).toFixed(1).replace('.', ',')} km` : `${Math.round(selectedRoute.legs[0].distanceMeters)} m`}` : ''}</small>
-                </>
-              ) : (
-                <><strong>Dirija-se ao ponto {selectedRoute.boardingStop.name}</strong><small>Confira o horário programado antes de embarcar.</small></>
-              )}
-            </div>
-          </div>
+          <TripStatus route={selectedRoute} />
           {detailsOpen && (
             <>
-              <div className="journey-timeline">
-                {selectedRoute.legs.map((leg, index) => {
-                  const previousLeg = selectedRoute.legs[index - 1];
-                  const previousArrival = previousLeg?.arrivalAt ? new Date(String(previousLeg.arrivalAt)).getTime() : null;
-                  const legDeparture = leg.departureAt ? new Date(String(leg.departureAt)).getTime() : null;
-                  const waitMinutes = previousArrival !== null && legDeparture !== null ? Math.max(0, Math.round((legDeparture - previousArrival) / 60000)) : 0;
-                  const isWalk = leg.mode === 'walk';
-                  return (
-                    <div className="journey-timeline-group" key={`${selectedRoute.id}-step-${index}`}>
-                      {waitMinutes > 0 && (
-                        <div className="journey-step journey-wait-step">
-                          <span className="journey-step-icon"><Timer size={15} /></span>
-                          <div className="journey-step-content">
-                            <strong>{index > 0 && previousLeg?.mode === 'bus' ? 'Aguarde a conexão' : 'Aguarde o ônibus'}</strong>
-                            <span>{waitMinutes} min de espera programada · {previousLeg?.to.label ?? selectedRoute.boardingStop.name}</span>
-                            {leg.departureAt && <small>Saída prevista: {clockTime(leg.departureAt)}</small>}
-                          </div>
-                        </div>
-                      )}
-                      <div className={`journey-step ${isWalk ? 'journey-walk-step' : 'journey-bus-step'}`}>
-                        <span className="journey-step-icon">{isWalk ? <Footprints size={16} /> : <Bus size={16} />}</span>
-                        <div className="journey-step-content">
-                          <strong>{isWalk ? (index === selectedRoute.legs.length - 1 ? 'Caminhe até o destino' : 'Caminhe até o ponto') : `Pegue o ônibus ${leg.lineCode ?? ''}`}</strong>
-                          {!isWalk && leg.headsign && <span className="journey-headsign">Sentido {leg.headsign}</span>}
-                          <span>{leg.from.label} → {leg.to.label}</span>
-                          <small>{leg.durationMinutes} min · {isWalk ? (leg.distanceMeters >= 1000 ? `${(leg.distanceMeters / 1000).toFixed(1).replace('.', ',')} km` : `${Math.round(leg.distanceMeters)} m`) : 'no transporte público'}</small>
-                          {!isWalk && <small>Embarque: {clockTime(leg.departureAt)} · Desembarque: {clockTime(leg.arrivalAt)}</small>}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-                <div className="journey-destination"><MapPin size={16} /><span>Você chega ao destino</span><strong>{clockTime(selectedRoute.arrivalAt)}</strong></div>
-              </div>
-              <div className="journey-totals">
-                <div><strong>{selectedRoute.totalMinutes} min</strong><span>tempo total</span></div>
-                <div><strong>{selectedRoute.walkingMinutes} min</strong><span>caminhando</span></div>
-                <div><strong>{selectedRoute.transferCount}</strong><span>{selectedRoute.transferCount === 1 ? 'baldeação' : 'baldeações'}</span></div>
-              </div>
-              <p className="journey-schedule-note">Os horários e esperas são calculados a partir da tabela GTFS disponível. O VAI ainda não acompanha a posição do ônibus em tempo real.</p>
+              <JourneyTimeline route={selectedRoute} selectedLegIndex={selectedLegIndex} onSelectLeg={onSelectLeg} />
+              {selectedLegIndex !== null && (
+                <button type="button" className="journey-reset" onClick={() => onSelectLeg(null)} data-testid="button-show-full-trip">Mostrar a viagem inteira no mapa</button>
+              )}
             </>
           )}
         </section>
+      )}
+
+      {!isLoading && !error && routes.length > 0 && (
+        <>
+          <div className="route-list" data-testid="list-routes">
+            {visibleRoutes.map((route) => {
+              const isSelected = route.id === selectedRouteId;
+              const transferText = route.transferCount === 0
+                ? 'Sem baldeação'
+                : `${route.transferCount} ${route.transferCount === 1 ? 'baldeação' : 'baldeações'}`;
+              return (
+                <button
+                  type="button"
+                  key={route.id}
+                  className={`rc-card ${isSelected ? 'is-selected' : ''} ${route.recommended ? 'is-recommended' : ''}`}
+                  aria-pressed={isSelected}
+                  onClick={() => onSelectRoute(route)}
+                  data-testid={`card-route-${route.id}`}
+                >
+                  <span className="rc-top">
+                    <span className="rc-times">
+                      <strong>{clockTime(tripStart(route))}</strong>
+                      <ArrowRight size={13} aria-hidden="true" />
+                      <strong>{clockTime(route.arrivalAt)}</strong>
+                    </span>
+                    <span className="rc-duration">{route.totalMinutes} min</span>
+                  </span>
+                  <span className="rc-lines" data-testid={`text-route-legs-${route.id}`}>
+                    {route.lineCodes.map((code, index) => (
+                      <Fragment key={`${route.id}-line-${index}`}>
+                        {index > 0 && <ArrowRight size={12} aria-hidden="true" className="rc-arrow" />}
+                        <span className="rc-line">{code}</span>
+                      </Fragment>
+                    ))}
+                  </span>
+                  <span className="rc-boarding">
+                    Embarque às {clockTime(route.departureAt)} em {route.boardingStop.name}
+                  </span>
+                  <span className="rc-meta">
+                    <span><Footprints size={12} aria-hidden="true" /> {route.walkingMinutes} min a pé</span>
+                    <span>{transferText}</span>
+                    {route.recommended && <span className="rc-recommended">Recomendada</span>}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          {routes.length > INITIAL_ROUTE_COUNT && (
+            <button
+              type="button"
+              className="rc-more"
+              aria-expanded={showAllRoutes}
+              onClick={() => setShowAllRoutes((open) => !open)}
+              data-testid="button-toggle-routes"
+            >
+              {showAllRoutes
+                ? 'Mostrar menos opções'
+                : `Ver mais ${hiddenRouteCount} ${hiddenRouteCount === 1 ? 'opção' : 'opções'}`}
+            </button>
+          )}
+        </>
       )}
 
       {response && (
