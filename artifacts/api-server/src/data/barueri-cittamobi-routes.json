@@ -18,7 +18,8 @@
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T246-Tambore-9c631c6e3d7b.pdf",
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ParqueImperialviaEstacaoAntonioJoao-a8d3f94e2248.pdf",
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ValedoSolviaEstacaoAntonioJoao-e3521e60516d.pdf",
-      "https://linhas-preview.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-TamboreInaja-a40fdfaf3712"
+      "https://linhas-preview.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-TamboreInaja-a40fdfaf3712",
+      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T241-TerminalBarueri-941eff5a4a4a.pdf"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -33,7 +34,8 @@
       "A página pública atual do sentido Vale do Sol informa quadro de dia útil 15:49–22:35, com frequência média variável de 29–31 minutos; sábado e domingo sem operação indicada.",
       "Os PDFs de itinerário não fornecem coordenadas geográficas; endereços precisam ser geocodificados e validados antes de habilitar cálculo de rotas.",
       "T245: os dois sentidos foram transcritos das listas de paradas e resumos horários dos PDFs públicos do Cittamobi, emitidos em 04/04/2026; páginas dinâmicas consultadas em 07/11/2026 indicam quadro mais recente e devem prevalecer para horários.",
-      "T245 Tamboré (Inajá): itinerário público de 54 paradas consultado em 13/10/2026. Horários disponíveis apenas em dias úteis; a frequência varia conforme o dia (38–47 min) e não foi reduzida a uma média única."
+      "T245 Tamboré (Inajá): itinerário público de 54 paradas consultado em 13/10/2026. Horários disponíveis apenas em dias úteis; a frequência varia conforme o dia (38–47 min) e não foi reduzida a uma média única.",
+      "T241 Terminal Barueri: 42 paradas na ordem do itinerário e resumo de operação/frequência transcritos do PDF público do Cittamobi, documento de 04/04/2026. Dados mais antigos que as páginas dinâmicas atualizadas em novembro; manter como referência provisória até revalidar."
     ]
   },
   "routes": [
@@ -680,6 +682,77 @@
         "Alameda Araguacema, 269, Barueri - SP",
         "Alameda Araguacema, 2, Barueri - SP",
         "Alameda Inajá, 38-90 - Tamboré, Barueri - SP"
+      ]
+    },
+    {
+      "routeId": "BARUERI-T241-TERMINAL-BARUERI",
+      "lineCode": "T241",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Barueri",
+      "direction": "Jardim do Líbano para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-T241-TerminalBarueri-941eff5a4a4a.pdf",
+      "schedule": {
+        "observedAt": "2026-04-04",
+        "weekday": {
+          "firstDeparture": "03:30",
+          "lastDeparture": "23:50",
+          "averageHeadwayMinutes": 36
+        },
+        "saturday": {
+          "firstDeparture": "03:45",
+          "lastDeparture": "23:25",
+          "averageHeadwayMinutes": 43
+        },
+        "sunday": {
+          "firstDeparture": "00:15",
+          "lastDeparture": "22:20",
+          "averageHeadwayMinutes": 53
+        },
+        "precision": "daily-operating-window-and-average-headway-from-2026-04-04-document"
+      },
+      "stops": [
+        "Travessa Porto Velho, 218 - Jardim do Líbano, Barueri - SP, 06448-150, Brasil",
+        "Rua Belém, 98 - Votupoca, Barueri - SP, Brasil",
+        "Estrada das Pitas, 1306, Barueri - SP",
+        "Estrada das Pitas, 1840, Barueri - SP",
+        "Estrada das Pitas, 2102, Barueri - SP",
+        "Rua São Fernando, 575, Barueri - SP",
+        "Rua Amália, 327, Barueri - SP",
+        "Rua Amália, 165, Barueri - SP",
+        "Rua Amália, 9-13 - Jardim Júlio, Barueri - SP",
+        "Estrada Velha de Itapevi, 4672 - Vila Militar, Barueri - SP",
+        "Rua Tâmisa, 28, Barueri - SP",
+        "Rua Tâmisa, 185, Barueri - SP",
+        "Rua Tâmisa, 275 - Vale do Sol, Barueri - SP",
+        "Rua Tâmisa, 442, Barueri - SP",
+        "Rua Casablanca, 2, Barueri - SP",
+        "Rua Casablanca, 260, Barueri - SP",
+        "Rua Adonilson Alves Ferreira, 356-380 - Vale do Sol, Barueri - SP",
+        "Rua Adonilson Alves Ferreira, 160-250 - Vale do Sol, Barueri - SP",
+        "Rua Adonilson Alves Ferreira, 79, Barueri - SP",
+        "Rua Gabriela, 710, Barueri - SP",
+        "Rua Renata, 206, Barueri - SP",
+        "Rua Renata, 395, Barueri - SP",
+        "Rua Amélia, 309, Barueri - SP",
+        "Rua Amélia, 101, Barueri - SP",
+        "Rua Olga, 598, Barueri - SP",
+        "Rua Olga, 344, Barueri - SP",
+        "Rua Márcia, 187, Barueri - SP",
+        "Rua Márcia, 62, Barueri - SP",
+        "Avenida Zélia, 199 - Parque dos Camargos, Barueri - SP",
+        "Avenida Zélia, 119 - Parque dos Camargos, Barueri - SP",
+        "Rua Benedito de Paula Marcondes, 680, Barueri - SP",
+        "Rua Benedito de Paula Marcondes, 525, Barueri - SP",
+        "Rua Benedito de Paula Marcondes, 130, Barueri - SP",
+        "Avenida Municipal, 523, Barueri - SP",
+        "Avenida Municipal, 185, Barueri - SP",
+        "Rua Interna Grupo Bandeirante, 13 - Vila Nova, Barueri - SP",
+        "Avenida Vinte e Seis de Março, 1155 - Centro, Barueri - SP",
+        "Avenida Vinte e Seis de Março, 873 - Centro, Barueri - SP",
+        "Avenida Vinte e Seis de Março, 535 - Centro, Barueri - SP",
+        "Avenida Vinte e Seis de Março, 317 - Centro, Barueri - SP",
+        "Rua Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Rua Campos Sales, 103-118 - Centro, Barueri - SP, 06401-131, Brasil"
       ]
     }
   ]
