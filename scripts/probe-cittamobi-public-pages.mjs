@@ -179,4 +179,9 @@ console.log(JSON.stringify({
   totalRouteStopRecords: allStops.length,
   uniqueStops: distinctStops.size,
   geocodedStops: output.uniqueGeocodedStopCount,
+  errorSamples: output.routesWithErrors.slice(0, 8).map((route) => ({
+    url: route.url,
+    serviceId: route.serviceId,
+    error: route.geometry?.error ?? route.geometry?.status,
+  })),
 }));
