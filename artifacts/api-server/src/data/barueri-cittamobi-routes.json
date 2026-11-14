@@ -10,7 +10,9 @@
     "operatorLabel": "Benfica Municipal - Barueri",
     "pages": [
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-TerminalbarueriviaHospital-fb3b732a7a9a",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-TerminalPq.Imperial-9771917bc259"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-TerminalPq.Imperial-9771917bc259",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A112-Hospital-Aldeia-EstacaoAntonioJoao-591dd6957ed4",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A112-Hospital-TerminaldeBarueri-284882b905f1"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -18,7 +20,9 @@
       "A ordem das paradas segue a ordem publicada pela fonte.",
       "Endereços ainda não foram geocodificados nem validados em campo.",
       "Faixas horárias e frequências médias não são horários exatos de passagem por parada.",
-      "Este catálogo ainda não é consumido pelo motor de rotas."
+      "Este catálogo ainda não é consumido pelo motor de rotas.",
+      "A112 foi transcrita das duas páginas públicas da Ralip Municipal Barueri consultadas em 13/11/2026.",
+      "Os horários são faixas de primeira/última partida e frequência média; não representam horários exatos em cada parada."
     ]
   },
   "routes": [
@@ -148,6 +152,118 @@
         "Rua Adoniran Barbosa, 1124, Barueri - SP",
         "Rua Adoniran Barbosa, 1332, Barueri - SP",
         "Terminal Rodoviário Gumercindo Modesto de Farias, 1340 - Parque Imperial, Barueri - SP"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A112-HOSPITAL-ESTACAO-ANTONIO-JOAO",
+      "lineCode": "A112",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Hospital - Aldeia - Estação Antônio João",
+      "direction": "Centro para Fazenda Militar",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A112-Hospital-Aldeia-EstacaoAntonioJoao-591dd6957ed4",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "05:33",
+          "lastDeparture": "22:15",
+          "averageHeadwayMinutes": 40
+        },
+        "saturday": {
+          "firstDeparture": "05:30",
+          "lastDeparture": "21:40",
+          "averageHeadwayMinutes": 60
+        },
+        "sunday": {
+          "firstDeparture": "05:30",
+          "lastDeparture": "21:40",
+          "averageHeadwayMinutes": 51
+        },
+        "precision": "daily-first-and-last-departure-plus-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4, Barueri - SP",
+        "Rua Duque de Caxias, 317, Barueri - SP",
+        "R. Duque de Caxias, 570, Barueri - SP",
+        "Rua da Prata, 113 - Boa Vista, Barueri - SP, 06410-000, Brasil",
+        "Rua Platina, 56, Barueri - SP",
+        "R. da Prata, 366A - Jardim dos Camargos, Barueri - SP",
+        "R. Marabá, 167 - Vila Porto, Barueri - SP",
+        "Rua Marechal Deodoro, 322, Barueri - SP",
+        "R. Mal. Deodoro, 188-218 - Vila Boa Vista, Barueri - SP",
+        "R. Augusta, 247, Barueri - SP",
+        "Rua Ângela Mirella, 246, Barueri - SP",
+        "Av. Sebastião Davino dos Réis, 66-358 - Jardim Tupanci, Barueri - SP",
+        "Avenida Sebastião Davino dos Reis, 462, Barueri - SP",
+        "Av. Marginal Esquerda, 75-299 - Alphaville Res. Dois, Barueri - SP",
+        "Rua Claudino de Oliveira Pessoa, 456, Barueri - SP",
+        "Rua Claudino de Oliveira Pessoa, 688, Barueri - SP",
+        "Av. João Batista Soares, 977, Barueri - SP",
+        "Rua Nossa Senhora da Escada, 69, Barueri - SP",
+        "Rua Engenheiro César Polilo, 350, Barueri - SP",
+        "Rua Adriano Augusto, 478-544 - Jardim Iracema, Barueri - SP",
+        "Rua Adriano Augusto, 20 - Aldeia, Barueri - SP",
+        "Avenida Guilherme Rohn, 186 - Nova Aldeinha, Barueri - SP",
+        "Rua General Divisão Pedro Rodrigues da Silva, Fazenda Militar, Barueri - SP"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A112-HOSPITAL-TERMINAL",
+      "lineCode": "A112",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Hospital - Terminal de Barueri",
+      "direction": "Fazenda Militar para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A112-Hospital-TerminaldeBarueri-284882b905f1",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "05:00",
+          "lastDeparture": "22:35",
+          "averageHeadwayMinutes": 39
+        },
+        "saturday": {
+          "firstDeparture": "05:00",
+          "lastDeparture": "22:05",
+          "averageHeadwayMinutes": 60
+        },
+        "sunday": {
+          "firstDeparture": "05:00",
+          "lastDeparture": "22:05",
+          "averageHeadwayMinutes": 51
+        },
+        "precision": "daily-first-and-last-departure-plus-average-headway"
+      },
+      "stops": [
+        "Rua General Divisão Pedro Rodrigues da Silva, Fazenda Militar, Barueri - SP",
+        "Rua General de Divisão Pedro Rodrigues da Silva, Barueri - SP",
+        "Rua General de Divisão Pedro Rodrigues da Silva, Barueri - SP",
+        "Avenida da Aldeia, 202, Barueri - SP",
+        "Avenida da Aldeia, 423, Barueri - SP",
+        "Avenida da Aldeia, 771, Barueri - SP",
+        "Avenida da Aldeia, 873, Barueri - SP",
+        "Rua Engenheiro César Polilo, 192, Barueri - SP",
+        "Rua Engenheiro César Polilo, 350, Barueri - SP",
+        "Rua Nossa Senhora da Escada, 69, Barueri - SP",
+        "Av. Marginal Esquerda, 444-470 - Aldeia, Barueri - SP",
+        "Rua Claudino de Oliveira Pessoa, 645, Barueri - SP",
+        "Av. Marginal Esquerda, 75-299 - Alphaville Res. Dois, Barueri - SP",
+        "Avenida Sebastião Davino dos Reis, 447, Barueri - SP",
+        "Rua Ângela Mirella, 354, Barueri - SP",
+        "Rua Dona Henriqueta, 44, Barueri - SP",
+        "Rua Augusta, 192, Barueri - SP",
+        "R. Mal. Deodoro, 188-218 - Vila Boa Vista, Barueri - SP",
+        "Rua Marechal Deodoro, 322, Barueri - SP",
+        "R. Rio Grande do Sul, 410-456 - Vila Boa Vista, Barueri - SP",
+        "R. Marabá, 8-64 - Vila Porto, Barueri - SP",
+        "R. Rubro, 12-62 - Jardim dos Camargos, Barueri - SP",
+        "R. da Prata, 463-561 - Jardim dos Camargos, Barueri - SP",
+        "R. da Prata, 359 - Jardim dos Camargos, Barueri - SP",
+        "Rua Platina, 56, Barueri - SP",
+        "R. Pres. Artur da Costa e Silva, 393-501 - Vila Silveira, Barueri - SP",
+        "Praça dos Artistas - Vila Creti, Barueri - SP",
+        "Avenida Presidente Tancredo de Almeida Neves, 896, Barueri - SP",
+        "Av. Henriqueta Mendes Guerra, 158, Barueri - SP",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
       ]
     }
   ]
