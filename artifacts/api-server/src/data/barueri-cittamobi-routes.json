@@ -37,7 +37,9 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Valedosolviacentro-e1c77acfa1fb",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-Jd.MariaCristina-9e2d9cfd9faa",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-TerminalBarueri-2352ea953d86",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A170-BaiaDuquedeCaxiasJardimItaquiti-535fcc1b9696",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -60,7 +62,8 @@
       "Atualização por PDFs públicos individuais do Cittamobi: A113 Terminal Barueri (18 paradas, 04/04/2026), A167 Jardim dos Altos (16, 04/04/2026), A168 Itaqui via Gupe (16), A168 Jardim Graziela via Terminal (17), A168 Jardim Itaquiti via Centro (24), A212 Hospital Geral Bandeirantes (38) e T172 Aldeia da Serra (24, 25/04/2026). Horários preservados como janela operacional e frequência média, não como passagem exata por parada.",
       "T411: dois sentidos transcritos de páginas individuais públicas consultadas em outubro de 2026. O sentido Jardim Belval lista 24 paradas e só publica operação aos domingos no quadro consultado; o sentido Tocantins lista 6 paradas e também só informa quadro de domingo. Não preencher horários ausentes.",
       "A160 Eng. Novo (Av. Constran): 16 paradas transcritas da página individual pública consultada em 13/11/2026; quadro de dia útil 05:32–22:58, sem frequência média nem operação de sábado/domingo informadas no texto consultado.",
-      "Atualização 13/11/2026: acrescentados itinerários completos A160 Engenho Novo via Terminal Barueri (16 paradas), A160 Vale do Sol via Centro (14), A161 Jardim Maria Cristina (23), A161 Terminal Barueri (16) e A162 Chácaras Marco (14), conforme páginas individuais públicas do Cittamobi. Horários preservados apenas na precisão publicada; partidas únicas não foram convertidas em frequência."
+      "Atualização 13/11/2026: acrescentados itinerários completos A160 Engenho Novo via Terminal Barueri (16 paradas), A160 Vale do Sol via Centro (14), A161 Jardim Maria Cristina (23), A161 Terminal Barueri (16) e A162 Chácaras Marco (14), conforme páginas individuais públicas do Cittamobi. Horários preservados apenas na precisão publicada; partidas únicas não foram convertidas em frequência.",
+      "Atualização 14/11/2026: A170 Baia Duque de Caxias / Jardim Itaquiti (14 paradas) e T173 Terminal de Barueri (18 paradas) transcritas das páginas individuais públicas do Cittamobi. Na A170 foi preservada a janela de dias úteis 09:40–21:35 e frequência média 143 min; para T173 não foi incluída tabela horária, pois ela não foi confirmada nesta captura. A lista T173 preserva a parada inicial duplicada exatamente como publicada na página."
     ]
   },
   "routes": [
@@ -1448,6 +1451,76 @@
         "Av. Marco, 218-578 - Chácaras Marco, Barueri - SP, Brasil",
         "Avenida Marco, 218",
         "Rua Pinheiros, 1-145 - Chácaras Marco, Barueri - SP, 06419-120, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A170-BAIA-DUQUE-CAXIAS-JARDIM-ITAQUITI",
+      "lineCode": "A170",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Baia Duque de Caxias / Jardim Itaquiti",
+      "direction": "Centro para Jardim Itaquiti",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A170-BaiaDuquedeCaxiasJardimItaquiti-535fcc1b9696",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": {
+          "firstDeparture": "09:40",
+          "lastDeparture": "21:35",
+          "averageHeadwayMinutes": 143
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil",
+        "Av. Henriqueta Mendes Guerra, 158",
+        "Av. Henriqueta Mendes Guerra, 556 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 826 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 1168 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410",
+        "Avenida Vinte e Seis de Março, 1572",
+        "Avenida Itaqui, 28",
+        "Av. Itaqui, 362",
+        "Avenida Itaqui, 492",
+        "Avenida Itaqui, 752",
+        "Avenida Itaqui, 872",
+        "R. da Bica, 121",
+        "Av. Gupe, 1"
+      ]
+    },
+    {
+      "routeId": "BARUERI-T173-TERMINAL-DE-BARUERI",
+      "lineCode": "T173",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Terminal de Barueri",
+      "direction": "Jardim Itaquiti para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d",
+      "schedule": {
+        "observedAt": "2026-11-13",
+        "weekday": null,
+        "saturday": null,
+        "sunday": null,
+        "precision": "no-schedule-table-confirmed-in-this-capture"
+      },
+      "stops": [
+        "Estrada do Ingai, 200 - Jardim Itaquiti, Barueri - SP, Brasil",
+        "Estrada do Ingai, 200 - Jardim Itaquiti, Barueri - SP, Brasil",
+        "Estr. dos Alpes, 2658 - Jardim Itaquiti, Barueri - SP, Brasil",
+        "Estr. dos Alpes, 26, Barueri - SP, Brasil",
+        "Estr. dos Alpes, 870 - Jardim Itaquiti, Barueri - SP, Brasil",
+        "Estr. dos Alpes, 900 - Bairro dos Altos, Barueri - SP, 06423-080, Brasil",
+        "Estr. dos Alpes, 890 - Res. Morada dos Lagos, Barueri - SP, 06423-150, Brasil",
+        "Estr. da Pedreira, 4454",
+        "Rodovia Castelo Branco, 672",
+        "Avenida Gupe, 667",
+        "R. da Bica, 121",
+        "Avenida Itaqui, Belval, Barueri - São Paulo, 06420, Brasil",
+        "Rua Interna Grupo Bandeirante, 3182",
+        "R. Interna Grupo Bandeirante, 13 - Vila Nova, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 1155 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 535 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 317 - Centro, Barueri - SP, Brasil",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
       ]
     }
   ]
