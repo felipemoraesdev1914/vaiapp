@@ -302,7 +302,9 @@ async function walkingPath(
   if (cached) walkingPathCache.delete(key);
 
   const promise = fetchWalkingPath(from, to).catch((error: unknown) => {
-    walkingPathCache.delete(key);
+    if (walkingPathCache.get(key)?.promise === promise) {
+      walkingPathCache.delete(key);
+    }
     throw error;
   });
   walkingPathCache.set(key, {
