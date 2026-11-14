@@ -31,7 +31,8 @@
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-HospitalGeralBandeirantes-92893cc68b0d.pdf",
       "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-T172-AldeiadaSerra-b787b95e6a45.pdf",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-JdBelval-b5d30c50b219",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-Tocantins-30e013908b02"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T411-Tocantins-30e013908b02",
+      "https://linhas-preview.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Eng.NovoAv.Constran-a1afd2c232e9"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -52,7 +53,8 @@
       "A111 Estação Antônio João, A167 Jardim dos Altos, A168 Jardim Graziela, A212 Hospital Geral Bandeirantes, T131 e T411 foram transcritas de páginas individuais públicas do Cittamobi em 13/11/2026. Endereços repetidos/ambíguos foram preservados como publicados; geocodificação e validação em campo pendentes.",
       "Revisão de qualidade em 13/11/2026: seis registros preliminares foram retirados por não terem sido conferidos integralmente contra o itinerário público individual; não usar como paradas confirmadas.",
       "Atualização por PDFs públicos individuais do Cittamobi: A113 Terminal Barueri (18 paradas, 04/04/2026), A167 Jardim dos Altos (16, 04/04/2026), A168 Itaqui via Gupe (16), A168 Jardim Graziela via Terminal (17), A168 Jardim Itaquiti via Centro (24), A212 Hospital Geral Bandeirantes (38) e T172 Aldeia da Serra (24, 25/04/2026). Horários preservados como janela operacional e frequência média, não como passagem exata por parada.",
-      "T411: dois sentidos transcritos de páginas individuais públicas consultadas em outubro de 2026. O sentido Jardim Belval lista 24 paradas e só publica operação aos domingos no quadro consultado; o sentido Tocantins lista 6 paradas e também só informa quadro de domingo. Não preencher horários ausentes."
+      "T411: dois sentidos transcritos de páginas individuais públicas consultadas em outubro de 2026. O sentido Jardim Belval lista 24 paradas e só publica operação aos domingos no quadro consultado; o sentido Tocantins lista 6 paradas e também só informa quadro de domingo. Não preencher horários ausentes.",
+      "A160 Eng. Novo (Av. Constran): 16 paradas transcritas da página individual pública consultada em 13/11/2026; quadro de dia útil 05:32–22:58, sem frequência média nem operação de sábado/domingo informadas no texto consultado."
     ]
   },
   "routes": [
@@ -1215,6 +1217,43 @@
         "Alameda Tocantins, 277-425 - Alphaville Industrial, Barueri - SP, Brasil",
         "Alameda Tocantins, 98",
         "Alameda Tocantins 267, Alphaville, Barueri - São Paulo, 06455-020, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A160-ENGENHO-NOVO-CONSTRAN",
+      "lineCode": "A160",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Eng. Novo (Av. Constran)",
+      "direction": "Centro para Engenho Novo",
+      "sourceUrl": "https://linhas-preview.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Eng.NovoAv.Constran-a1afd2c232e9",
+      "schedule": {
+        "observedAt": "2026-11-03",
+        "weekday": {
+          "firstDeparture": "05:32",
+          "lastDeparture": "22:58",
+          "averageHeadwayMinutes": null
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-first-and-last-departure-only"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Rua da Prata, 210",
+        "R. da Prata, 359 - Jardim dos Camargos, Barueri - SP, Brasil",
+        "R. da Prata, 463-561 - Jardim dos Camargos, Barueri - SP, Brasil",
+        "Rua Ângela Mirella 354, Boa Vista, Barueri - São Paulo, 06414, Brasil",
+        "Rua Werner Goldberg, 121",
+        "Estrada dos Romeiros 1650, Cruz Preta, Barueri - São Paulo, 06417-000, Brasil",
+        "Estr. dos Romeiros, 296 - Vila Pindorama, Barueri - SP, 06417-000, Brasil",
+        "Rua Almeida, 66",
+        "R. São Paulo, 175-199 - Vila Engenho Novo, Barueri - SP, 06415-070, Brasil",
+        "Rua São Paulo, 270",
+        "Rua São Paulo, 630",
+        "Av. Capitão Francisco César, 1224 - Vila Pindorama, Barueri - SP, 06415-000, Brasil",
+        "Rua Capitão Francisco César, 1362",
+        "Av. Capitão Francisco César, 1620 - Vila Pindorama, Barueri - SP, 06416-000, Brasil",
+        "Rua Constantinopla, 582"
       ]
     }
   ]
