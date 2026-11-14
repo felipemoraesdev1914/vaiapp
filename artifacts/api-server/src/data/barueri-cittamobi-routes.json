@@ -39,7 +39,12 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A161-TerminalBarueri-2352ea953d86",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A170-BaiaDuquedeCaxiasJardimItaquiti-535fcc1b9696",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A168-Jd.Graziela-688f6ed74e35",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A169-TerminalBarueri-1e4c9cfd220d",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A215-JardimMariaHelena-26caf1dcc52d",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueriValedosol-6ad186647dda",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7"
     ],
     "observedAt": "2026-11-13",
     "notes": [
@@ -63,7 +68,8 @@
       "T411: dois sentidos transcritos de páginas individuais públicas consultadas em outubro de 2026. O sentido Jardim Belval lista 24 paradas e só publica operação aos domingos no quadro consultado; o sentido Tocantins lista 6 paradas e também só informa quadro de domingo. Não preencher horários ausentes.",
       "A160 Eng. Novo (Av. Constran): 16 paradas transcritas da página individual pública consultada em 13/11/2026; quadro de dia útil 05:32–22:58, sem frequência média nem operação de sábado/domingo informadas no texto consultado.",
       "Atualização 13/11/2026: acrescentados itinerários completos A160 Engenho Novo via Terminal Barueri (16 paradas), A160 Vale do Sol via Centro (14), A161 Jardim Maria Cristina (23), A161 Terminal Barueri (16) e A162 Chácaras Marco (14), conforme páginas individuais públicas do Cittamobi. Horários preservados apenas na precisão publicada; partidas únicas não foram convertidas em frequência.",
-      "Atualização 14/11/2026: A170 Baia Duque de Caxias / Jardim Itaquiti (14 paradas) e T173 Terminal de Barueri (18 paradas) transcritas das páginas individuais públicas do Cittamobi. Na A170 foi preservada a janela de dias úteis 09:40–21:35 e frequência média 143 min; para T173 não foi incluída tabela horária, pois ela não foi confirmada nesta captura. A lista T173 preserva a parada inicial duplicada exatamente como publicada na página."
+      "Atualização 14/11/2026: A170 Baia Duque de Caxias / Jardim Itaquiti (14 paradas) e T173 Terminal de Barueri (18 paradas) transcritas das páginas individuais públicas do Cittamobi. Na A170 foi preservada a janela de dias úteis 09:40–21:35 e frequência média 143 min; para T173 não foi incluída tabela horária, pois ela não foi confirmada nesta captura. A lista T173 preserva a parada inicial duplicada exatamente como publicada na página.",
+      "Atualização 14/11/2026: cinco itinerários adicionais transcritos de páginas individuais públicas do Cittamobi: A168 Jd. Graziela (25 paradas), A169 Terminal Barueri (24), A215 Jardim Maria Helena (29), A217 Terminal Barueri/Vale do Sol (24) e T249 Antonio João/Green Valley (17). Endereços e ordem seguem a página consultada, inclusive registros repetidos publicados pela fonte. Quadros de horário e frequências foram registrados somente quando a página os apresentava; A217 tem apenas janela de partida de dias úteis."
     ]
   },
   "routes": [
@@ -1521,6 +1527,246 @@
         "Av. Vinte e Seis de Março, 535 - Centro, Barueri - SP, Brasil",
         "Av. Vinte e Seis de Março, 317 - Centro, Barueri - SP, Brasil",
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A168-JARDIM-GRAZIELA-CENTRO",
+      "lineCode": "A168",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jd. Graziela",
+      "direction": "Centro para Jardim Graziela",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A168-Jd.Graziela-688f6ed74e35",
+      "schedule": {
+        "observedAt": "2026-11-14",
+        "weekday": {
+          "firstDeparture": "06:05",
+          "lastDeparture": "20:15",
+          "averageHeadwayMinutes": 44
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Avenida Presidente Tancredo de Almeida Neves, 896",
+        "Estrada dos Romeiros",
+        "Rodovia Presidente Castelo Branco, Boa Vista, Barueri - São Paulo, 06411, Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estr. dos Romeiros, 262",
+        "Acesso para Av Srg. José Siqueira",
+        "Rua Werner Goldberg, 121",
+        "Av. Sebastião Davino dos Réis, 66-358 - Jardim Tupanci, Barueri - SP, 06414-007, Brasil",
+        "Avenida Sebastião Davino dos Reis, 462",
+        "Av. Marginal Esquerda, 2-500, Barueri - SP, Brasil",
+        "Rua Ana Augusta Vilela, Cruz Preta, Barueri - São Paulo, 06414, Brasil",
+        "Av. Marginal Esquerda, 1-499, Barueri - SP, Brasil",
+        "Avenida Marginal Esquerda, 1144",
+        "Avenida Marginal Esquerda",
+        "Avenida Marco, 808",
+        "Avenida Marco, 580",
+        "Avenida Marco, 218",
+        "Av. Marco, 218-578 - Chácaras Marco, Barueri - SP, Brasil",
+        "Rua Birigui, 80",
+        "Rua Birigui, 266",
+        "R. Birigui, 448",
+        "Rua Maria Fernanda, 374",
+        "Rua Maria Fernanda, 480"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A169-TERMINAL-BARUERI",
+      "lineCode": "A169",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Terminal Barueri",
+      "direction": "Jardim Graziela para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A169-TerminalBarueri-1e4c9cfd220d",
+      "schedule": {
+        "observedAt": "2026-11-14",
+        "weekday": {
+          "firstDeparture": "08:43",
+          "lastDeparture": "23:10",
+          "averageHeadwayMinutes": 96
+        },
+        "saturday": {
+          "firstDeparture": "05:35",
+          "lastDeparture": "22:35",
+          "averageHeadwayMinutes": 56
+        },
+        "sunday": {
+          "firstDeparture": "05:30",
+          "lastDeparture": "23:22",
+          "averageHeadwayMinutes": 63
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "Rua Maria Fernanda, 480",
+        "Rua Maria Fernanda, 389",
+        "Rua Birigui, 411",
+        "Rua Birigui, 266",
+        "Rua Birigui, 80",
+        "Rua Carajás, 681",
+        "Av. Marco, 218-578 - Chácaras Marco, Barueri - SP, Brasil",
+        "Avenida Marco, 218",
+        "Avenida Marco, 580",
+        "Avenida Marco 935, Cruz Preta, Barueri - São Paulo, 06419-000, Brasil",
+        "Avenida Marginal Esquerda",
+        "Avenida Marginal Esquerda, 1143",
+        "Av. Marginal Esquerda, 1-499, Barueri - SP, Brasil",
+        "Rua Ana Augusta Vilela, Cruz Preta, Barueri - São Paulo, 06414, Brasil",
+        "Av. Marginal Esquerda, 2-500, Barueri - SP, Brasil",
+        "Avenida Sebastião Davino dos Reis, 447",
+        "Rua Ângela Mirella 354, Boa Vista, Barueri - São Paulo, 06414, Brasil",
+        "Rua Werner Goldberg, 121",
+        "Estr. dos Romeiros, 629 - Jardim Regina Alice, Barueri - SP, Brasil",
+        "Estrada dos Romeiros, 101",
+        "Estrada dos Romeiros, 2",
+        "Estrada dos Romeiros, 2",
+        "Rua Santa Úrsula, 433",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A215-JARDIM-MARIA-HELENA",
+      "lineCode": "A215",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Jardim Maria Helena",
+      "direction": "Centro para Jardim Maria Helena",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A215-JardimMariaHelena-26caf1dcc52d",
+      "schedule": {
+        "observedAt": "2026-11-14",
+        "weekday": {
+          "firstDeparture": "05:00",
+          "lastDeparture": "23:45",
+          "averageHeadwayMinutes": 25
+        },
+        "saturday": {
+          "firstDeparture": "06:05",
+          "lastDeparture": "23:15",
+          "averageHeadwayMinutes": 41
+        },
+        "sunday": {
+          "firstDeparture": "06:00",
+          "lastDeparture": "23:10",
+          "averageHeadwayMinutes": 64
+        },
+        "precision": "daily-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Av. Henriqueta Mendes Guerra, 158",
+        "Av. Henriqueta Mendes Guerra, 556 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 826 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 1168 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410",
+        "Estrada de Jandira, 2498",
+        "Avenida Presidente Kennedy, 148",
+        "Rua Marcos Antônio Marquês, 32",
+        "Rua Manoel Henriques, 2",
+        "R. Manoel Henriques, 114-182 - Jardim Sao Jose, Barueri - SP, 06433-160, Brasil",
+        "Rua Guimarães Rosa, 128",
+        "R. Guimarães Rosa, 192-204 - Jardim Tupa, Barueri - SP, Brasil",
+        "Rua Guimarães Rosa, 290",
+        "Rua João Cabral de Melo Neto, 2",
+        "Rua João Cabral de Melo Neto, 160",
+        "Rua Cassiano Ricardo, 93",
+        "Av. Brg. Manoel Rodrigues Jordão, 1977 - Jardim Silveira, Barueri - SP, 06433-010, Brasil",
+        "Estrada Velha de Itapevi, 2387",
+        "Avenida Giovani Attílio Tolaini, 24",
+        "Avenida Giovani Attílio Tolaini, 844",
+        "Avenida Giovani Attílio Tolaini, 844",
+        "Avenida Giovani Attílio Tolaini, 844",
+        "Avenida Giovani Attílio Tolaini, 1582",
+        "Rua Ipanema, 335",
+        "Rua Ipanema, 154",
+        "Avenida Francisco Lourenço da Costa - Jardim Maria Helena, Barueri - SP, Brasil",
+        "Avenida Giovani Atílio Tolaini, Votupoca, Barueri - São Paulo, 06445, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A217-TERMINAL-VALE-DO-SOL",
+      "lineCode": "A217",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Barueri / Vale do sol",
+      "direction": "Centro para Vale do Sol",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueriValedosol-6ad186647dda",
+      "schedule": {
+        "observedAt": "2026-11-14",
+        "weekday": {
+          "firstDeparture": "05:20",
+          "lastDeparture": "22:20",
+          "averageHeadwayMinutes": null
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-first-and-last-departure-only"
+      },
+      "stops": [
+        "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil",
+        "Av. Henriqueta Mendes Guerra, 556 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 1168 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410",
+        "Avenida Vinte e Seis de Março, 1572",
+        "Estrada de Jandira, 2256",
+        "Avenida Exército Brasileiro, 40",
+        "Avenida Exército Brasileiro, 920",
+        "Avenida Exército Brasileiro, 922",
+        "Rua Brasílio Machado, 219",
+        "Estrada Velha de Itapevi, 2658",
+        "Estrada Velha de Itapevi, 2730",
+        "Estr. Velha de Itapevi, 3276 - Vila Militar, Barueri - SP, Brasil",
+        "Estrada Velha de Itapevi, 3502",
+        "Estrada Velha de Itapevi, 3802",
+        "Estrada Velha de Itapevi, 4296",
+        "Estr. Velha de Itapevi, 4672 - Vila Militar, Barueri - SP, Brasil",
+        "Estrada Velha de Itapevi, 4906",
+        "Estrada Velha de Itapevi, 4906",
+        "R. Tâmisa, 275 - Vale do Sol, Barueri - SP, Brasil",
+        "Rua Tâmisa, 442",
+        "R. Mississipi, 74 - Vale do Sol, Barueri - SP, Brasil",
+        "R. Mississipi, 138-228 - Vale do Sol, Barueri - SP, Brasil",
+        "R. Mississipi, 450-470 - Vale do Sol, Barueri - SP, Brasil"
+      ]
+    },
+    {
+      "routeId": "BARUERI-T249-ANTONIO-JOAO-GREEN-VALLEY",
+      "lineCode": "T249",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Antonio João / Green Valley",
+      "direction": "Fazenda Militar para Green Valley",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7",
+      "schedule": {
+        "observedAt": "2026-11-14",
+        "weekday": {
+          "firstDeparture": "06:04",
+          "lastDeparture": "08:26",
+          "averageHeadwayMinutes": 15
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-first-last-departure-and-average-headway"
+      },
+      "stops": [
+        "Rua General Divisão Pedro Rodrigues Da Silva, Fazenda Militar, Barueri - São Paulo, 06443, Brasil",
+        "Rua General de Divisão Pedro Rodrigues da Silva",
+        "Rua General de Divisão Pedro Rodrigues da Silva",
+        "Estrada Aldeinha, 96",
+        "Alameda Rio Negro, 350 - Alphaville Industrial, Barueri - SP, Brasil",
+        "Alameda Rio Negro, 532",
+        "Alameda Rio Negro, 952",
+        "Alameda Madeira, 1119",
+        "Alameda Mamoré, 700-720 - Alphaville Industrial, Barueri - SP, 06454-040, Brasil",
+        "Av. Alphaville, 698-952 - Empresarial 18 do Forte, Barueri - SP, 06472-010, Brasil",
+        "Avenida Alphaville, 1384",
+        "Av. Andrômeda, 5639-5665 - Alphaville Empresarial, Barueri - SP, Brasil",
+        "Avenida Andrômeda, 4833",
+        "Av. Andrômeda, 4405-4515 - Alphaville Empresarial, Barueri - SP, Brasil",
+        "Avenida Andrômeda, 3528-3898 - Alphaville Empresarial, Barueri - SP, Brasil",
+        "Av. Andrômeda, 3528-3848 - Alphaville Empresarial, Barueri - SP, Brasil",
+        "Avenida Andrômeda, 3025"
       ]
     }
   ]
