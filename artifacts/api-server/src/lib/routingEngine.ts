@@ -86,6 +86,32 @@ type CachedWalkingPath = {
 
 const walkingPathCache = new Map<string, CachedWalkingPath>();
 
+// The public FOSSGIS routing service asks clients to stay at or below
+// one request per second. Keep a process-wide queue so concurrent route
+// searches cannot burst requests against the shared pedestrian router.
+const WALKING_ROUTER_MIN_INTERVAL_MS = 1_100;
+let nextWalkingRouterRequestAt = 0;
+let walkingRouterQueue: Promise<void> = Promise.resolve();
+
+function fetchWalkingPathRateLimited(
+  from: GeoPoint,
+  to: GeoPoint,
+): Promise<WalkingPath | undefined> {
+  const request = walkingRouterQueue.then(async () => {
+    const waitMs = Math.max(0, nextWalkingRouterRequestAt - Date.now());
+    if (waitMs > 0) {
+      await new Promise<void>((resolve) => setTimeout(resolve, waitMs));
+    }
+    nextWalkingRouterRequestAt = Date.now() + WALKING_ROUTER_MIN_INTERVAL_MS;
+    return fetchWalkingPath(from, to);
+  });
+  walkingRouterQueue = request.then(
+    () => undefined,
+    () => undefined,
+  );
+  return request;
+}
+
 type OsrmResponse = {
   code?: string;
   routes?: Array<{
@@ -301,7 +327,7 @@ async function walkingPath(
   }
   if (cached) walkingPathCache.delete(key);
 
-  const promise = fetchWalkingPath(from, to).catch((error: unknown) => {
+  const promise = fetchWalkingPathRateLimited(from, to).catch((error: unknown) => {
     if (walkingPathCache.get(key)?.promise === promise) {
       walkingPathCache.delete(key);
     }
