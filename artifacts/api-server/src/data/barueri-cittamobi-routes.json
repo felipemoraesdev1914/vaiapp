@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "dataset": "barueri-municipal-transit",
+  "status": "catalog-only-not-yet-used-by-routing-engine",
+  "city": "Barueri",
+  "state": "SP",
+  "country": "BR",
+  "source": {
+    "name": "Cittamobi Linhas",
+    "operatorLabel": "Benfica Municipal - Barueri",
+    "pages": [
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-TerminalbarueriviaHospital-fb3b732a7a9a",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-TerminalPq.Imperial-9771917bc259"
+    ],
+    "observedAt": "2026-11-13",
+    "notes": [
+      "Itinerários e nomes de paradas foram transcritos da página pública do Cittamobi.",
+      "A ordem das paradas segue a ordem publicada pela fonte.",
+      "Endereços ainda não foram geocodificados nem validados em campo.",
+      "Faixas horárias e frequências médias não são horários exatos de passagem por parada.",
+      "Este catálogo ainda não é consumido pelo motor de rotas."
+    ]
+  },
+  "routes": [
+    {
+      "routeId": "BARUERI-A260",
+      "lineCode": "A260",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Terminal barueri via Hospital",
+      "direction": "Parque Imperial para Centro",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-TerminalbarueriviaHospital-fb3b732a7a9a",
+      "schedule": {
+        "observedAt": "2026-11-07",
+        "weekday": {
+          "firstDeparture": "04:20",
+          "lastDeparture": "22:20",
+          "averageHeadwayMinutes": 38
+        },
+        "saturday": {
+          "firstDeparture": "04:25",
+          "lastDeparture": "22:20",
+          "averageHeadwayMinutes": 39
+        },
+        "sunday": {
+          "firstDeparture": "04:25",
+          "lastDeparture": "22:20",
+          "averageHeadwayMinutes": 71
+        },
+        "precision": "daily-first-and-last-departure-plus-average-headway"
+      },
+      "stops": [
+        "Terminal Rodoviário Gumercindo Modesto de Farias, 1340 - Parque Imperial, Barueri - SP",
+        "R. Adoniran Barbosa, 889 - Parque Imperial, Barueri - SP",
+        "Rua Adoniran Barbosa, 367, Barueri - SP",
+        "R. Adoniran Barbosa, 219 - Parque Imperial, Barueri - SP",
+        "R. Adoniran Barbosa, 56 - Parque Imperial, Barueri - SP",
+        "R. Martins Fontes, 117-203 - Parque Imperial, Barueri - SP",
+        "R. Duarte da Costa, 1023, Barueri - SP",
+        "Rua Duarte da Costa, 845, Barueri - SP",
+        "Rua Duarte da Costa, 687, Barueri - SP",
+        "Rua Chico Mendes, Mutinga, Barueri - SP",
+        "R. Chico Mendes, 591, Barueri - SP",
+        "Rua João Rodrigues Nunes, 995, Barueri - SP",
+        "Rua João Rodrigues Nunes, 426, Barueri - SP",
+        "Rua Nova Aurora, 1-277 - Jardim Mutinga, Barueri - SP",
+        "Avenida Diretriz, 34-86 - Jardim Mutinga, Barueri - SP",
+        "Avenida Diretriz, 418, Barueri - SP",
+        "Av. Dois, 1611, Barueri - SP",
+        "Rua Sertânia, 117, Barueri - SP",
+        "Rua Vertentes, 37, Barueri - SP",
+        "Rua Jussara, 1462, Barueri - SP",
+        "Avenida Piracema, 288, Barueri - SP",
+        "R. Pres. Artur da Costa e Silva, 393-501 - Vila Silveira, Barueri - SP",
+        "Rua da Prata, 210, Barueri - SP",
+        "Rua da Prata, 380-424 - Jardim dos Camargos, Barueri - SP",
+        "R. da Prata, 670 - Jardim dos Camargos, Barueri - SP",
+        "Av. Marginal Esquerda, 75-299 - Alphaville Res. Dois, Barueri - SP",
+        "Avenida Sebastião Davino dos Reis, 447, Barueri - SP",
+        "Rua Werner Goldberg, 121, Barueri - SP",
+        "Estr. dos Romeiros, 629 - Jardim Regina Alice, Barueri - SP",
+        "Estrada dos Romeiros, 101, Barueri - SP",
+        "Estrada dos Romeiros, 2, Barueri - SP",
+        "Rua Santa Úrsula, 433, Barueri - SP",
+        "Rua Santa Úrsula, 251, Barueri - SP",
+        "Rua Fioravante Barleta, 25, Barueri - SP",
+        "Rua Dom Pedro II, 28, Barueri - SP",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A260-REVERSE",
+      "lineCode": "A260",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Pq. Imperial",
+      "direction": "Centro para Parque Imperial",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-TerminalPq.Imperial-9771917bc259",
+      "schedule": {
+        "observedAt": "2026-10-25",
+        "weekday": {
+          "firstDeparture": "05:17",
+          "lastDeparture": "23:04",
+          "averageHeadwayMinutes": 36
+        },
+        "saturday": {
+          "firstDeparture": "05:04",
+          "lastDeparture": "22:58",
+          "averageHeadwayMinutes": 39
+        },
+        "sunday": {
+          "firstDeparture": "05:03",
+          "lastDeparture": "22:56",
+          "averageHeadwayMinutes": 71
+        },
+        "precision": "daily-first-and-last-departure-plus-average-headway"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+        "Avenida Arnaldo Rodrigues Bittencourt, 1, Barueri - SP",
+        "Av. Anápolis, 2, Barueri - SP",
+        "R. Bahia, 1, Barueri - SP",
+        "Rua Bahia, 277, Barueri - SP",
+        "Avenida Pirambóia, 174, Barueri - SP",
+        "Avenida Pirambóia, 1581, Barueri - SP",
+        "Rua Jussara, 1842, Barueri - SP",
+        "Rua Angelim, 335, Barueri - SP",
+        "Rua Desterro, 152, Barueri - SP",
+        "R. Alagoinha, 221-355 - Jardim Mutinga, Barueri - SP",
+        "R. Alagoinha, 401-521 - Jardim Mutinga, Barueri - SP",
+        "Rua Pedro Gomes, 871, Barueri - SP",
+        "Av. Diretriz, 742 - Jardim Mutinga, Barueri - SP",
+        "Avenida Diretriz 446, Mutinga, Barueri - SP",
+        "Avenida Diretriz, Mutinga, Barueri - SP",
+        "R. Antônio Benedito Ferreira, 80 - Jardim Mutinga, Barueri - SP",
+        "Av. João Rodrigues Nunes, 80, Barueri - SP",
+        "AV_JOAO_RODRIGUES_NUNES_934-1026, Barueri - SP",
+        "Rua Chico Mendes, 2925, Barueri - SP",
+        "Rua Chico Mendes, 947, Barueri - SP",
+        "R. Chico Mendes, 899, Barueri - SP",
+        "Rua Chico Mendes, 523, Barueri - SP",
+        "Rua Duarte da Costa, 321, Barueri - SP",
+        "Rua Duarte da Costa, 522, Barueri - SP",
+        "Rua Duarte da Costa, 629, Barueri - SP",
+        "R. Martins Fontes, 206 - Parque Imperial, Barueri - SP",
+        "R. Adoniran Barbosa, 122 - Parque Imperial, Barueri - SP",
+        "R. Adoniran Barbosa, 272 - Parque Imperial, Barueri - SP",
+        "Rua Adoniran Barbosa, 570, Barueri - SP",
+        "Rua Adoniran Barbosa, 860, Barueri - SP",
+        "Rua Adoniran Barbosa, 1124, Barueri - SP",
+        "Rua Adoniran Barbosa, 1332, Barueri - SP",
+        "Terminal Rodoviário Gumercindo Modesto de Farias, 1340 - Parque Imperial, Barueri - SP"
+      ]
+    }
+  ]
+}
