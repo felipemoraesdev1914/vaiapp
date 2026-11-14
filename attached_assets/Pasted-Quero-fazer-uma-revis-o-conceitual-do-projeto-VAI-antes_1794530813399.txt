@@ -1,0 +1,113 @@
+Quero fazer uma revisão conceitual do projeto VAI antes de continuar o desenvolvimento.
+
+Acredito que você começou a implementar o cálculo de rotas, mas preciso esclarecer melhor o objetivo principal do aplicativo.
+
+O VAI NÃO é apenas um aplicativo que mostra um caminho no mapa.
+
+Ele deve funcionar como um assistente inteligente de mobilidade urbana, ajudando o usuário a realizar uma viagem completa utilizando transporte público.
+
+COMO DEVE FUNCIONAR UMA VIAGEM
+
+Quando o usuário informar a origem e o destino, o VAI deverá organizar a viagem em etapas:
+
+1. Caminhada inicial:
+
+* Mostrar quanto tempo o usuário levará caminhando até o ponto de ônibus mais próximo adequado para aquela rota.
+* Mostrar a distância em metros.
+* Mostrar o endereço ou identificação do ponto.
+
+2. Espera pelo ônibus:
+
+* Informar qual linha o usuário deve pegar.
+* Mostrar o sentido correto do ônibus.
+* Informar o horário programado de passagem.
+* Quando houver integração com dados em tempo real, mostrar uma contagem regressiva de quanto falta para o ônibus chegar.
+* Diferenciar claramente previsão em tempo real de horário programado.
+
+3. Embarque:
+
+* Mostrar o nome e número da linha.
+* Destacar o ponto correto de embarque.
+* Informar o tempo estimado dentro do ônibus.
+
+4. Desembarque:
+
+* Informar em qual ponto o usuário deve descer.
+* Mostrar quantas paradas faltam, quando essa informação estiver disponível.
+* Alertar quando estiver próximo do desembarque.
+
+5. Integrações:
+
+* Se for necessário trocar de ônibus, mostrar onde descer, quanto caminhar até o próximo ponto, qual linha pegar e quanto esperar.
+
+6. Caminhada final:
+
+* Mostrar quanto tempo falta caminhando do último ponto até o destino.
+
+7. Resumo:
+
+* Tempo total estimado da viagem.
+* Quantidade de ônibus utilizados.
+* Quantidade de baldeações.
+* Tempo total caminhando.
+* Tempo total aguardando.
+* Horário estimado de chegada.
+
+MAPA
+
+O mapa deve acompanhar todas as etapas da viagem.
+
+Quero visualizar:
+
+* Origem.
+* Pontos de embarque.
+* Trajeto dos ônibus.
+* Pontos de desembarque.
+* Caminhadas.
+* Destino.
+
+INTELIGÊNCIA DO VAI
+
+O sistema deve comparar diferentes possibilidades e recomendar a melhor rota considerando:
+
+* Menor tempo total.
+* Menor caminhada.
+* Menor quantidade de baldeações.
+* Horários disponíveis.
+
+MUITO IMPORTANTE
+
+Não invente horários, linhas, previsões ou posições de ônibus.
+
+Se não houver integração em tempo real, mostre os horários programados e informe que são horários de tabela.
+
+PRIMEIRA TAREFA: AUDITORIA
+
+Antes de modificar qualquer código, analise o projeto atual e me informe:
+
+1. Como funciona atualmente o cálculo de rotas.
+2. Quais dados de transporte são reais e quais são simulados.
+3. Se existe integração com horários oficiais.
+4. Se existe alguma previsão de chegada em tempo real.
+5. Quais das etapas descritas acima já estão implementadas.
+6. Quais ainda precisam ser desenvolvidas.
+
+Não altere nada nesta primeira etapa.
+
+SEGUNDA TAREFA: PREPARAÇÃO DOS ARQUIVOS
+
+Também quero preparar o projeto para continuar seu desenvolvimento em outras ferramentas de IA.
+
+Verifique a possibilidade de:
+
+* Exportar o projeto completo em ZIP.
+* Conectar o projeto a um repositório privado no GitHub.
+* Preservar todos os arquivos necessários para executar o projeto.
+* Identificar as variáveis de ambiente necessárias, sem revelar valores secretos.
+* Documentar como instalar dependências e iniciar o projeto.
+
+Não exponha chaves de API, senhas ou credenciais.
+
+Ao final, explique exatamente como posso baixar o código-fonte completo pelo iPhone.
+
+Não comece uma reconstrução do projeto. Primeiro faça a auditoria e prepare a exportação.

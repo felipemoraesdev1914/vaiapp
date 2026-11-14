@@ -1,0 +1,273 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: routes
+    description: Busca de trajetos de transporte público
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /routes/search:
+    post:
+      operationId: searchTransitRoutes
+      tags: [routes]
+      summary: Busca alternativas de transporte público
+      description: Calcula trajetos com caminhada e viagens disponíveis no GTFS oficial carregado pelo backend.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransitRouteSearchInput"
+      responses:
+        "200":
+          description: Busca concluída, inclusive quando nenhuma rota é encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransitRouteSearchResponse"
+        "400":
+          description: Origem, destino ou horário inválido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Fonte oficial ou roteador de caminhada indisponível
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    ApiError:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
+    Coordinates:
+      type: object
+      properties:
+        latitude:
+          type: number
+          minimum: -90
+          maximum: 90
+        longitude:
+          type: number
+          minimum: -180
+          maximum: 180
+      required: [latitude, longitude]
+    JourneyPlace:
+      type: object
+      properties:
+        label:
+          type: string
+          minLength: 1
+          maxLength: 240
+        coordinates:
+          $ref: "#/components/schemas/Coordinates"
+      required: [label, coordinates]
+    TransitRouteSearchInput:
+      type: object
+      properties:
+        origin:
+          $ref: "#/components/schemas/JourneyPlace"
+        destination:
+          $ref: "#/components/schemas/JourneyPlace"
+        departureAt:
+          type: string
+          format: date-time
+      required: [origin, destination]
+    TransitStop:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        coordinates:
+          $ref: "#/components/schemas/Coordinates"
+      required: [id, name, coordinates]
+    TransitLocation:
+      type: object
+      properties:
+        label:
+          type: string
+        coordinates:
+          $ref: "#/components/schemas/Coordinates"
+      required: [label, coordinates]
+    TransitRouteLeg:
+      type: object
+      properties:
+        mode:
+          type: string
+          enum: [walk, bus]
+        from:
+          $ref: "#/components/schemas/TransitLocation"
+        to:
+          $ref: "#/components/schemas/TransitLocation"
+        durationMinutes:
+          type: integer
+          minimum: 0
+        distanceMeters:
+          type: integer
+          minimum: 0
+        geometry:
+          type: array
+          items:
+            $ref: "#/components/schemas/Coordinates"
+        lineCode:
+          type: ["string", "null"]
+        lineName:
+          type: ["string", "null"]
+        headsign:
+          type: ["string", "null"]
+        departureAt:
+          type: ["string", "null"]
+          format: date-time
+        arrivalAt:
+          type: ["string", "null"]
+          format: date-time
+        boardingStop:
+          anyOf:
+            - $ref: "#/components/schemas/TransitStop"
+            - type: "null"
+        alightingStop:
+          anyOf:
+            - $ref: "#/components/schemas/TransitStop"
+            - type: "null"
+      required:
+        - mode
+        - from
+        - to
+        - durationMinutes
+        - distanceMeters
+        - geometry
+        - lineCode
+        - lineName
+        - headsign
+        - departureAt
+        - arrivalAt
+        - boardingStop
+        - alightingStop
+    TransitRouteOption:
+      type: object
+      properties:
+        recommended:
+          type: boolean
+        id:
+          type: string
+        lineCodes:
+          type: array
+          items:
+            type: string
+        label:
+          type: string
+        departureAt:
+          type: string
+          format: date-time
+        arrivalAt:
+          type: string
+          format: date-time
+        totalMinutes:
+          type: integer
+          minimum: 0
+        walkingMinutes:
+          type: integer
+          minimum: 0
+        transitMinutes:
+          type: integer
+          minimum: 0
+        transferCount:
+          type: integer
+          minimum: 0
+        boardingStop:
+          $ref: "#/components/schemas/TransitStop"
+        alightingStop:
+          $ref: "#/components/schemas/TransitStop"
+        legs:
+          type: array
+          items:
+            $ref: "#/components/schemas/TransitRouteLeg"
+      required:
+        - recommended
+        - id
+        - lineCodes
+        - label
+        - departureAt
+        - arrivalAt
+        - totalMinutes
+        - walkingMinutes
+        - transitMinutes
+        - transferCount
+        - boardingStop
+        - alightingStop
+        - legs
+    TransitDataSource:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        license:
+          type: string
+        version:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        coverage:
+          type: string
+        limitations:
+          type: array
+          items:
+            type: string
+      required: [name, url, license, version, updatedAt, coverage, limitations]
+    TransitRouteSearchResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [routes_found, no_routes]
+        message:
+          type: string
+        requestedAt:
+          type: string
+          format: date-time
+        source:
+          $ref: "#/components/schemas/TransitDataSource"
+        routes:
+          type: array
+          items:
+            $ref: "#/components/schemas/TransitRouteOption"
+      required: [status, message, requestedAt, source, routes]
+

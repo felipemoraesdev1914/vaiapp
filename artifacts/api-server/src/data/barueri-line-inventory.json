@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "dataset": "barueri-public-transit-line-inventory",
+  "city": "Barueri",
+  "state": "SP",
+  "country": "BR",
+  "observedAt": "2026-11-13",
+  "status": "inventory-only-itineraries-not-yet-imported",
+  "sources": [
+    {
+      "name": "Cittamobi Barueri",
+      "url": "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri",
+      "scope": "public line catalogue, page 1 of 2"
+    },
+    {
+      "name": "Prefeitura de Barueri - Transporte",
+      "url": "https://portal.barueri.sp.gov.br/secretarias/mobilidade-urbana/transporte",
+      "scope": "official municipal and metropolitan service list by terminal"
+    },
+    {
+      "name": "Ralip - Horários e itinerários",
+      "url": "https://ralip.com.br/horarios-e-itinerarios/",
+      "scope": "operator's municipal line index"
+    }
+  ],
+  "municipalLines": [
+    {
+      "code": "A111",
+      "description": "Vila Márcia / Estação Antônio João",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A112",
+      "description": "Hospital / Aldeia / Estação Antônio João; Hospital / Terminal Barueri",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A113",
+      "description": "Vila Márcia / Terminal Barueri",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A160",
+      "description": "Engenho Novo / Terminal Barueri; Vale do Sol",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A161",
+      "description": "Jardim Maria Cristina / Terminal Barueri",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A162",
+      "description": "Terminal Barueri / Chácaras Marco Circular",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A163",
+      "description": "Jardim Maria Cristina / Chácaras Marco Circular",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A164C1",
+      "description": "Terminal Barueri / Engenho Novo Circular 1",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A164C2",
+      "description": "Terminal Barueri / Engenho Novo Circular 2",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A165C1",
+      "description": "Terminal Barueri / Jardim São Luiz via Regina Alice",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A165C2",
+      "description": "Terminal Barueri / Jardim São Luiz via Vila Porto",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A166C1",
+      "description": "Terminal Barueri / Jardim Califórnia via Estrada dos Romeiros",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A166C2",
+      "description": "Terminal Barueri / Jardim Califórnia via Estrada dos Altos",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A167",
+      "description": "Centro / Jardim dos Altos",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A168",
+      "description": "Jardim Itaquiti / Jardim Graziela",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A169",
+      "description": "Terminal Barueri / Jardim Graziela",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A170",
+      "description": "Centro / Jardim Itaquiti",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A174",
+      "description": "Terminal Barueri / Jardim Califórnia via Estrada das Rosas",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A212",
+      "description": "Terminal Barueri / Jardim Gabriela; Hospital Geral Bandeirantes",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A215",
+      "description": "Vila do Conde / Terminal Barueri",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A216C1",
+      "description": "Terminal Barueri / Jardim Votupoca via Estrada Velha",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A216C2",
+      "description": "Terminal Barueri / Jardim Votupoca via Avenida Zélia",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A217",
+      "description": "Vale do Sol / Terminal Barueri",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A260",
+      "description": "Parque Imperial / Terminal Barueri via Hospital",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A268",
+      "description": "Vale do Sol / Engenho Novo",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "A631",
+      "description": "Jardim Graziela / Centro Comercial Alphaville",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T131",
+      "description": "Terminal Barueri / 18 do Forte; via Antônio João",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T154",
+      "description": "Terminal Barueri / Jardim Mutinga",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T172",
+      "description": "Terminal Barueri / Aldeia da Serra",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T173",
+      "description": "Terminal Barueri / Kartódromo",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T241",
+      "description": "Jardim Líbano / Terminal Barueri",
+      "operator": "Benfica Municipal - Barueri / Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T242",
+      "description": "Jardim Líbano / Terminal Barueri via Avenida Brigadeiro Jordão",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T243",
+      "description": "Vale do Sol / Terminal Barueri via Recanto Phynéa",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T244",
+      "description": "Vale do Sol / Tamboré via Estrada Velha de Itapevi",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T245",
+      "description": "Vale do Sol / Parque Imperial",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T246",
+      "description": "Vale do Sol / Tamboré",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T247",
+      "description": "Jardim Líbano / Tamboré",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T250",
+      "description": "Jardim Paulista / Centro Comercial Alphaville",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T253",
+      "description": "Jardim Líbano / Parque Imperial",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T254",
+      "description": "Jardim Líbano / Parque Imperial via Mackenzie",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T255",
+      "description": "Terminal Barueri / Residencial Zero via Equoterapia",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T256",
+      "description": "Terminal Barueri / Complexo Empresarial Green Valley",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T411",
+      "description": "Terminal Barueri / Jardim Belval",
+      "operator": "Benfica Municipal - Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T412",
+      "description": "Tamboré / Jardim Belval",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T642",
+      "description": "Jardim dos Altos / Parque Imperial",
+      "operator": "Municipal",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T651",
+      "description": "Engenho Novo / Jardim Mutinga via Alphaville e Tamboré",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    },
+    {
+      "code": "T652",
+      "description": "Engenho Novo / Tamboré via Rua da Prata",
+      "operator": "Ralip Municipal Barueri",
+      "status": "needs-individual-stop-list-and-geocoding"
+    }
+  ],
+  "intermunicipalLines": [
+    {
+      "code": "053",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "130",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "134",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "264",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "291",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "291BI1",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "303",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "313",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "322",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "324",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "324BI",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "345",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "346",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "350",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "360",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "399",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "417",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "421",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "428",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "454",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "463",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "463TRO",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "468",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "468BI1",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "468EX1",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "468EX2",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "468EX3",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "489",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "518",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "533",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "557",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "815",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "821",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "833",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "850",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "860",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    },
+    {
+      "code": "870",
+      "status": "cross-check-against-ARTESP-GTFS-and-Cittamobi"
+    }
+  ],
+  "notes": [
+    "This is a discovery inventory, not a claim that every listed variant is currently operating. Cross-check with the latest municipal authority/operator records before activation.",
+    "The Cittamobi city catalogue page 1 lists a subset of municipal and intermunicipal services; the official municipal page and Ralip operator page expand the candidate set.",
+    "No stops, coordinates, stop_times or frequencies are inferred from line names. Each itinerary must be sourced individually.",
+    "Intermunicipal line codes are candidates for deduplication against the ARTESP GTFS feed."
+  ]
+}
