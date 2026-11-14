@@ -20,7 +20,7 @@ const WALKING_ROUTER =
 const MAX_WALK_STRAIGHT_LINE_METERS = 2_000;
 // Evaluate a wider set because the geographically closest stop is not always
 // the easiest one to reach on foot (barriers, highways and disconnected streets).
-const MAX_STOPS_TO_EVALUATE_PER_SIDE = 32;
+const MAX_STOPS_TO_EVALUATE_PER_SIDE = 12;
 const MAX_STOPS_PER_SIDE = 8;
 const MAX_ACCESS_WALK_METERS = 1_000;
 const WALKING_CACHE_TTL_MS = 15 * 60 * 1_000;
