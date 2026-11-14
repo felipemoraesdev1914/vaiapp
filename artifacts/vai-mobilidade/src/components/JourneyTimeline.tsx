@@ -1,7 +1,7 @@
 import { useMemo, type ReactNode } from 'react';
 import { ArrowRightLeft, Bus, Footprints, MapPin, Timer } from 'lucide-react';
 import type { TransitRouteOption } from '@workspace/api-client-react';
-import { clockTime, formatDistance, minutesBetween } from './format';
+import { clockTime, formatDistance, formatDuration, minutesBetween } from './format';
 
 type StepKind = 'walk' | 'walk-final' | 'wait' | 'transfer' | 'bus' | 'arrival';
 
@@ -39,7 +39,7 @@ function buildSteps(route: TransitRouteOption): Step[] {
           legIndex: null,
           title: `Baldeação em ${previous.to.label}`,
           lines: [`Pegue a linha ${leg.lineCode ?? ''}`.trim(), departure],
-          meta: `${waitMinutes} min de espera`,
+          meta: `${formatDuration(waitMinutes)} de espera`,
         });
       } else {
         steps.push({

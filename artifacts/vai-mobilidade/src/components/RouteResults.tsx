@@ -3,7 +3,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react';
 import type { TransitRouteOption, TransitRouteSearchResponse } from '@workspace/api-client-react';
 import { TripStatus } from './TripStatus';
 import { JourneyTimeline } from './JourneyTimeline';
-import { clockTime, tripStart } from './format';
+import { clockTime, formatDuration, tripStart } from './format';
 
 // Quantidade de alternativas exibidas antes de o usuário expandir a lista.
 const INITIAL_ROUTE_COUNT = 3;
@@ -200,7 +200,7 @@ export function RouteResults({ response, selectedRouteId, onSelectRoute, selecte
                       <ArrowRight size={13} aria-hidden="true" />
                       <strong>{clockTime(route.arrivalAt)}</strong>
                     </span>
-                    <span className="rc-duration">{route.totalMinutes} min</span>
+                    <span className="rc-duration">{formatDuration(route.totalMinutes)}</span>
                   </span>
                   <span className="rc-lines" data-testid={`text-route-legs-${route.id}`}>
                     {route.lineCodes.map((code, index) => (

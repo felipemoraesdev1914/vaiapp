@@ -20,13 +20,16 @@ const WALKING_ROUTER =
 const MAX_WALK_STRAIGHT_LINE_METERS = 2_000;
 // Evaluate a wider set because the geographically closest stop is not always
 // the easiest one to reach on foot (barriers, highways and disconnected streets).
-const MAX_STOPS_TO_EVALUATE_PER_SIDE = 12;
-const MAX_STOPS_PER_SIDE = 8;
+const MAX_STOPS_TO_EVALUATE_PER_SIDE = 4;
+const MAX_STOPS_PER_SIDE = 3;
 const MAX_ACCESS_WALK_METERS = 1_000;
 const WALKING_CACHE_TTL_MS = 15 * 60 * 1_000;
 const MAX_WALKING_CACHE_ENTRIES = 4_000;
 const MAX_ROUTE_RESULTS = 8;
 const MAX_SEARCH_HORIZON_MS = 18 * 60 * 60 * 1_000;
+const MAX_INITIAL_WAIT_SECONDS = 60 * 60;
+const MAX_TRANSFER_WAIT_SECONDS = 45 * 60;
+const MAX_ITINERARY_DURATION_SECONDS = 3 * 60 * 60;
 const MINIMUM_TRANSFER_SECONDS = 5 * 60;
 const MAX_FIRST_LEGS_TO_EXPLORE = 180;
 
@@ -472,7 +475,19 @@ function buildCandidate(
     firstWalk.durationSeconds + lastWalk.durationSeconds;
   const arrivalEpoch =
     lastRide.arrivalEpoch + lastWalk.durationSeconds * 1_000;
-  if (arrivalEpoch <= requestEpoch) return undefined;
+  const initialWaitSeconds =
+    (firstRide.departureEpoch - requestEpoch) / 1_000;
+  const totalDurationSeconds = (arrivalEpoch - requestEpoch) / 1_000;
+  // Do not present trips that require waiting hours for the first bus or
+  // spending most of the journey parked at a transfer stop.
+  if (
+    arrivalEpoch <= requestEpoch ||
+    initialWaitSeconds < 0 ||
+    initialWaitSeconds > MAX_INITIAL_WAIT_SECONDS ||
+    totalDurationSeconds > MAX_ITINERARY_DURATION_SECONDS
+  ) {
+    return undefined;
+  }
 
   return {
     rides,
@@ -710,6 +725,9 @@ function findNextTransferRide(
   for (const choice of choices) {
     if (choice.ride.departureEpoch > maximumEpoch) break;
     if (choice.ride.departureEpoch < earliestBoarding) continue;
+    const waitSeconds =
+      (choice.ride.departureEpoch - firstRide.arrivalEpoch) / 1_000;
+    if (waitSeconds > MAX_TRANSFER_WAIT_SECONDS) break;
     if (choice.ride.schedule.route.id === firstRide.schedule.route.id) continue;
     return choice.ride;
   }
