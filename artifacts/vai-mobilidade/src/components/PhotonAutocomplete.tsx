@@ -44,7 +44,7 @@ function photonLabel(properties: Record<string, unknown>): string {
 function photonRelevance(properties: Record<string, unknown>, query: string): number {
   const street = propertyText(properties, 'street');
   const houseNumber = propertyText(properties, 'housenumber');
-  const hasNumberAtEnd = /(?:,|\\s)\\d{1,5}\\s*$/.test(query.trim());
+  const hasNumberAtEnd = /(?:,|\s)\d{1,5}\s*$/.test(query.trim());
   let score = 0;
   if (street) score += 5;
   if (street && houseNumber) score += 5;
