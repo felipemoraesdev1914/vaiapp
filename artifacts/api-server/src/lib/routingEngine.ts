@@ -18,7 +18,11 @@ const SAO_PAULO_TIME_ZONE = "America/Sao_Paulo";
 const WALKING_ROUTER =
   "https://routing.openstreetmap.de/routed-foot/route/v1/driving";
 const MAX_WALK_STRAIGHT_LINE_METERS = 2_000;
-const MAX_STOPS_PER_SIDE = 4;
+// Evaluate a wider set because the geographically closest stop is not always
+// the easiest one to reach on foot (barriers, highways and disconnected streets).
+const MAX_STOPS_TO_EVALUATE_PER_SIDE = 16;
+const MAX_STOPS_PER_SIDE = 8;
+const MAX_ACCESS_WALK_METERS = 1_000;
 const MAX_ROUTE_RESULTS = 8;
 const MAX_SEARCH_HORIZON_MS = 18 * 60 * 60 * 1_000;
 const MINIMUM_TRANSFER_SECONDS = 5 * 60;
@@ -171,7 +175,7 @@ function nearestStops(
         candidate.straightLineMeters <= MAX_WALK_STRAIGHT_LINE_METERS,
     )
     .sort((left, right) => left.straightLineMeters - right.straightLineMeters)
-    .slice(0, MAX_STOPS_PER_SIDE);
+    .slice(0, MAX_STOPS_TO_EVALUATE_PER_SIDE);
 }
 
 async function walkingPath(
@@ -242,7 +246,11 @@ async function walkingPathsForStops(
         if (!pair) return;
         try {
           const path = await walkingPath(point, pair.point);
-          if (path) paths.set(pair.stop.id, path);
+          // Never offer a bus stop that requires an excessive access walk,
+          // even when its straight-line distance appears acceptable.
+          if (path && path.distanceMeters <= MAX_ACCESS_WALK_METERS) {
+            paths.set(pair.stop.id, path);
+          }
         } catch {
           errorCount += 1;
         }
@@ -254,7 +262,14 @@ async function walkingPathsForStops(
   if (paths.size === 0 && errorCount > 0) {
     throw new Error("O serviço público de cálculo de caminhada está indisponível.");
   }
-  return paths;
+
+  // Keep the most accessible stops by actual pedestrian-network distance,
+  // not only by straight-line proximity.
+  return new Map(
+    [...paths.entries()]
+      .sort((left, right) => left[1].distanceMeters - right[1].distanceMeters)
+      .slice(0, MAX_STOPS_PER_SIDE),
+  );
 }
 
 function shapeSegment(
@@ -673,7 +688,7 @@ export async function searchTransitRoutes(
   if (nearbyOriginStops.length === 0 || nearbyDestinationStops.length === 0) {
     return makeResponse(
       "no_routes",
-      "Não encontramos paradas do GTFS metropolitano a até 2 km de cada ponto. As linhas municipais de Barueri ainda não têm feed integrado.",
+      "Não encontramos paradas do GTFS metropolitano próximas dos dois endereços. As linhas municipais de Barueri ainda não têm feed integrado.",
       requestedAt,
       feed,
       [],
@@ -717,7 +732,7 @@ export async function searchTransitRoutes(
   if (originStopIds.size === 0 || destinationStopIds.size === 0) {
     return makeResponse(
       "no_routes",
-      "O roteador OpenStreetMap não encontrou caminho a pé entre um dos endereços e as paradas próximas.",
+      "Não encontramos pontos de ônibus atendidos pelo GTFS a até 1 km de caminhada da origem e do destino. As linhas municipais de Barueri ainda não têm feed integrado.",
       requestedAt,
       feed,
       [],
