@@ -50,8 +50,27 @@ function hiddenInputValue(html, id) {
   const valueFirst = html.match(new RegExp(`<input[^>]*value=["']([^"']+)["'][^>]*id=["']${escapedId}["']`, "i"));
   return valueFirst ? decode(valueFirst[1]) : null;
 }
-function getStopDomIds(html) {
-  return [...new Set([...html.matchAll(/data-stop-id=["']([^"']+)["']/gi)].map((match) => match[1]))];
+function parseStopsFromHtml(html) {
+  const matches = [...html.matchAll(/data-stop-id=["']([^"']+)["']/gi)];
+  return matches.map((match, index) => {
+    const start = Math.max(0, match.index - 500);
+    const end = Math.min(html.length, matches[index + 1]?.index ?? match.index + 1800);
+    const snippet = html.slice(start, end);
+    const text = stripTags(snippet).replace(/\\s+/g, " ").slice(0, 1000);
+    const attributes = [...snippet.matchAll(/([a-zA-Z_:][-a-zA-Z0-9_:.]*)=["']([^"']*)["']/g)]
+      .map((item) => [item[1], decode(item[2])]);
+    return {
+      id: match[1],
+      sequence: index + 1,
+      text,
+      attributes: Object.fromEntries(attributes),
+    };
+  });
+}
+function parseStopDepartures(html) {
+  const match = html.match(/<script[^>]*id=["']line-departures-v1["'][^>]*>([\\s\\S]*?)<\\/script>/i);
+  if (!match) return null;
+  try { return JSON.parse(match[1]); } catch { return null; }
 }
 function normalizeApiStop(stop, index) {
   const latitude = Number(stop?.location?.lat);
@@ -109,7 +128,8 @@ for (let index = 0; index < queue.length; index += 3) {
       const title = decode(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? "");
       const agencyId = hiddenInputValue(html, "agencyId");
       const serviceId = hiddenInputValue(html, "serviceId");
-      const stopDomIds = getStopDomIds(html);
+      const stopDom = parseStopsFromHtml(html);
+      const departures = parseStopDepartures(html);
       const municipal = /(?:Benfica|Ralip)Municipal-/i.test(url);
       const record = {
         url,
@@ -117,8 +137,9 @@ for (let index = 0; index < queue.length; index += 3) {
         municipal,
         agencyId,
         serviceId,
-        stopDomIds,
-        stopDomCount: stopDomIds.length,
+        stopsFromHtml: stopDom,
+        departuresByStopIndex: departures,
+        departureStopIndexCount: departures ? Object.keys(departures).length : 0,
         htmlLength: html.length,
       };
       if (municipal && serviceId) {
@@ -183,5 +204,12 @@ console.log(JSON.stringify({
     url: route.url,
     serviceId: route.serviceId,
     error: route.geometry?.error ?? route.geometry?.status,
+  })),
+  routeSamples: municipalPages.slice(0, 3).map((route) => ({
+    url: route.url,
+    stopCount: route.stopsFromHtml?.length,
+    departureStopIndexCount: route.departureStopIndexCount,
+    firstStops: route.stopsFromHtml?.slice(0, 3),
+    firstDepartureEntries: Object.entries(route.departuresByStopIndex ?? {}).slice(0, 3),
   })),
 }));
