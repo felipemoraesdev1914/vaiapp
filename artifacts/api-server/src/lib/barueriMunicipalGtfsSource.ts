@@ -159,6 +159,7 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
         a260Contexts,
       }));
     }
+    if (route.lineCode === "A260") {
       const scriptSrcs = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map((match) => match[1]).slice(0, 30);
       const agencyId = html.match(/id=["']agencyId["'][^>]*value=["']([^"']+)["']/i)?.[1];
       const apiContexts = [...html.matchAll(/.{0,100}(?:CittamobiAPI|api\.cittamobi|linesroutes|m3p\/js).{0,160}/gi)]
