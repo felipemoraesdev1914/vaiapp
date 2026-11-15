@@ -341,3 +341,40 @@ button:focus-visible, input:focus-visible { outline: 3px solid hsl(var(--accent)
   .map-badge { top:10px; left:10px; font-size:9px; padding:7px 9px; }
   .map-legend-vai { left:10px; bottom:10px; gap:6px; font-size:9px; padding:7px 8px; }
 }
+
+/* Pontos de ônibus em destaque e consulta rápida dos próximos horários. */
+.vai-stop-map {
+  width:34px;height:38px;display:grid;place-items:center;
+  color:#233a22;background:#d9ef68;border:2px solid #fff;border-radius:12px 12px 12px 3px;
+  box-shadow:0 3px 10px #18334a45;transform:rotate(-45deg);
+}
+.vai-stop-map svg { width:17px;height:17px;transform:rotate(45deg);stroke-width:2.3; }
+.vai-stop-popup { width:100%; min-width:240px; color:#203a52; font-family:var(--app-font-sans); }
+.vai-stop-popup-head { display:flex;align-items:center;gap:10px;padding:2px 0 12px;border-bottom:1px solid #edf1e6; }
+.vai-stop-popup-icon { width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:11px;background:#d9ef68;color:#314b22;font-size:19px;font-weight:800; }
+.vai-stop-popup-head div { display:grid;gap:3px;min-width:0; }
+.vai-stop-popup-kicker { color:#78933a;font-size:9px;font-weight:800;letter-spacing:1px; }
+.vai-stop-popup-head strong { color:#203a52;font-size:12px;line-height:1.35; }
+.vai-stop-arrivals-title { display:flex;align-items:center;justify-content:space-between;margin:12px 0 7px;color:#526779;font-size:11px;font-weight:800; }
+.vai-stop-live-dot { width:7px;height:7px;border-radius:50%;background:#a6cf3e;box-shadow:0 0 0 3px #eff7d9; }
+.vai-stop-arrivals { display:grid;gap:6px;max-height:210px;overflow:auto; }
+.vai-stop-arrival { display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:8px;border:1px solid #edf1e7;border-radius:10px;background:#fbfcf8; }
+.vai-stop-line-code { min-width:39px;padding:5px 6px;border-radius:7px;background:#d9ef68;color:#2d4520;text-align:center;font:800 11px var(--font-display); }
+.vai-stop-destination { overflow:hidden;color:#536779;font-size:10px;line-height:1.3;text-overflow:ellipsis; }
+.vai-stop-wait { display:grid;gap:2px;text-align:right;white-space:nowrap; }
+.vai-stop-wait strong { color:#52751d;font-size:10px; }
+.vai-stop-wait small { color:#87949c;font-size:9px; }
+.vai-stop-state { padding:12px 8px;color:#71808a;font-size:10px;line-height:1.45;text-align:center; }
+.vai-stop-state.is-error { color:#a24b4b; }
+.vai-stop-popup-foot { display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid #edf1e6;color:#87949c;font-size:9px; }
+.vai-stop-popup-foot button { border:0;border-radius:7px;background:#f0f6d9;color:#557522;padding:6px 8px;font-size:9px;font-weight:800; }
+.vai-stop-popup-foot button:disabled { opacity:.55; }
+.vai-stop-disclaimer { margin:7px 0 0;color:#9aa4aa;font-size:8px;line-height:1.35; }
+.leaflet-popup-content-wrapper { border:1px solid #e4ebdd;border-radius:15px;box-shadow:0 8px 28px #18334a24; }
+.leaflet-popup-content { margin:12px 14px; }
+.leaflet-popup-tip { box-shadow:0 2px 4px #18334a12; }
+.vai-map-data-warning { position:absolute;z-index:500;right:14px;top:14px;padding:8px 11px;border:1px solid #f0d9b9;border-radius:10px;background:#fff9ee;color:#94642d;box-shadow:0 3px 12px #18334a16;font-size:10px;font-weight:700; }
+@media (max-width:680px) {
+  .vai-stop-popup { min-width:225px; }
+  .vai-map-data-warning { right:9px;top:54px;font-size:9px; }
+}
