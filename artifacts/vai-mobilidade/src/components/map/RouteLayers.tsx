@@ -97,7 +97,7 @@ export function RouteStops({ route, selectedLegIndex }: RouteLayersProps) {
           <Marker
             key={`${route.id}-alighting-${index}`}
             position={[leg.to.coordinates.latitude, leg.to.coordinates.longitude]}
-            icon={stopIcon('stop')}
+            icon={stopIcon('stop', leg.lineCode ?? undefined)}
             opacity={opacity}
             title={`Parada de desembarque: ${leg.alightingStop?.name ?? leg.to.label}`}
           />
