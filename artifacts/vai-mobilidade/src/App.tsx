@@ -34,7 +34,7 @@ function App() {
 
   useEffect(() => {
     const controller = new AbortController();
-    const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\\/$/, '');
+    const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
     // Wake the free API while the user is choosing addresses, not when they
     // press the route-search button.
     void fetch(`${apiBaseUrl}/api/healthz`, {
