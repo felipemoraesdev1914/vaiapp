@@ -59,6 +59,28 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (!("geolocation" in navigator)) return;
+    let active = true;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        if (!active) return;
+        const heading = position.coords.heading;
+        setUserLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          accuracy: position.coords.accuracy,
+          heading: typeof heading === "number" && Number.isFinite(heading) ? heading : null,
+        });
+      },
+      () => {
+        // Sem permissão de localização, o mapa continua disponível e pode ser movido manualmente.
+      },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 120000 },
+    );
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
     setSelectedRouteId(response?.routes.find((route) => route.recommended)?.id ?? response?.routes[0]?.id ?? null);
     setSelectedLegIndex(null);
   }, [response]);
