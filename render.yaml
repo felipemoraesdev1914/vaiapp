@@ -1,0 +1,32 @@
+previews:
+  generation: off
+
+services:
+  - type: web
+    name: vai-api-preview
+    runtime: node
+    plan: free
+    region: virginia
+    branch: feat/barueri-municipal-transit
+    buildCommand: corepack prepare pnpm@10.28.0 --activate && pnpm install --frozen-lockfile && pnpm run typecheck:libs && pnpm --filter @workspace/api-server build
+    startCommand: pnpm --filter @workspace/api-server start
+    autoDeployTrigger: commit
+    healthCheckPath: /api/healthz
+
+  - type: web
+    name: vai-frontend-preview
+    runtime: static
+    branch: feat/barueri-municipal-transit
+    buildCommand: corepack prepare pnpm@10.28.0 --activate && pnpm install --frozen-lockfile && export PORT=10000 BASE_PATH=/ NODE_ENV=production && pnpm --filter @workspace/vai-mobilidade build
+    staticPublishPath: artifacts/vai-mobilidade/dist/public
+    autoDeployTrigger: commit
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: vai-api-preview
+          envVarKey: RENDER_EXTERNAL_URL
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
