@@ -388,3 +388,41 @@ button:focus-visible, input:focus-visible { outline: 3px solid hsl(var(--accent)
 .vai-map .leaflet-marker-pane,
 .vai-map .leaflet-shadow-pane,
 .vai-map .leaflet-popup-pane { filter:none; }
+
+
+/* Experiência de aplicativo no celular: mapa como tela inicial e navegação inferior. */
+.mobile-tabbar { display:none; }
+@media (max-width:680px) {
+  html, body, #root { width:100%; min-width:0; min-height:100%; margin:0; overflow:hidden; }
+  body { overscroll-behavior:none; }
+  .app-shell { min-height:100dvh; height:100dvh; overflow:hidden; background:#f7f9f7; }
+  .topbar { position:fixed; z-index:1300; inset:0 0 auto; height:60px; padding:0 16px; background:rgba(255,255,255,.97); border-bottom:1px solid #e7ece8; box-shadow:0 2px 12px #1735530a; }
+  .brand-mark { width:35px; height:35px; }
+  .brand-name { font-size:20px; }
+  .brand-sub { font-size:9px; }
+  .page { position:fixed; inset:60px 0 calc(66px + env(safe-area-inset-bottom)); width:100%; height:auto; min-height:0; margin:0; padding:0; overflow:hidden; }
+  .intro { display:none !important; }
+  .workspace { display:block; width:100%; height:100%; min-height:0; margin:0; }
+  .map-column { display:contents; }
+  .planner-panel { display:none; }
+  .map-frame { position:absolute; inset:0; width:100%; height:100%; min-height:0; max-height:none; border:0; border-radius:0; box-shadow:none; }
+  .leaflet-map { width:100%; height:100%; }
+  .result-section { display:none; }
+  .map-badge { top:12px; left:12px; }
+  .map-legend-vai { left:12px; bottom:12px; max-width:calc(100% - 88px); flex-wrap:wrap; }
+  .map-controls { right:12px; bottom:58px; }
+  .map-control { width:42px; height:42px; }
+  .map-attribution { bottom:0; }
+  .mobile-tabbar { position:fixed; z-index:1400; inset:auto 0 0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; min-height:calc(66px + env(safe-area-inset-bottom)); padding:7px 12px calc(7px + env(safe-area-inset-bottom)); background:rgba(255,255,255,.98); border-top:1px solid #e5ebe7; box-shadow:0 -5px 20px #1735530c; }
+  .mobile-tabbar button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:0; border:0; border-radius:12px; background:transparent; color:#80909b; font:700 10px/1.1 var(--app-font-sans); }
+  .mobile-tabbar button.is-active { color:#45621c; background:#f1f6df; }
+  .mobile-tabbar button:focus-visible { outline:3px solid #a6cf3e; outline-offset:2px; }
+  .app-shell[data-mobile-view="planner"] .page { overflow-y:auto; overscroll-behavior:contain; padding:14px 13px 20px; }
+  .app-shell[data-mobile-view="planner"] .workspace { display:flex; flex-direction:column; gap:12px; height:auto; min-height:0; }
+  .app-shell[data-mobile-view="planner"] .planner-panel { display:flex; order:1; width:100%; padding:19px 16px; border:1px solid #e4eaee; border-radius:17px; box-shadow:0 5px 20px #17355309; }
+  .app-shell[data-mobile-view="planner"] .map-frame { display:none; }
+  .app-shell[data-mobile-view="planner"] .result-section { display:block; order:2; width:100%; margin-bottom:10px; border-radius:15px; padding:14px; }
+  .app-shell[data-mobile-view="planner"] .data-footnote { margin-top:16px; }
+  .dialog-backdrop { z-index:1600; padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
+  .about-dialog { max-height:calc(100dvh - 48px - env(safe-area-inset-bottom)); overflow:auto; padding:24px 20px; border-radius:20px; }
+}
