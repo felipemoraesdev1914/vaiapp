@@ -21,7 +21,7 @@ export function MapControls({ onFrameRoute, userLocation, onLocate }: MapControl
         aria-label="Centralizar na minha localização"
         title="Centralizar na minha localização"
         onClick={() => {
-          if (userLocation) map.setView([userLocation.latitude, userLocation.longitude], Math.max(map.getZoom(), 16));
+          if (userLocation) map.flyTo([userLocation.latitude, userLocation.longitude], Math.max(map.getZoom(), 17), { duration: 0.8 });
           else onLocate();
         }}
         data-testid="button-map-locate"
