@@ -1,6 +1,7 @@
 import { createWriteStream } from "node:fs";
 import { performance } from "node:perf_hooks";
-import { mkdir, rename, rm, stat } from "node:fs/promises";
+import { mkdir, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
+import { gunzipSync } from "node:zlib";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { Readable, type Readable as NodeReadable } from "node:stream";
@@ -85,6 +86,10 @@ const DATASET_API =
   "https://dadosabertos.artesp.sp.gov.br/api/3/action/package_show?id=gtfs";
 const DATASET_HOST = "dadosabertos.artesp.sp.gov.br";
 const CACHE_DIRECTORY = path.join(tmpdir(), "vai-artesp-gtfs");
+const PREBUILT_INDEX_PATH = path.join(
+  process.cwd(),
+  "artifacts/api-server/dist/artesp-gtfs-index.json.gz",
+);
 const MAX_FEED_BYTES = 100 * 1024 * 1024;
 
 // This bounded index keeps the regional feed useful for Barueri while avoiding
@@ -399,7 +404,68 @@ function isInBarueriServiceArea(latitude: number, longitude: number): boolean {
   );
 }
 
+type SerializedGtfsFeed = {
+  source: GtfsFeed["source"];
+  stops: GtfsStop[];
+  routes: GtfsRoute[];
+  trips: GtfsTrip[];
+  stopTimesByTrip: Array<[string, GtfsStopTime[]]>;
+  calendar: GtfsCalendar[];
+  shapes: Array<[string, GeoPoint[]]>;
+};
+
+async function loadPrebuiltFeed(): Promise<GtfsFeed | undefined> {
+  try {
+    const compressed = await readFile(PREBUILT_INDEX_PATH);
+    const parsed = JSON.parse(gunzipSync(compressed).toString("utf8")) as SerializedGtfsFeed;
+    if (
+      !parsed.source?.version ||
+      !Array.isArray(parsed.stops) ||
+      !Array.isArray(parsed.routes) ||
+      !Array.isArray(parsed.trips) ||
+      !Array.isArray(parsed.stopTimesByTrip) ||
+      !Array.isArray(parsed.calendar) ||
+      !Array.isArray(parsed.shapes)
+    ) {
+      throw new Error("O índice GTFS pré-processado está incompleto.");
+    }
+    const feed: GtfsFeed = {
+      source: parsed.source,
+      stops: new Map(parsed.stops.map((stop) => [stop.id, stop])),
+      routes: new Map(parsed.routes.map((route) => [route.id, route])),
+      trips: new Map(parsed.trips.map((trip) => [trip.id, trip])),
+      stopTimesByTrip: new Map(parsed.stopTimesByTrip),
+      calendar: new Map(parsed.calendar.map((entry) => [entry.serviceId, entry])),
+      shapes: new Map(parsed.shapes),
+    };
+    console.info(
+      JSON.stringify({
+        event: "artesp_gtfs_prebuilt_loaded",
+        version: feed.source.version,
+        stops: feed.stops.size,
+        trips: feed.trips.size,
+        localTrips: feed.stopTimesByTrip.size,
+        shapes: feed.shapes.size,
+      }),
+    );
+    return feed;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      console.warn(
+        JSON.stringify({
+          event: "artesp_gtfs_prebuilt_unavailable",
+          message: error instanceof Error ? error.message : String(error),
+        }),
+      );
+    }
+    return undefined;
+  }
+}
+
 async function loadFeed(): Promise<GtfsFeed> {
+  const prebuiltFeed = await loadPrebuiltFeed();
+  if (prebuiltFeed) return prebuiltFeed;
+
   const loadStartedAt = performance.now();
   const catalogStartedAt = performance.now();
   const resource = await getLatestResource();
