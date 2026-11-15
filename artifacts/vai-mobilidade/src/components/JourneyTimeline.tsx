@@ -1,7 +1,8 @@
-import { useMemo, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { ArrowRightLeft, Bus, Footprints, MapPin, Timer } from 'lucide-react';
 import type { TransitRouteOption } from '@workspace/api-client-react';
 import { clockTime, formatDistance, formatDuration, minutesBetween } from './format';
+import { getWalkingDirections } from '../lib/walking-directions';
 
 type StepKind = 'walk' | 'walk-final' | 'wait' | 'transfer' | 'bus' | 'arrival';
 
@@ -25,7 +26,7 @@ const ICONS: Record<StepKind, ReactNode> = {
 };
 
 // Monta as etapas a partir dos dados da API. Esperas e baldeações são calculadas pelos horários de cada etapa.
-function buildSteps(route: TransitRouteOption): Step[] {
+function buildSteps(route: TransitRouteOption, finalWalkInstructions: string[] = [], finalWalkLoading = false): Step[] {
   const steps: Step[] = [];
   route.legs.forEach((leg, index) => {
     const previous = route.legs[index - 1];
@@ -58,7 +59,16 @@ function buildSteps(route: TransitRouteOption): Step[] {
       const meta = [`${leg.durationMinutes} min a pé`, distance].filter(Boolean).join(' · ');
       steps.push(index === 0
         ? { key: `walk-${index}`, kind: 'walk', legIndex: index, title: `Caminhe até ${leg.to.label}`, lines: [`Saindo de ${leg.from.label}`], meta }
-        : { key: `walk-${index}`, kind: 'walk-final', legIndex: index, title: `Desça no ponto ${leg.from.label}`, lines: [`Depois, caminhe até ${leg.to.label}`], meta });
+        : {
+            key: `walk-${index}`,
+            kind: 'walk-final',
+            legIndex: index,
+            title: `Desça em ${leg.from.label}`,
+            lines: finalWalkInstructions.length > 0
+              ? [...finalWalkInstructions, `Continue até ${leg.to.label}`]
+              : [finalWalkLoading ? 'Calculando o caminho a pé…' : `Caminhe até ${leg.to.label} pela rota indicada no mapa`],
+            meta,
+          });
     } else {
       steps.push({
         key: `bus-${index}`,
@@ -81,7 +91,30 @@ type JourneyTimelineProps = {
 };
 
 export function JourneyTimeline({ route, selectedLegIndex, onSelectLeg }: JourneyTimelineProps) {
-  const steps = useMemo(() => buildSteps(route), [route]);
+  const finalWalk = useMemo(() => route.legs.find((leg, index) => index > 0 && leg.mode === 'walk'), [route]);
+  const [finalWalkInstructions, setFinalWalkInstructions] = useState<string[]>([]);
+  const [finalWalkLoading, setFinalWalkLoading] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    setFinalWalkInstructions([]);
+    if (!finalWalk) {
+      setFinalWalkLoading(false);
+      return () => { active = false; };
+    }
+    setFinalWalkLoading(true);
+    void getWalkingDirections(finalWalk.from.coordinates, finalWalk.to.coordinates).then((directions) => {
+      if (!active) return;
+      setFinalWalkInstructions(directions?.instructions ?? []);
+      setFinalWalkLoading(false);
+    });
+    return () => { active = false; };
+  }, [finalWalk]);
+
+  const steps = useMemo(
+    () => buildSteps(route, finalWalkInstructions, finalWalkLoading),
+    [route, finalWalkInstructions, finalWalkLoading],
+  );
   return (
     <ol className="jt-list" aria-label="Etapas da viagem" data-testid="journey-timeline">
       {steps.map((step) => {
