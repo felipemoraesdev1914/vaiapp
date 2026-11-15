@@ -35,13 +35,23 @@ function App() {
   useEffect(() => {
     const controller = new AbortController();
     const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
-    // Wake the free API while the user is choosing addresses, not when they
-    // press the route-search button.
-    void fetch(`${apiBaseUrl}/api/healthz`, {
-      cache: 'no-store',
-      signal: controller.signal,
-    }).catch(() => undefined);
+    const warmApi = () => {
+      void fetch(`${apiBaseUrl}/api/healthz`, {
+        cache: 'no-store',
+        signal: controller.signal,
+      }).catch(() => undefined);
+    };
+    // Wake the free API before the user searches and keep it warm while the
+    // app stays open; returning to the foreground also refreshes the ping.
+    warmApi();
+    const interval = window.setInterval(warmApi, 10 * 60 * 1_000);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') warmApi();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => {
+      window.clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       controller.abort();
       searchAbortRef.current?.abort();
     };
