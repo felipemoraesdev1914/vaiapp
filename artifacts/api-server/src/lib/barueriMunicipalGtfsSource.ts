@@ -142,6 +142,27 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
     const serviceId = serviceIdFromHtml(html) ?? source.pathname.match(/-([a-f0-9]{12})$/i)?.[1];
     if (route.lineCode === "A260") {
       const scriptSrcs = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map((match) => match[1]).slice(0, 30);
+      const agencyId = html.match(/id=["']agencyId["'][^>]*value=["']([^"']+)["']/i)?.[1];
+      const apiContexts = [...html.matchAll(/.{0,100}(?:CittamobiAPI|api\.cittamobi|linesroutes|m3p\/js).{0,160}/gi)]
+        .slice(0, 30)
+        .map((match) => match[0].replace(/\s+/g, " ").slice(0, 240));
+      const apiProbePaths = agencyId ? [
+        "/m3p/js/services/agency/" + agencyId,
+        "/m3p/js/services/agency/v2/" + agencyId,
+        "/m3p/js/services/" + agencyId,
+        "/m3p/js/stops/service/v2/" + serviceId + "?agencyId=" + agencyId,
+      ] : [];
+      const apiProbeResults = await Promise.all(apiProbePaths.map(async (path) => {
+        try {
+          const response = await fetch(new URL(path, "https://api.cittamobi.com.br"), {
+            signal: AbortSignal.timeout(3_000),
+            headers: { accept: "application/json", "user-agent": "VAI Mobilidade/1.0" },
+          });
+          return { path, status: response.status, body: (await response.text()).slice(0, 260) };
+        } catch (error) {
+          return { path, error: error instanceof Error ? error.message : String(error) };
+        }
+      }));
       const coordinateContexts = [...html.matchAll(/.{0,80}(?:latitude|longitude|\blat\b|\blng\b).{0,100}/gi)]
         .slice(0, 20)
         .map((match) => match[0].replace(/\s+/g, " ").slice(0, 220));
@@ -164,6 +185,9 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
         serviceIdCandidate: serviceId,
         scriptPath,
         scriptSrcs,
+        agencyId,
+        apiContexts,
+        apiProbeResults,
         coordinateContexts,
         scriptContexts,
       }));
