@@ -5,6 +5,7 @@ import type {
   TransitRouteSearchInput,
   TransitRouteSearchResponse,
 } from "@workspace/api-zod";
+import { getBarueriMunicipalGtfsFeed } from "./barueriMunicipalGtfsSource";
 import {
   getArtespGtfsFeed,
   type GeoPoint,
@@ -121,6 +122,68 @@ const scheduledTripCache = new Map<string, ScheduledTrip[]>();
 const shapeSpatialIndexes = new WeakMap<GtfsFeed, Map<string, ShapeSpatialIndex>>();
 const shapeMatchCache = new WeakMap<GtfsFeed, Map<string, ShapeMatch>>();
 const shapeSegmentCache = new WeakMap<GtfsFeed, Map<string, GeoPoint[]>>();
+
+function mergeTransitFeeds(artesp: GtfsFeed, municipal: GtfsFeed): GtfsFeed {
+  if (municipal.stops.size === 0) return artesp;
+  const stops = new Map(artesp.stops);
+  const routes = new Map(artesp.routes);
+  const trips = new Map(artesp.trips);
+  const stopTimesByTrip = new Map(artesp.stopTimesByTrip);
+  const calendar = new Map(artesp.calendar);
+  const shapes = new Map(artesp.shapes);
+  const municipalStopIds = new Map<string, string>();
+
+  const nearestExistingStop = (point: GeoPoint): GtfsStop | undefined => {
+    let nearest: GtfsStop | undefined;
+    let nearestDistance = 12;
+    for (const stop of artesp.stops.values()) {
+      const distance = haversineMeters(point, stop.coordinates);
+      if (distance < nearestDistance) {
+        nearest = stop;
+        nearestDistance = distance;
+      }
+    }
+    return nearest;
+  };
+
+  for (const stop of municipal.stops.values()) {
+    const existing = nearestExistingStop(stop.coordinates);
+    const id = existing?.id ?? stop.id;
+    municipalStopIds.set(stop.id, id);
+    if (!existing) stops.set(id, stop);
+  }
+  for (const [id, route] of municipal.routes) routes.set(id, route);
+  for (const [id, trip] of municipal.trips) trips.set(id, trip);
+  for (const [id, times] of municipal.stopTimesByTrip) {
+    stopTimesByTrip.set(id, times.map((time) => ({
+      ...time,
+      stopId: municipalStopIds.get(time.stopId) ?? time.stopId,
+    })));
+  }
+  for (const [id, service] of municipal.calendar) calendar.set(id, service);
+  for (const [id, shape] of municipal.shapes) shapes.set(id, shape);
+
+  return {
+    source: {
+      ...artesp.source,
+      name: "GTFS metropolitano ARTESP + linhas municipais de Barueri",
+      version: `${artesp.source.version}|barueri:${municipal.source.version}`,
+      updatedAt: new Date(Math.max(
+        Date.parse(artesp.source.updatedAt) || 0,
+        Date.parse(municipal.source.updatedAt) || 0,
+      )).toISOString(),
+      coverage: `${artesp.source.coverage} ${municipal.source.coverage}`,
+      limitations: [...artesp.source.limitations, ...municipal.source.limitations],
+    },
+    stops,
+    routes,
+    trips,
+    stopTimesByTrip,
+    calendar,
+    shapes,
+  };
+}
+
 
 // The public FOSSGIS routing service asks clients to stay at or below
 // one request per second. One batched Table request replaces up to eight
@@ -1119,11 +1182,17 @@ export async function searchTransitRoutes(
   const requestedAt = request.departureAt ?? new Date();
   const requestEpoch = requestedAt.getTime();
   const feedStartedAt = performance.now();
-  const feed = await waitForAbort(getArtespGtfsFeed(), signal);
+  const [artespFeed, municipalFeed] = await waitForAbort(
+    Promise.all([getArtespGtfsFeed(), getBarueriMunicipalGtfsFeed()]),
+    signal,
+  );
+  const feed = mergeTransitFeeds(artespFeed, municipalFeed);
   timed("gtfs_feed", feedStartedAt, {
     version: feed.source.version,
     stops: feed.stops.size,
     trips: feed.trips.size,
+    municipalStops: municipalFeed.stops.size,
+    municipalTrips: municipalFeed.trips.size,
   });
   throwIfAborted(signal);
 
