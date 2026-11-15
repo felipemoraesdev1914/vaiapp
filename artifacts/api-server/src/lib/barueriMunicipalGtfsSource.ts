@@ -91,6 +91,7 @@ function decodePolyline(encoded: string): GeoPoint[] {
 
 function serviceIdFromHtml(html: string): string | undefined {
   const patterns = [
+    /id=["']serviceId["'][^>]*value=["']([a-f0-9]{8}-[a-f0-9-]{27})["']/i,
     /["']serviceId["']\s*:\s*["']?(\d{3,})/i,
     /["']service_id["']\s*:\s*["']?(\d{3,})/i,
     /["']idService["']\s*:\s*["']?(\d{3,})/i,
@@ -155,6 +156,16 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
     }
     const raw = await fetchJson(`${API_BASE}/${encodeURIComponent(serviceId)}`);
     const service = raw as CittamobiService;
+    if (route.lineCode === "A260") {
+      console.info(JSON.stringify({
+        event: "municipal_cittamobi_payload_probe",
+        routeId: route.routeId,
+        serviceKeys: raw && typeof raw === "object" ? Object.keys(raw as Record<string, unknown>) : [],
+        polylineType: typeof service?.polyline,
+        stopCount: Array.isArray(service?.stops) ? service.stops.length : null,
+        firstStop: Array.isArray(service?.stops) ? service.stops[0] : null,
+      }));
+    }
     if (!service || typeof service.polyline !== "string" || !Array.isArray(service.stops)) return undefined;
     const shape = decodePolyline(service.polyline);
     const stops = service.stops.flatMap((item, index) => {
