@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "VAI — Mobilidade Inteligente",
+  "short_name": "VAI",
+  "description": "Pontos de ônibus e planejamento de rotas em Barueri.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f9f7",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/vai-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
