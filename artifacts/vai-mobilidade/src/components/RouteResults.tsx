@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpDown, Bus, Footprints, RefreshCw, Route as RouteIcon, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, ArrowUpDown, Bus, Footprints, RefreshCw, Route as RouteIcon, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import type { TransitRouteOption, TransitRouteSearchResponse } from '@workspace/api-client-react';
 import { TripStatus } from './TripStatus';
@@ -22,6 +22,7 @@ type RouteResultsProps = {
   isLoading: boolean;
   error: unknown;
   onRetry: () => void;
+  onCancel: () => void;
 };
 
 // Mensagens ao usuário em português. Detalhes técnicos ficam no console e nos logs do servidor.
@@ -39,7 +40,7 @@ function errorMessage(error: unknown) {
   return 'Não foi possível consultar as rotas agora. Tente novamente.';
 }
 
-export function RouteResults({ response, selectedRouteId, onSelectRoute, selectedLegIndex, onSelectLeg, isLoading, error, onRetry }: RouteResultsProps) {
+export function RouteResults({ response, selectedRouteId, onSelectRoute, selectedLegIndex, onSelectLeg, isLoading, error, onRetry, onCancel }: RouteResultsProps) {
   const [sort, setSort] = useState<SortKey>('fastest');
   const [durationLimit, setDurationLimit] = useState<DurationLimit>('any');
   const [walkingLimit, setWalkingLimit] = useState<WalkingLimit>('any');
@@ -125,7 +126,8 @@ export function RouteResults({ response, selectedRouteId, onSelectRoute, selecte
         <div className="route-loading" role="status" data-testid="status-routes-loading">
           <div className="loading-skeleton" /><div className="loading-skeleton" />
           <span>Consultando horários e conexões disponíveis…</span>
-          <span>A primeira busca pode levar cerca de meio minuto enquanto o GTFS oficial é carregado e preparado.</span>
+          <span>Você pode cancelar a busca a qualquer momento.</span>
+          <button type="button" className="cancel-search-button" onClick={onCancel} data-testid="button-cancel-routes"><X size={14} /> Cancelar busca</button>
         </div>
       )}
       {!isLoading && Boolean(error) && (

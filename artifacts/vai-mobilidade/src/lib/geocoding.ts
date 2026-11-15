@@ -32,15 +32,23 @@ export function photonLabel(properties: Record<string, unknown>): string {
   const street = propertyText(properties, 'street');
   const houseNumber = propertyText(properties, 'housenumber');
   const name = propertyText(properties, 'name');
-  const primary = street
-    ? [street, houseNumber].filter(Boolean).join(', ')
-    : name || houseNumber;
+  const address = [street, houseNumber].filter(Boolean).join(', ');
+  const osmKey = propertyText(properties, 'osm_key').toLocaleLowerCase('en-US');
+  const osmValue = propertyText(properties, 'osm_value').toLocaleLowerCase('en-US');
+  const isNamedArea =
+    osmKey === 'place' &&
+    ['suburb', 'neighbourhood', 'quarter', 'district'].includes(osmValue);
+  const primary = isNamedArea
+    ? name || address
+    : name && address && normalizeSearchText(name) !== normalizeSearchText(address)
+      ? `${name} — ${address}`
+      : name || address || houseNumber;
   const locality = [
     propertyText(properties, 'district'),
     propertyText(properties, 'city') || propertyText(properties, 'locality'),
     propertyText(properties, 'state'),
     propertyText(properties, 'postcode'),
-  ];
+  ].filter((value) => normalizeSearchText(value) !== normalizeSearchText(primary));
   return [...new Set([primary, ...locality].filter(Boolean))].join(', ');
 }
 
@@ -52,7 +60,16 @@ function photonRelevance(properties: Record<string, unknown>, query: string): nu
     propertyText(properties, 'city') || propertyText(properties, 'locality'),
   );
   const state = normalizeSearchText(propertyText(properties, 'state'));
+  const name = normalizeSearchText(propertyText(properties, 'name'));
+  const district = normalizeSearchText(propertyText(properties, 'district'));
+  const osmKey = propertyText(properties, 'osm_key').toLocaleLowerCase('en-US');
+  const osmValue = propertyText(properties, 'osm_value').toLocaleLowerCase('en-US');
   const hasNumberAtEnd = /(?:,|\s)\d{1,5}\s*$/.test(query.trim());
+  const stopWords = new Set(['a', 'as', 'ao', 'aos', 'da', 'das', 'de', 'do', 'dos', 'em', 'para', 'por', 'e', 'sp', 'brasil', 'barueri']);
+  const queryTokens = normalizedQuery
+    .split(/\s+/)
+    .filter((token) => token.length > 1 && !stopWords.has(token));
+  const queryCore = queryTokens.join(' ');
 
   let score = 0;
   if (street) score += 5;
@@ -60,6 +77,23 @@ function photonRelevance(properties: Record<string, unknown>, query: string): nu
   if (hasNumberAtEnd && houseNumber) score += 8;
   if (hasNumberAtEnd && !houseNumber) score -= 8;
   if (!street && propertyText(properties, 'name') && hasNumberAtEnd) score -= 5;
+
+  const searchableFields = [name, normalizeSearchText(street), district];
+  const matchingTokens = queryTokens.filter((token) =>
+    searchableFields.some((field) => field.includes(token)),
+  ).length;
+  score += matchingTokens * 12;
+  if (queryCore && name === queryCore) score += 85;
+  if (queryCore && district === queryCore) score += 95;
+  if (queryCore && (name.includes(queryCore) || district.includes(queryCore))) score += 36;
+  if (queryTokens.length > 1 && matchingTokens < queryTokens.length) {
+    score -= (queryTokens.length - matchingTokens) * 16;
+  }
+  if (osmKey === 'place' && ['suburb', 'neighbourhood', 'quarter', 'district'].includes(osmValue)) {
+    score += 120;
+  }
+  if (queryTokens.includes('terminal') && osmValue === 'bus_station') score += 42;
+  if (queryTokens.includes('shopping') && /mall|supermarket|commercial/.test(osmValue)) score += 18;
 
   // Use Barueri as the default locality bias while honoring an explicitly
   // named municipality in the user's query, including nearby cities.
@@ -81,7 +115,7 @@ export function rankPhotonFeatures(
   features: PhotonFeature[],
   query: string,
 ): PhotonSearchResult[] {
-  return features
+  const ranked = features
     .flatMap((feature, index) => {
       const properties = feature.properties ?? {};
       const label = photonLabel(properties);
@@ -114,8 +148,14 @@ export function rankPhotonFeatures(
         index,
       }];
     })
-    .sort((left, right) => right.score - left.score || left.index - right.index)
-    .map(({ result }) => result);
+    .sort((left, right) => right.score - left.score || left.index - right.index);
+  const seenLabels = new Set<string>();
+  return ranked.flatMap(({ result }) => {
+    const key = normalizeSearchText(result.label);
+    if (seenLabels.has(key)) return [];
+    seenLabels.add(key);
+    return [result];
+  });
 }
 
 type CacheEntry<T> = {

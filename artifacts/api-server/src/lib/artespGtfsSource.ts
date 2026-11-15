@@ -1,4 +1,5 @@
 import { createWriteStream } from "node:fs";
+import { performance } from "node:perf_hooks";
 import { mkdir, rename, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -92,7 +93,9 @@ const BARUERI_SERVICE_AREA = {
   south: -23.56,
   north: -23.46,
   west: -46.93,
-  east: -46.82,
+  // Include the eastern Barueri neighborhoods around Parque Imperial and
+  // the municipal terminal; the previous cutoff excluded them entirely.
+  east: -46.78,
 };
 
 const FEED_LIMITATIONS = [
@@ -151,7 +154,9 @@ async function getLatestResource(): Promise<Required<Pick<CkanResource, "url">> 
   return latest;
 }
 
-async function downloadFeed(resource: CkanResource & { url: string }): Promise<string> {
+async function downloadFeed(
+  resource: CkanResource & { url: string },
+): Promise<{ path: string; cacheHit: boolean }> {
   await mkdir(CACHE_DIRECTORY, { recursive: true });
   const modifiedKey = (resource.last_modified ?? "latest").replace(/[^0-9]/g, "");
   const archivePath = path.join(CACHE_DIRECTORY, `artesp-${modifiedKey}.zip`);
@@ -164,7 +169,7 @@ async function downloadFeed(resource: CkanResource & { url: string }): Promise<s
       cached.size <= MAX_FEED_BYTES &&
       (resource.size === undefined || cached.size === resource.size)
     ) {
-      return archivePath;
+      return { path: archivePath, cacheHit: true };
     }
   } catch {
     // The cache is optional; a missing file is downloaded below.
@@ -197,7 +202,7 @@ async function downloadFeed(resource: CkanResource & { url: string }): Promise<s
       throw new Error("O tamanho do arquivo GTFS baixado não corresponde ao catálogo da ARTESP.");
     }
     await rename(partialPath, archivePath);
-    return archivePath;
+    return { path: archivePath, cacheHit: false };
   } catch (error) {
     await rm(partialPath, { force: true });
     throw error;
@@ -234,7 +239,9 @@ async function forEachCsvRow(
   archivePath: string,
   fileName: string,
   callback: (row: Record<string, string>) => void | Promise<void>,
-): Promise<void> {
+): Promise<number> {
+  const startedAt = performance.now();
+  let rowCount = 0;
   const { stream, close } = await openEntry(archivePath, fileName);
   const parser = parse({
     bom: true,
@@ -247,11 +254,22 @@ async function forEachCsvRow(
 
   try {
     for await (const row of parser as AsyncIterable<Record<string, string>>) {
-      await callback(row);
+      rowCount += 1;
+      const callbackResult = callback(row);
+      if (callbackResult) await callbackResult;
     }
   } finally {
     close();
+    console.info(
+      JSON.stringify({
+        event: "artesp_gtfs_csv_parsed",
+        fileName,
+        rowCount,
+        durationMs: Math.round(performance.now() - startedAt),
+      }),
+    );
   }
+  return rowCount;
 }
 
 function isInBarueriServiceArea(latitude: number, longitude: number): boolean {
@@ -264,8 +282,14 @@ function isInBarueriServiceArea(latitude: number, longitude: number): boolean {
 }
 
 async function loadFeed(): Promise<GtfsFeed> {
+  const loadStartedAt = performance.now();
+  const catalogStartedAt = performance.now();
   const resource = await getLatestResource();
-  const archivePath = await downloadFeed(resource);
+  const catalogDurationMs = Math.round(performance.now() - catalogStartedAt);
+  const archiveStartedAt = performance.now();
+  const archive = await downloadFeed(resource);
+  const archiveDurationMs = Math.round(performance.now() - archiveStartedAt);
+  const archivePath = archive.path;
 
   const stops = new Map<string, GtfsStop>();
   await forEachCsvRow(archivePath, "stops.txt", (row) => {
@@ -379,6 +403,18 @@ async function loadFeed(): Promise<GtfsFeed> {
     orderedShapes.set(row.shape_id, points);
   });
 
+  for (const [tripId, times] of stopTimesByTrip) {
+    times.sort((left, right) => left.sequence - right.sequence);
+    let previousArrival = -1;
+    const hasInvalidTimeOrder = times.some((time) => {
+      const invalid = time.arrivalSeconds < previousArrival ||
+        time.departureSeconds < time.arrivalSeconds;
+      previousArrival = time.departureSeconds;
+      return invalid;
+    });
+    if (hasInvalidTimeOrder) stopTimesByTrip.delete(tripId);
+  }
+
   const shapes = new Map<string, GeoPoint[]>(
     [...orderedShapes.entries()].map(([shapeId, points]) => [
       shapeId,
@@ -397,7 +433,7 @@ async function loadFeed(): Promise<GtfsFeed> {
     (resource.last_modified && new Date(resource.last_modified).toISOString()) ||
     new Date().toISOString();
 
-  return {
+  const feed: GtfsFeed = {
     source: {
       name: "GTFS metropolitano da ARTESP",
       url: DATASET_PAGE,
@@ -415,6 +451,25 @@ async function loadFeed(): Promise<GtfsFeed> {
     calendar,
     shapes,
   };
+  console.info(
+    JSON.stringify({
+      event: "artesp_gtfs_loaded",
+      version: feed.source.version,
+      catalogDurationMs,
+      archiveDurationMs,
+      archiveCacheHit: archive.cacheHit,
+      totalDurationMs: Math.round(performance.now() - loadStartedAt),
+      stops: stops.size,
+      routes: routes.size,
+      trips: trips.size,
+      calendarServices: calendar.size,
+      localTrips: stopTimesByTrip.size,
+      localStopTimes: [...stopTimesByTrip.values()].reduce((count, times) => count + times.length, 0),
+      shapes: shapes.size,
+      shapePoints: [...shapes.values()].reduce((count, points) => count + points.length, 0),
+    }),
+  );
+  return feed;
 }
 
 export function getArtespGtfsFeed(): Promise<GtfsFeed> {

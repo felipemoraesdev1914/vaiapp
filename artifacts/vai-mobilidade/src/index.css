@@ -170,6 +170,8 @@ button:focus-visible, input:focus-visible { outline: 3px solid hsl(var(--accent)
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 .route-loading { display:grid; gap:8px; margin-top:13px; }
 .route-loading span { color:#758493; font-size:10px; }
+.cancel-search-button { width:max-content; margin-top:2px; padding:7px 9px; display:flex; align-items:center; gap:6px; border:1px solid #d8e0e5; border-radius:8px; background:#fff; color:#425b70; font-size:10px; font-weight:700; cursor:pointer; }
+.cancel-search-button:hover { background:#f5f7f8; }
 .route-message { display:grid; gap:5px; margin-top:13px; padding:14px; border:1px solid #e4eaee; border-radius:11px; background:#f7f9f7; color:#6c7c89; font-size:11px; line-height:1.5; }
 .route-message strong { color:#334b60; font-size:12px; }
 .route-welcome { grid-template-columns:34px minmax(0,1fr); align-items:center; }

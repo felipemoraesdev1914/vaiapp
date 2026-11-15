@@ -71,7 +71,9 @@ export function PhotonAutocomplete({ id, label, placeholder, value, icon, invali
         const params = new URLSearchParams({
           q: term, lat: '-23.5113', lon: '-46.8765', zoom: '12', limit: '6', countrycode: 'br',
         });
-        const response = await fetch(`https://photon.komoot.io/api/?${params.toString()}`, { signal: controller.signal });
+        const response = await fetch(`https://photon.komoot.io/api/?${params.toString()}`, {
+          signal: AbortSignal.any([controller.signal, AbortSignal.timeout(6_000)]),
+        });
         if (!response.ok) throw new Error('Não foi possível consultar endereços agora.');
         const collection = await response.json() as { features?: PhotonFeature[] };
         const mapped = rankPhotonFeatures(collection.features ?? [], term);
@@ -83,7 +85,9 @@ export function PhotonAutocomplete({ id, label, placeholder, value, icon, invali
         // Mensagem amigável ao usuário; o erro técnico vai para o console.
         console.error('Falha na busca de endereços', error);
         setRequestError(
-          error instanceof TypeError
+          error instanceof DOMException && error.name === 'TimeoutError'
+            ? 'A busca de endereços demorou demais. Tente novamente.'
+            : error instanceof TypeError
             ? 'Não foi possível buscar endereços. Verifique sua conexão.'
             : 'A busca de endereços está indisponível agora. Tente novamente.',
         );

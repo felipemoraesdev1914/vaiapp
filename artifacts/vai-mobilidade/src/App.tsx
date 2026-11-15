@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
-import { useSearchTransitRoutes, type TransitRouteOption } from '@workspace/api-client-react';
+import { searchTransitRoutes, type TransitRouteOption, type TransitRouteSearchResponse } from '@workspace/api-client-react';
 import { BrandHeader } from './components/BrandHeader';
 import { JourneyPlanner } from './components/JourneyPlanner';
 import { MapCanvas } from './components/MapCanvas';
 import { RouteResults } from './components/RouteResults';
 import type { UserLocation } from './components/map/UserLocationLayer';
 import type { Place } from './types/route';
+
+type SearchState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; response: TransitRouteSearchResponse }
+  | { status: 'error'; error: unknown };
 
 function App() {
   const [origin, setOrigin] = useState<Place>({ label: '' });
@@ -15,13 +21,18 @@ function App() {
   const [isLocating, setIsLocating] = useState(false);
   const [locationError, setLocationError] = useState('');
   const [aboutOpen, setAboutOpen] = useState(false);
-  const searchRoutes = useSearchTransitRoutes();
+  const [searchState, setSearchState] = useState<SearchState>({ status: 'idle' });
+  const searchAbortRef = useRef<AbortController | null>(null);
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   // Índice da etapa escolhida na linha do tempo; null mostra a viagem inteira.
   const [selectedLegIndex, setSelectedLegIndex] = useState<number | null>(null);
   const [userLocation, setUserLocation] = useState<UserLocation | null>(null);
-  const response = searchRoutes.data;
+  const response = searchState.status === 'success' ? searchState.response : undefined;
+  const isSearching = searchState.status === 'loading';
+  const searchError = searchState.status === 'error' ? searchState.error : null;
   const selectedRoute = response?.routes.find((route) => route.id === selectedRouteId) ?? null;
+
+  useEffect(() => () => searchAbortRef.current?.abort(), []);
 
   useEffect(() => {
     setSelectedRouteId(response?.routes.find((route) => route.recommended)?.id ?? response?.routes[0]?.id ?? null);
@@ -33,21 +44,37 @@ function App() {
     setSelectedLegIndex(null);
   };
 
-  const runSearch = () => {
+  const cancelSearch = () => {
+    searchAbortRef.current?.abort();
+    searchAbortRef.current = null;
+    setSearchState({ status: 'idle' });
+  };
+
+  const runSearch = async () => {
     if (!origin.coordinates || !destination.coordinates) return;
-    searchRoutes.reset();
+    searchAbortRef.current?.abort();
+    const controller = new AbortController();
+    searchAbortRef.current = controller;
+    setSearchState({ status: 'loading' });
     setSelectedRouteId(null);
-    searchRoutes.mutate({
-      data: {
+    setCenterSignal((value) => value + 1);
+    try {
+      const searchResponse = await searchTransitRoutes({
         origin: { label: origin.label, coordinates: origin.coordinates },
         destination: { label: destination.label, coordinates: destination.coordinates },
-      },
-    });
-    setCenterSignal((value) => value + 1);
+      }, { signal: controller.signal });
+      if (!controller.signal.aborted) setSearchState({ status: 'success', response: searchResponse });
+    } catch (error) {
+      if (!controller.signal.aborted) setSearchState({ status: 'error', error });
+    } finally {
+      if (searchAbortRef.current === controller) searchAbortRef.current = null;
+    }
   };
 
   const updatePlace = (field: 'origin' | 'destination', place: Place) => {
-    searchRoutes.reset();
+    searchAbortRef.current?.abort();
+    searchAbortRef.current = null;
+    setSearchState({ status: 'idle' });
     setSelectedRouteId(null);
     if (field === 'origin') setOrigin(place);
     else setDestination(place);
@@ -118,7 +145,7 @@ function App() {
             onLocate={requestCurrentLocation}
             isLocating={isLocating}
             locationError={locationError}
-            isSearching={searchRoutes.isPending}
+            isSearching={isSearching}
           />
           <div className="map-column">
             <MapCanvas
@@ -135,9 +162,10 @@ function App() {
               onSelectRoute={selectRoute}
               selectedLegIndex={selectedLegIndex}
               onSelectLeg={setSelectedLegIndex}
-              isLoading={searchRoutes.isPending}
-              error={searchRoutes.error}
+              isLoading={isSearching}
+              error={searchError}
               onRetry={runSearch}
+              onCancel={cancelSearch}
             />
           </div>
         </div>

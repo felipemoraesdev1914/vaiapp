@@ -1,3 +1,4 @@
+import { performance } from "node:perf_hooks";
 import type {
   TransitRouteLeg,
   TransitRouteOption,
@@ -16,7 +17,7 @@ import {
 
 const SAO_PAULO_TIME_ZONE = "America/Sao_Paulo";
 const WALKING_ROUTER =
-  "https://routing.openstreetmap.de/routed-foot/route/v1/driving";
+  "https://routing.openstreetmap.de/routed-foot/table/v1/driving";
 const MAX_WALK_STRAIGHT_LINE_METERS = 2_000;
 // Evaluate a wider set because the geographically closest stop is not always
 // the easiest one to reach on foot (barriers, highways and disconnected streets).
@@ -31,7 +32,9 @@ const MAX_INITIAL_WAIT_SECONDS = 60 * 60;
 const MAX_TRANSFER_WAIT_SECONDS = 45 * 60;
 const MAX_ITINERARY_DURATION_SECONDS = 3 * 60 * 60;
 const MINIMUM_TRANSFER_SECONDS = 5 * 60;
-const MAX_FIRST_LEGS_TO_EXPLORE = 180;
+const WALKING_ROUTER_TIMEOUT_MS = 4_000;
+const ROUTE_RESULT_CACHE_TTL_MS = 30_000;
+const ROUTE_RESULT_CACHE_MAX_ENTRIES = 256;
 
 type WalkingPath = {
   distanceMeters: number;
@@ -64,7 +67,10 @@ type RideSegment = {
 };
 
 type SecondRide = {
-  ride: RideSegment;
+  schedule: ScheduledTrip;
+  fromIndex: number;
+  toIndex: number;
+  departureEpoch: number;
 };
 
 type Candidate = {
@@ -87,26 +93,76 @@ type CachedWalkingPath = {
   promise: Promise<WalkingPath | undefined>;
 };
 
+type OsrmTableResponse = {
+  code?: string;
+  distances?: Array<Array<number | null>>;
+  durations?: Array<Array<number | null>>;
+};
+
+type RouteSearchTiming = (
+  stage: string,
+  durationMs: number,
+  details?: Record<string, number | string | boolean>,
+) => void;
+
+type CachedRouteResponse = {
+  expiresAt: number;
+  response: TransitRouteSearchResponse;
+  candidateCount: number;
+};
+
+type ShapePoint = { index: number; point: GeoPoint };
+type ShapeSpatialIndex = { cells: Map<string, ShapePoint[]> };
+type ShapeMatch = { index: number; distance: number };
+
 const walkingPathCache = new Map<string, CachedWalkingPath>();
+const routeResponseCache = new Map<string, CachedRouteResponse>();
+const scheduledTripCache = new Map<string, ScheduledTrip[]>();
+const shapeSpatialIndexes = new WeakMap<GtfsFeed, Map<string, ShapeSpatialIndex>>();
+const shapeMatchCache = new WeakMap<GtfsFeed, Map<string, ShapeMatch>>();
+const shapeSegmentCache = new WeakMap<GtfsFeed, Map<string, GeoPoint[]>>();
 
 // The public FOSSGIS routing service asks clients to stay at or below
-// one request per second. Keep a process-wide queue so concurrent route
-// searches cannot burst requests against the shared pedestrian router.
+// one request per second. One batched Table request replaces up to eight
+// serial route requests for a journey.
 const WALKING_ROUTER_MIN_INTERVAL_MS = 1_100;
 let nextWalkingRouterRequestAt = 0;
 let walkingRouterQueue: Promise<void> = Promise.resolve();
 
-function fetchWalkingPathRateLimited(
-  from: GeoPoint,
-  to: GeoPoint,
-): Promise<WalkingPath | undefined> {
+function fetchWalkingTableRateLimited(
+  url: string,
+  signal?: AbortSignal,
+): Promise<OsrmTableResponse> {
   const request = walkingRouterQueue.then(async () => {
     const waitMs = Math.max(0, nextWalkingRouterRequestAt - Date.now());
     if (waitMs > 0) {
-      await new Promise<void>((resolve) => setTimeout(resolve, waitMs));
+      await waitForDelay(waitMs, signal);
     }
+    throwIfAborted(signal);
     nextWalkingRouterRequestAt = Date.now() + WALKING_ROUTER_MIN_INTERVAL_MS;
-    return fetchWalkingPath(from, to);
+    const timeoutSignal = AbortSignal.timeout(WALKING_ROUTER_TIMEOUT_MS);
+    const requestSignal = signal
+      ? AbortSignal.any([signal, timeoutSignal])
+      : timeoutSignal;
+    const response = await fetch(url, {
+      signal: requestSignal,
+      headers: {
+        accept: "application/json",
+        "user-agent": "VAI Mobilidade/1.0 (pedestrian routing from OSM data)",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`O roteador de caminhada respondeu HTTP ${response.status}.`);
+    }
+    const body = (await response.json()) as OsrmTableResponse;
+    if (
+      body.code !== "Ok" ||
+      !Array.isArray(body.distances) ||
+      !Array.isArray(body.durations)
+    ) {
+      throw new Error("O roteador de caminhada retornou uma matriz inválida.");
+    }
+    return body;
   });
   walkingRouterQueue = request.then(
     () => undefined,
@@ -115,16 +171,52 @@ function fetchWalkingPathRateLimited(
   return request;
 }
 
-type OsrmResponse = {
-  code?: string;
-  routes?: Array<{
-    distance?: number;
-    duration?: number;
-    geometry?: {
-      coordinates?: Array<[number, number]>;
+function throwIfAborted(signal?: AbortSignal): void {
+  if (signal?.aborted) {
+    throw signal.reason instanceof Error
+      ? signal.reason
+      : new DOMException("A busca foi cancelada.", "AbortError");
+  }
+}
+
+function waitForDelay(milliseconds: number, signal?: AbortSignal): Promise<void> {
+  if (!signal) return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  throwIfAborted(signal);
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      signal.removeEventListener("abort", abort);
+      resolve();
+    }, milliseconds);
+    const abort = () => {
+      clearTimeout(timer);
+      signal.removeEventListener("abort", abort);
+      reject(signal.reason ?? new DOMException("A busca foi cancelada.", "AbortError"));
     };
-  }>;
-};
+    signal.addEventListener("abort", abort, { once: true });
+  });
+}
+
+function waitForAbort<T>(promise: Promise<T>, signal?: AbortSignal): Promise<T> {
+  if (!signal) return promise;
+  throwIfAborted(signal);
+  return new Promise((resolve, reject) => {
+    const abort = () => {
+      signal.removeEventListener("abort", abort);
+      reject(signal.reason ?? new DOMException("A busca foi cancelada.", "AbortError"));
+    };
+    signal.addEventListener("abort", abort, { once: true });
+    promise.then(
+      (value) => {
+        signal.removeEventListener("abort", abort);
+        resolve(value);
+      },
+      (error: unknown) => {
+        signal.removeEventListener("abort", abort);
+        reject(error);
+      },
+    );
+  });
+}
 
 function haversineMeters(left: GeoPoint, right: GeoPoint): number {
   const radians = (degrees: number) => (degrees * Math.PI) / 180;
@@ -216,136 +308,265 @@ function nearestStops(
     .slice(0, MAX_STOPS_TO_EVALUATE_PER_SIDE);
 }
 
-async function fetchWalkingPath(
-  from: GeoPoint,
-  to: GeoPoint,
-): Promise<WalkingPath | undefined> {
-  const straightLineMeters = haversineMeters(from, to);
-  if (straightLineMeters < 5) {
-    return {
-      distanceMeters: Math.round(straightLineMeters),
-      durationSeconds: 0,
-      geometry: [from, to],
-    };
-  }
-
-  const url = `${WALKING_ROUTER}/${from.longitude},${from.latitude};${to.longitude},${to.latitude}?overview=full&geometries=geojson&steps=false`;
-  const response = await fetch(url, {
-    signal: AbortSignal.timeout(12_000),
-    headers: {
-      accept: "application/json",
-      "user-agent": "VAI Mobilidade/1.0 (pedestrian routing from OSM data)",
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`O roteador de caminhada respondeu HTTP ${response.status}.`);
-  }
-
-  const body = (await response.json()) as OsrmResponse;
-  const route = body.routes?.[0];
-  if (body.code === "NoRoute" || !route) return undefined;
-  if (
-    body.code !== "Ok" ||
-    !Number.isFinite(route.distance) ||
-    !Number.isFinite(route.duration) ||
-    !Array.isArray(route.geometry?.coordinates)
-  ) {
-    throw new Error("O roteador de caminhada retornou uma resposta inválida.");
-  }
-
-  const geometry = route.geometry.coordinates.flatMap(([longitude, latitude]) =>
-    Number.isFinite(latitude) && Number.isFinite(longitude)
-      ? [{ latitude, longitude }]
-      : [],
-  );
-  if (geometry.length === 0) return undefined;
-
-  return {
-    distanceMeters: Math.max(0, Math.round(route.distance ?? 0)),
-    durationSeconds: Math.max(0, route.duration ?? 0),
-    geometry,
-  };
-}
-
-async function walkingPathsForStops(
-  point: GeoPoint,
-  stops: GtfsStop[],
-): Promise<Map<string, WalkingPath>> {
-  const pairs = stops.map((stop) => ({ stop, point: stop.coordinates }));
-  const paths = new Map<string, WalkingPath>();
-  let nextIndex = 0;
-  let errorCount = 0;
-  const workers = Array.from(
-    { length: Math.min(4, pairs.length) },
-    async () => {
-      while (true) {
-        const index = nextIndex++;
-        const pair = pairs[index];
-        if (!pair) return;
-        try {
-          const path = await walkingPath(point, pair.point);
-          // Never offer a bus stop that requires an excessive access walk,
-          // even when its straight-line distance appears acceptable.
-          if (path && path.distanceMeters <= MAX_ACCESS_WALK_METERS) {
-            paths.set(pair.stop.id, path);
-          }
-        } catch {
-          errorCount += 1;
-        }
-      }
-    },
-  );
-  await Promise.all(workers);
-
-  if (paths.size === 0 && errorCount > 0) {
-    throw new Error("O serviço público de cálculo de caminhada está indisponível.");
-  }
-
-  // Keep the most accessible stops by actual pedestrian-network distance,
-  // not only by straight-line proximity.
-  return new Map(
-    [...paths.entries()]
-      .sort((left, right) => left[1].distanceMeters - right[1].distanceMeters)
-      .slice(0, MAX_STOPS_PER_SIDE),
-  );
+function coordinateKey(point: GeoPoint): string {
+  return `${point.latitude.toFixed(6)},${point.longitude.toFixed(6)}`;
 }
 
 function walkingCacheKey(from: GeoPoint, to: GeoPoint): string {
-  const coordinate = (point: GeoPoint) =>
-    `${point.latitude.toFixed(5)},${point.longitude.toFixed(5)}`;
-  return `${coordinate(from)}>${coordinate(to)}`;
+  return `${coordinateKey(from)}>${coordinateKey(to)}`;
 }
 
-async function walkingPath(
-  from: GeoPoint,
-  to: GeoPoint,
-): Promise<WalkingPath | undefined> {
-  const key = walkingCacheKey(from, to);
+function getCachedWalkingPath(key: string): Promise<WalkingPath | undefined> | undefined {
   const cached = walkingPathCache.get(key);
-  if (cached && cached.expiresAt > Date.now()) {
-    // Refresh insertion order so frequently reused paths remain in the cache.
+  if (!cached) return undefined;
+  if (cached.expiresAt <= Date.now()) {
     walkingPathCache.delete(key);
-    walkingPathCache.set(key, cached);
-    return cached.promise;
+    return undefined;
   }
-  if (cached) walkingPathCache.delete(key);
+  walkingPathCache.delete(key);
+  walkingPathCache.set(key, cached);
+  return cached.promise;
+}
 
-  const promise = fetchWalkingPathRateLimited(from, to).catch((error: unknown) => {
-    if (walkingPathCache.get(key)?.promise === promise) {
-      walkingPathCache.delete(key);
-    }
-    throw error;
-  });
+function cacheWalkingPath(key: string, path: WalkingPath | undefined): void {
+  walkingPathCache.delete(key);
   walkingPathCache.set(key, {
     expiresAt: Date.now() + WALKING_CACHE_TTL_MS,
-    promise,
+    promise: Promise.resolve(path),
   });
   while (walkingPathCache.size > MAX_WALKING_CACHE_ENTRIES) {
     const oldestKey = walkingPathCache.keys().next().value;
     if (!oldestKey) break;
     walkingPathCache.delete(oldestKey);
   }
-  return promise;
+}
+
+type WalkingPair = {
+  side: "origin" | "destination";
+  stop: GtfsStop;
+  from: GeoPoint;
+  to: GeoPoint;
+  key: string;
+};
+
+function tableCoordinate(point: GeoPoint): string {
+  return `${point.longitude},${point.latitude}`;
+}
+
+async function walkingPathsForStops(
+  origin: GeoPoint,
+  destination: GeoPoint,
+  originStops: GtfsStop[],
+  destinationStops: GtfsStop[],
+  signal?: AbortSignal,
+): Promise<{
+  origin: Map<string, WalkingPath>;
+  destination: Map<string, WalkingPath>;
+  pairCount: number;
+  cacheHits: number;
+  externalPairs: number;
+  externalRequests: number;
+}> {
+  const pairs: WalkingPair[] = [
+    ...originStops.map((stop) => ({
+      side: "origin" as const,
+      stop,
+      from: origin,
+      to: stop.coordinates,
+      key: walkingCacheKey(origin, stop.coordinates),
+    })),
+    ...destinationStops.map((stop) => ({
+      side: "destination" as const,
+      stop,
+      from: stop.coordinates,
+      to: destination,
+      key: walkingCacheKey(stop.coordinates, destination),
+    })),
+  ];
+  const cached = new Map<string, WalkingPath | undefined>();
+  const missing = new Map<string, WalkingPair>();
+  for (const pair of pairs) {
+    if (haversineMeters(pair.from, pair.to) < 5) {
+      cached.set(pair.key, {
+        distanceMeters: Math.round(haversineMeters(pair.from, pair.to)),
+        durationSeconds: 0,
+        geometry: [],
+      });
+      continue;
+    }
+    const cachedPromise = getCachedWalkingPath(pair.key);
+    if (cachedPromise) {
+      cached.set(pair.key, await waitForAbort(cachedPromise, signal));
+    } else {
+      missing.set(pair.key, pair);
+    }
+  }
+
+  let externalRequests = 0;
+  if (missing.size > 0) {
+    externalRequests = 1;
+    const uniqueCoordinates = new Map<string, GeoPoint>();
+    for (const pair of missing.values()) {
+      uniqueCoordinates.set(coordinateKey(pair.from), pair.from);
+      uniqueCoordinates.set(coordinateKey(pair.to), pair.to);
+    }
+    const coordinates = [...uniqueCoordinates.values()];
+    const coordinateIndexes = new Map(
+      coordinates.map((point, index) => [coordinateKey(point), index]),
+    );
+    const sourceIndexes = [
+      ...new Set(
+        [...missing.values()].map((pair) => coordinateIndexes.get(coordinateKey(pair.from))!),
+      ),
+    ];
+    const destinationIndexes = [
+      ...new Set(
+        [...missing.values()].map((pair) => coordinateIndexes.get(coordinateKey(pair.to))!),
+      ),
+    ];
+    const url = `${WALKING_ROUTER}/${coordinates.map(tableCoordinate).join(";")}?annotations=duration,distance&sources=${sourceIndexes.join(";")}&destinations=${destinationIndexes.join(";")}`;
+    const table = await waitForAbort(
+      fetchWalkingTableRateLimited(url, signal),
+      signal,
+    );
+    for (const [key, pair] of missing) {
+      const rowIndex = sourceIndexes.indexOf(
+        coordinateIndexes.get(coordinateKey(pair.from))!,
+      );
+      const columnIndex = destinationIndexes.indexOf(
+        coordinateIndexes.get(coordinateKey(pair.to))!,
+      );
+      const distance = table.distances?.[rowIndex]?.[columnIndex];
+      const duration = table.durations?.[rowIndex]?.[columnIndex];
+      const path =
+        typeof distance === "number" &&
+        Number.isFinite(distance) &&
+        typeof duration === "number" &&
+        Number.isFinite(duration)
+          ? {
+              distanceMeters: Math.max(0, Math.round(distance)),
+              durationSeconds: Math.max(0, duration),
+              // The Table endpoint provides network distance and duration but
+              // no geometry; leaving it empty avoids drawing a fabricated line.
+              geometry: [],
+            }
+          : undefined;
+      cached.set(key, path);
+      cacheWalkingPath(key, path);
+    }
+  }
+
+  const originPaths = new Map<string, WalkingPath>();
+  const destinationPaths = new Map<string, WalkingPath>();
+  for (const pair of pairs) {
+    const path = cached.get(pair.key);
+    if (!path || path.distanceMeters > MAX_ACCESS_WALK_METERS) continue;
+    const collection = pair.side === "origin" ? originPaths : destinationPaths;
+    const current = collection.get(pair.stop.id);
+    if (!current || path.distanceMeters < current.distanceMeters) {
+      collection.set(pair.stop.id, path);
+    }
+  }
+
+  const keepClosest = (paths: Map<string, WalkingPath>) =>
+    new Map(
+      [...paths.entries()]
+        .sort((left, right) => left[1].distanceMeters - right[1].distanceMeters)
+        .slice(0, MAX_STOPS_PER_SIDE),
+    );
+  return {
+    origin: keepClosest(originPaths),
+    destination: keepClosest(destinationPaths),
+    pairCount: pairs.length,
+    cacheHits: pairs.length - missing.size,
+    externalPairs: missing.size,
+    externalRequests,
+  };
+}
+
+const SHAPE_GRID_DEGREES = 0.005;
+const SHAPE_GRID_SEARCH_RADIUS = 3;
+
+function shapeGridKey(latitudeCell: number, longitudeCell: number): string {
+  return `${latitudeCell}:${longitudeCell}`;
+}
+
+function shapeSpatialIndex(
+  feed: GtfsFeed,
+  shapeId: string,
+  shape: GeoPoint[],
+): ShapeSpatialIndex {
+  let feedIndexes = shapeSpatialIndexes.get(feed);
+  if (!feedIndexes) {
+    feedIndexes = new Map();
+    shapeSpatialIndexes.set(feed, feedIndexes);
+  }
+  const existing = feedIndexes.get(shapeId);
+  if (existing) return existing;
+
+  const cells = new Map<string, ShapePoint[]>();
+  shape.forEach((point, index) => {
+    const key = shapeGridKey(
+      Math.floor(point.latitude / SHAPE_GRID_DEGREES),
+      Math.floor(point.longitude / SHAPE_GRID_DEGREES),
+    );
+    const points = cells.get(key) ?? [];
+    points.push({ index, point });
+    cells.set(key, points);
+  });
+  const index = { cells };
+  feedIndexes.set(shapeId, index);
+  return index;
+}
+
+function nearestShapePoint(
+  feed: GtfsFeed,
+  shapeId: string,
+  shape: GeoPoint[],
+  point: GeoPoint,
+): ShapeMatch {
+  let feedMatches = shapeMatchCache.get(feed);
+  if (!feedMatches) {
+    feedMatches = new Map();
+    shapeMatchCache.set(feed, feedMatches);
+  }
+  const key = `${shapeId}:${coordinateKey(point)}`;
+  const cached = feedMatches.get(key);
+  if (cached) return cached;
+
+  const index = shapeSpatialIndex(feed, shapeId, shape);
+  const latitudeCell = Math.floor(point.latitude / SHAPE_GRID_DEGREES);
+  const longitudeCell = Math.floor(point.longitude / SHAPE_GRID_DEGREES);
+  let nearest: ShapeMatch = { index: -1, distance: Number.POSITIVE_INFINITY };
+  for (
+    let latitudeOffset = -SHAPE_GRID_SEARCH_RADIUS;
+    latitudeOffset <= SHAPE_GRID_SEARCH_RADIUS;
+    latitudeOffset += 1
+  ) {
+    for (
+      let longitudeOffset = -SHAPE_GRID_SEARCH_RADIUS;
+      longitudeOffset <= SHAPE_GRID_SEARCH_RADIUS;
+      longitudeOffset += 1
+    ) {
+      const points = index.cells.get(
+        shapeGridKey(latitudeCell + latitudeOffset, longitudeCell + longitudeOffset),
+      );
+      if (!points) continue;
+      for (const candidate of points) {
+        const distance = haversineMeters(point, candidate.point);
+        if (distance < nearest.distance) {
+          nearest = { index: candidate.index, distance };
+        }
+      }
+    }
+  }
+  feedMatches.set(key, nearest);
+  while (feedMatches.size > 30_000) {
+    const oldestKey = feedMatches.keys().next().value;
+    if (!oldestKey) break;
+    feedMatches.delete(oldestKey);
+  }
+  return nearest;
 }
 
 function shapeSegment(
@@ -356,22 +577,17 @@ function shapeSegment(
 ): GeoPoint[] {
   const shape = feed.shapes.get(shapeId);
   if (!shape || shape.length < 2) return [];
+  const key = `${shapeId}:${coordinateKey(from)}>${coordinateKey(to)}`;
+  let feedSegments = shapeSegmentCache.get(feed);
+  if (!feedSegments) {
+    feedSegments = new Map();
+    shapeSegmentCache.set(feed, feedSegments);
+  }
+  const cached = feedSegments.get(key);
+  if (cached) return cached;
 
-  const nearestIndex = (point: GeoPoint) => {
-    let result = -1;
-    let minimumDistance = Number.POSITIVE_INFINITY;
-    shape.forEach((candidate, index) => {
-      const distance = haversineMeters(point, candidate);
-      if (distance < minimumDistance) {
-        minimumDistance = distance;
-        result = index;
-      }
-    });
-    return { index: result, distance: minimumDistance };
-  };
-
-  const fromMatch = nearestIndex(from);
-  const toMatch = nearestIndex(to);
+  const fromMatch = nearestShapePoint(feed, shapeId, shape, from);
+  const toMatch = nearestShapePoint(feed, shapeId, shape, to);
   if (
     fromMatch.index < 0 ||
     toMatch.index < 0 ||
@@ -385,7 +601,14 @@ function shapeSegment(
   const start = Math.min(fromMatch.index, toMatch.index);
   const end = Math.max(fromMatch.index, toMatch.index);
   const segment = shape.slice(start, end + 1);
-  return fromMatch.index <= toMatch.index ? segment : segment.reverse();
+  const result = fromMatch.index <= toMatch.index ? segment : segment.reverse();
+  feedSegments.set(key, result);
+  while (feedSegments.size > 12_000) {
+    const oldestKey = feedSegments.keys().next().value;
+    if (!oldestKey) break;
+    feedSegments.delete(oldestKey);
+  }
+  return result;
 }
 
 function scheduledTrips(
@@ -394,34 +617,39 @@ function scheduledTrips(
   requestEpoch: number,
 ): ScheduledTrip[] {
   const maximumEpoch = requestEpoch + MAX_SEARCH_HORIZON_MS;
-  const result: ScheduledTrip[] = [];
-  for (const day of days) {
-    for (const [tripId, times] of feed.stopTimesByTrip) {
-      const trip = feed.trips.get(tripId);
-      const route = trip && feed.routes.get(trip.routeId);
-      if (!trip || !route || !day.serviceIds.has(trip.serviceId)) continue;
-      if (
-        !times.some((stopTime) => {
-          const departureEpoch =
-            day.midnightEpoch + stopTime.departureSeconds * 1_000;
-          return departureEpoch >= requestEpoch && departureEpoch <= maximumEpoch;
-        })
-      ) {
-        // A previous service day may still have an after-midnight trip.
-        if (
-          !times.some(
-            (stopTime) =>
-              day.midnightEpoch + stopTime.departureSeconds * 1_000 >=
-              requestEpoch,
-          )
-        ) {
-          continue;
-        }
+  const cacheKey = `${feed.source.version}|${days
+    .map((day) => `${day.key}:${[...day.serviceIds].sort().join("+")}`)
+    .join(";")}`;
+  let datedSchedules = scheduledTripCache.get(cacheKey);
+  if (!datedSchedules) {
+    datedSchedules = [];
+    for (const day of days) {
+      for (const [tripId, times] of feed.stopTimesByTrip) {
+        const trip = feed.trips.get(tripId);
+        const route = trip && feed.routes.get(trip.routeId);
+        if (!trip || !route || !day.serviceIds.has(trip.serviceId)) continue;
+        datedSchedules.push({ trip, route, times, midnightEpoch: day.midnightEpoch });
       }
-      result.push({ trip, route, times, midnightEpoch: day.midnightEpoch });
+    }
+    scheduledTripCache.set(cacheKey, datedSchedules);
+    while (scheduledTripCache.size > 16) {
+      const oldestKey = scheduledTripCache.keys().next().value;
+      if (!oldestKey) break;
+      scheduledTripCache.delete(oldestKey);
     }
   }
-  return result;
+
+  return datedSchedules.filter((schedule) => {
+    const firstTime = schedule.times[0];
+    const lastTime = schedule.times.at(-1);
+    if (!firstTime || !lastTime) return false;
+    const firstDeparture =
+      schedule.midnightEpoch + firstTime.departureSeconds * 1_000;
+    const lastDeparture =
+      schedule.midnightEpoch + lastTime.departureSeconds * 1_000;
+    // GTFS stop_times are sequence-sorted and validated during feed load.
+    return lastDeparture >= requestEpoch && firstDeparture <= maximumEpoch;
+  });
 }
 
 function buildRideSegment(
@@ -680,7 +908,6 @@ function activeTripsAtStops(
 function buildSecondRideIndex(
   schedules: ScheduledTrip[],
   destinationStopIds: Set<string>,
-  feed: GtfsFeed,
   maximumEpoch: number,
 ): Map<string, SecondRide[]> {
   const index = new Map<string, SecondRide[]>();
@@ -692,25 +919,24 @@ function buildSecondRideIndex(
 
     for (let fromIndex = 0; fromIndex < schedule.times.length - 1; fromIndex += 1) {
       const fromTime = schedule.times[fromIndex]!;
-      const destinationIndex = destinationIndexes.find(
-        (candidateIndex) => candidateIndex > fromIndex,
-      );
-      if (destinationIndex === undefined) continue;
-      const ride = buildRideSegment(
-        feed,
-        schedule,
-        fromIndex,
-        destinationIndex,
-      );
-      if (!ride || ride.departureEpoch > maximumEpoch) continue;
-      const choices = index.get(fromTime.stopId) ?? [];
-      choices.push({ ride });
-      index.set(fromTime.stopId, choices);
+      const departureEpoch =
+        schedule.midnightEpoch + fromTime.departureSeconds * 1_000;
+      if (departureEpoch > maximumEpoch) continue;
+      for (const destinationIndex of destinationIndexes) {
+        if (destinationIndex <= fromIndex) continue;
+        const destinationTime = schedule.times[destinationIndex]!;
+        const arrivalEpoch =
+          schedule.midnightEpoch + destinationTime.arrivalSeconds * 1_000;
+        if (arrivalEpoch <= departureEpoch) continue;
+        const choices = index.get(fromTime.stopId) ?? [];
+        choices.push({ schedule, fromIndex, toIndex: destinationIndex, departureEpoch });
+        index.set(fromTime.stopId, choices);
+      }
     }
   }
 
   for (const choices of index.values()) {
-    choices.sort((left, right) => left.ride.departureEpoch - right.ride.departureEpoch);
+    choices.sort((left, right) => left.departureEpoch - right.departureEpoch);
   }
   return index;
 }
@@ -719,17 +945,26 @@ function findNextTransferRide(
   choices: SecondRide[],
   firstRide: RideSegment,
   maximumEpoch: number,
+  feed: GtfsFeed,
 ): RideSegment | undefined {
   const earliestBoarding =
     firstRide.arrivalEpoch + MINIMUM_TRANSFER_SECONDS * 1_000;
-  for (const choice of choices) {
-    if (choice.ride.departureEpoch > maximumEpoch) break;
-    if (choice.ride.departureEpoch < earliestBoarding) continue;
+  let lower = 0;
+  let upper = choices.length;
+  while (lower < upper) {
+    const middle = Math.floor((lower + upper) / 2);
+    if (choices[middle]!.departureEpoch < earliestBoarding) lower = middle + 1;
+    else upper = middle;
+  }
+  for (let index = lower; index < choices.length; index += 1) {
+    const choice = choices[index]!;
+    if (choice.departureEpoch > maximumEpoch) break;
     const waitSeconds =
-      (choice.ride.departureEpoch - firstRide.arrivalEpoch) / 1_000;
+      (choice.departureEpoch - firstRide.arrivalEpoch) / 1_000;
     if (waitSeconds > MAX_TRANSFER_WAIT_SECONDS) break;
-    if (choice.ride.schedule.route.id === firstRide.schedule.route.id) continue;
-    return choice.ride;
+    if (choice.schedule.route.id === firstRide.schedule.route.id) continue;
+    const ride = buildRideSegment(feed, choice.schedule, choice.fromIndex, choice.toIndex);
+    if (ride) return ride;
   }
   return undefined;
 }
@@ -765,75 +1000,253 @@ function makeResponse(
   };
 }
 
+function routeResponseCacheKey(
+  request: TransitRouteSearchInput,
+  requestedAt: Date,
+  feed: GtfsFeed,
+): string {
+  return [
+    feed.source.version,
+    Math.floor(requestedAt.getTime() / 60_000),
+    coordinateKey(request.origin.coordinates),
+    coordinateKey(request.destination.coordinates),
+  ].join("|");
+}
+
+function cachedResponseForRequest(
+  cached: CachedRouteResponse,
+  request: TransitRouteSearchInput,
+  requestedAt: Date,
+): TransitRouteSearchResponse | undefined {
+  const requestEpoch = requestedAt.getTime();
+  const routes = cached.response.routes.flatMap((route) => {
+    const legs = route.legs.map((leg) => ({
+      ...leg,
+      from: { ...leg.from, coordinates: { ...leg.from.coordinates } },
+      to: { ...leg.to, coordinates: { ...leg.to.coordinates } },
+      geometry: [...leg.geometry],
+    }));
+    const firstWalk = legs[0];
+    const lastWalk = legs.at(-1);
+    if (
+      !firstWalk?.departureAt ||
+      !firstWalk.arrivalAt ||
+      !lastWalk ||
+      !route.departureAt ||
+      !route.arrivalAt
+    ) {
+      return [];
+    }
+    const firstWalkSeconds =
+      (firstWalk.arrivalAt.getTime() - firstWalk.departureAt.getTime()) / 1_000;
+    const departureEpoch = route.departureAt.getTime();
+    const arrivalEpoch = route.arrivalAt.getTime();
+    const initialWaitSeconds =
+      (departureEpoch - requestEpoch) / 1_000 - firstWalkSeconds;
+    const totalDurationSeconds = (arrivalEpoch - requestEpoch) / 1_000;
+    if (
+      initialWaitSeconds < 0 ||
+      initialWaitSeconds > MAX_INITIAL_WAIT_SECONDS ||
+      totalDurationSeconds <= 0 ||
+      totalDurationSeconds > MAX_ITINERARY_DURATION_SECONDS
+    ) {
+      return [];
+    }
+    firstWalk.from = {
+      label: request.origin.label,
+      coordinates: { ...request.origin.coordinates },
+    };
+    firstWalk.departureAt = requestedAt;
+    firstWalk.arrivalAt = new Date(requestEpoch + firstWalkSeconds * 1_000);
+    lastWalk.to = {
+      label: request.destination.label,
+      coordinates: { ...request.destination.coordinates },
+    };
+    return [{
+      ...route,
+      totalMinutes: minutesFromSeconds(totalDurationSeconds),
+      legs,
+    }];
+  });
+  if (routes.length === 0) return undefined;
+  routes.sort((left, right) => {
+    const scoreDifference =
+      left.totalMinutes + left.walkingMinutes * 0.25 + left.transferCount * 7 -
+      (right.totalMinutes + right.walkingMinutes * 0.25 + right.transferCount * 7);
+    return scoreDifference || left.totalMinutes - right.totalMinutes;
+  });
+  routes.forEach((route, index) => {
+    route.recommended = index === 0;
+  });
+  return {
+    ...cached.response,
+    requestedAt,
+    status: "routes_found",
+    routes,
+  };
+}
+
+function rememberRouteResponse(
+  key: string,
+  response: TransitRouteSearchResponse,
+  candidateCount: number,
+): void {
+  routeResponseCache.delete(key);
+  routeResponseCache.set(key, {
+    expiresAt: Date.now() + ROUTE_RESULT_CACHE_TTL_MS,
+    response,
+    candidateCount,
+  });
+  while (routeResponseCache.size > ROUTE_RESULT_CACHE_MAX_ENTRIES) {
+    const oldestKey = routeResponseCache.keys().next().value;
+    if (!oldestKey) break;
+    routeResponseCache.delete(oldestKey);
+  }
+}
+
 export async function searchTransitRoutes(
   request: TransitRouteSearchInput,
+  options: { signal?: AbortSignal; onTiming?: RouteSearchTiming } = {},
 ): Promise<TransitRouteSearchResponse> {
+  const totalStartedAt = performance.now();
+  const reportTiming = options.onTiming ?? (() => undefined);
+  const signal = options.signal;
+  const timed = (
+    stage: string,
+    startedAt: number,
+    details?: Record<string, number | string | boolean>,
+  ) => reportTiming(stage, Math.round(performance.now() - startedAt), details);
   const requestedAt = request.departureAt ?? new Date();
   const requestEpoch = requestedAt.getTime();
-  const feed = await getArtespGtfsFeed();
+  const feedStartedAt = performance.now();
+  const feed = await waitForAbort(getArtespGtfsFeed(), signal);
+  timed("gtfs_feed", feedStartedAt, {
+    version: feed.source.version,
+    stops: feed.stops.size,
+    trips: feed.trips.size,
+  });
+  throwIfAborted(signal);
+
+  const cacheKey = routeResponseCacheKey(request, requestedAt, feed);
+  const cachedRouteResponse = routeResponseCache.get(cacheKey);
+  if (cachedRouteResponse && cachedRouteResponse.expiresAt > Date.now()) {
+    routeResponseCache.delete(cacheKey);
+    routeResponseCache.set(cacheKey, cachedRouteResponse);
+    const cachedResponse = cachedResponseForRequest(
+      cachedRouteResponse,
+      request,
+      requestedAt,
+    );
+    if (cachedResponse) {
+      reportTiming("route_cache_hit", 0, {
+        candidateCount: cachedRouteResponse.candidateCount,
+      });
+      reportTiming("total", Math.round(performance.now() - totalStartedAt), {
+        cached: true,
+        routes: cachedResponse.routes.length,
+      });
+      return cachedResponse;
+    }
+  } else if (cachedRouteResponse) {
+    routeResponseCache.delete(cacheKey);
+  }
+
   const originPoint = request.origin.coordinates;
   const destinationPoint = request.destination.coordinates;
+  const stopsStartedAt = performance.now();
   const nearbyOriginStops = nearestStops(feed, originPoint);
   const nearbyDestinationStops = nearestStops(feed, destinationPoint);
+  timed("nearby_stops", stopsStartedAt, {
+    originCandidates: nearbyOriginStops.length,
+    destinationCandidates: nearbyDestinationStops.length,
+  });
 
   if (nearbyOriginStops.length === 0 || nearbyDestinationStops.length === 0) {
-    return makeResponse(
+    const response = makeResponse(
       "no_routes",
       "Não encontramos paradas do GTFS metropolitano próximas dos dois endereços. As linhas municipais de Barueri ainda não têm feed integrado.",
       requestedAt,
       feed,
       [],
     );
+    rememberRouteResponse(cacheKey, response, 0);
+    reportTiming("total", Math.round(performance.now() - totalStartedAt), {
+      cached: false,
+      routes: 0,
+    });
+    return response;
   }
 
+  const calendarStartedAt = performance.now();
   const serviceDays = serviceDaysFor(feed, requestedAt);
+  timed("service_calendar", calendarStartedAt, { activeDays: serviceDays.length });
   if (serviceDays.length === 0) {
-    return makeResponse(
+    const response = makeResponse(
       "no_routes",
       "O calendário oficial não informa viagens para essa data. A publicação atual não inclui exceções de feriados.",
       requestedAt,
       feed,
       [],
     );
+    rememberRouteResponse(cacheKey, response, 0);
+    reportTiming("total", Math.round(performance.now() - totalStartedAt), {
+      cached: false,
+      routes: 0,
+    });
+    return response;
   }
 
-  let originWalks: Map<string, WalkingPath>;
-  let destinationWalks: Map<string, WalkingPath>;
-  try {
-    [originWalks, destinationWalks] = await Promise.all([
-      walkingPathsForStops(
-        originPoint,
-        nearbyOriginStops.map((candidate) => candidate.stop),
-      ),
-      walkingPathsForStops(
-        destinationPoint,
-        nearbyDestinationStops.map((candidate) => candidate.stop),
-      ),
-    ]);
-  } catch (error) {
-    throw new Error(
-      error instanceof Error
-        ? error.message
-        : "Não foi possível calcular os trechos a pé pelo OpenStreetMap.",
-    );
-  }
+  const walkingStartedAt = performance.now();
+  const walkingPromise = walkingPathsForStops(
+    originPoint,
+    destinationPoint,
+    nearbyOriginStops.map((candidate) => candidate.stop),
+    nearbyDestinationStops.map((candidate) => candidate.stop),
+    signal,
+  );
+  const schedulesStartedAt = performance.now();
+  const schedules = scheduledTrips(
+    feed,
+    serviceDays,
+    requestEpoch,
+  );
+  timed("scheduled_trips", schedulesStartedAt, { tripCount: schedules.length });
+  const walking = await waitForAbort(walkingPromise, signal);
+  const originWalks = walking.origin;
+  const destinationWalks = walking.destination;
+  timed("walking_network", walkingStartedAt, {
+    candidatePairs: walking.pairCount,
+    cacheHits: walking.cacheHits,
+    externalPairs: walking.externalPairs,
+    externalRequests: walking.externalRequests,
+    originStops: originWalks.size,
+    destinationStops: destinationWalks.size,
+  });
 
   const originStopIds = new Set(originWalks.keys());
   const destinationStopIds = new Set(destinationWalks.keys());
   if (originStopIds.size === 0 || destinationStopIds.size === 0) {
-    return makeResponse(
+    const response = makeResponse(
       "no_routes",
       "Não encontramos pontos de ônibus atendidos pelo GTFS a até 1 km de caminhada da origem e do destino. As linhas municipais de Barueri ainda não têm feed integrado.",
       requestedAt,
       feed,
       [],
     );
+    rememberRouteResponse(cacheKey, response, 0);
+    reportTiming("total", Math.round(performance.now() - totalStartedAt), {
+      cached: false,
+      routes: 0,
+    });
+    return response;
   }
 
-  const schedules = scheduledTrips(feed, serviceDays, requestEpoch);
+  throwIfAborted(signal);
   const maximumEpoch = requestEpoch + MAX_SEARCH_HORIZON_MS;
   const candidates = new Map<string, Candidate>();
 
+  const directStartedAt = performance.now();
+  let directRidePairsChecked = 0;
   for (const schedule of schedules) {
     for (let fromIndex = 0; fromIndex < schedule.times.length - 1; fromIndex += 1) {
       const originTime = schedule.times[fromIndex]!;
@@ -860,6 +1273,7 @@ export async function searchTransitRoutes(
         if (!destinationStopIds.has(destinationTime.stopId)) continue;
         const lastWalk = destinationWalks.get(destinationTime.stopId);
         if (!lastWalk) continue;
+        directRidePairsChecked += 1;
         const ride = buildRideSegment(feed, schedule, fromIndex, toIndex);
         if (!ride || ride.arrivalEpoch <= departureEpoch) continue;
         addCandidate(
@@ -869,13 +1283,21 @@ export async function searchTransitRoutes(
       }
     }
   }
+  timed("direct_routes", directStartedAt, {
+    ridePairsChecked: directRidePairsChecked,
+    candidates: candidates.size,
+  });
 
+  const transferIndexStartedAt = performance.now();
   const secondRideIndex = buildSecondRideIndex(
     schedules,
     destinationStopIds,
-    feed,
     maximumEpoch,
   );
+  timed("transfer_index", transferIndexStartedAt, {
+    transferStops: secondRideIndex.size,
+  });
+
   const boardings = activeTripsAtStops(schedules, originStopIds)
     .filter((boarding) => {
       const stop = boarding.schedule.times[boarding.index];
@@ -885,8 +1307,9 @@ export async function searchTransitRoutes(
         boarding.departureEpoch >= requestEpoch + path.durationSeconds * 1_000 &&
         boarding.departureEpoch <= maximumEpoch
       );
-    })
-    .slice(0, MAX_FIRST_LEGS_TO_EXPLORE);
+    });
+  const transferStartedAt = performance.now();
+  let transferChoicesChecked = 0;
 
   for (const boarding of boardings) {
     const firstTime = boarding.schedule.times[boarding.index]!;
@@ -904,6 +1327,7 @@ export async function searchTransitRoutes(
       const transferStop = feed.stops.get(transferTime.stopId);
       const secondChoices = secondRideIndex.get(transferTime.stopId);
       if (!transferStop || !secondChoices?.length) continue;
+      transferChoicesChecked += 1;
 
       const firstRide = buildRideSegment(
         feed,
@@ -916,6 +1340,7 @@ export async function searchTransitRoutes(
         secondChoices,
         firstRide,
         maximumEpoch,
+        feed,
       );
       if (!secondRide) continue;
       const lastWalk = destinationWalks.get(secondRide.toStop.id);
@@ -933,6 +1358,11 @@ export async function searchTransitRoutes(
       );
     }
   }
+  timed("transfer_routes", transferStartedAt, {
+    originBoardings: boardings.length,
+    transferChoicesChecked,
+    candidates: candidates.size,
+  });
 
   const orderedCandidates = [...candidates.values()].sort((left, right) => {
     const scoreDifference =
@@ -946,7 +1376,7 @@ export async function searchTransitRoutes(
   );
   if (routes[0]) routes[0].recommended = true;
 
-  return makeResponse(
+  const response = makeResponse(
     routes.length > 0 ? "routes_found" : "no_routes",
     routes.length > 0
       ? "Alternativas calculadas com viagens do GTFS da ARTESP e caminhos a pé do OpenStreetMap."
@@ -955,4 +1385,24 @@ export async function searchTransitRoutes(
     feed,
     routes,
   );
+  const waitBoundaryRisk = boardings.some((boarding) => {
+    const time = boarding.schedule.times[boarding.index];
+    const path = time && originWalks.get(time.stopId);
+    if (!path) return false;
+    const waitSeconds =
+      (boarding.departureEpoch - requestEpoch) / 1_000 - path.durationSeconds;
+    return Math.abs(waitSeconds - MAX_INITIAL_WAIT_SECONDS) <= 120;
+  });
+  const cacheSafe =
+    routes.length > 0 &&
+    candidates.size <= MAX_ROUTE_RESULTS &&
+    !waitBoundaryRisk &&
+    routes.every((route) => route.totalMinutes <= 150);
+  if (cacheSafe) rememberRouteResponse(cacheKey, response, candidates.size);
+  reportTiming("total", Math.round(performance.now() - totalStartedAt), {
+    cached: false,
+    routes: routes.length,
+    candidates: candidates.size,
+  });
+  return response;
 }
