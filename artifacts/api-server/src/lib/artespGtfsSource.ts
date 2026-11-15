@@ -272,6 +272,62 @@ async function forEachCsvRow(
   return rowCount;
 }
 
+async function forEachCsvRowFast(
+  archivePath: string,
+  fileName: string,
+  requiredColumns: string[],
+  callback: (row: Record<string, string>) => void,
+): Promise<number> {
+  const startedAt = performance.now();
+  let rowCount = 0;
+  const { stream, close } = await openEntry(archivePath, fileName);
+  const requiredColumnSet = new Set(requiredColumns);
+  const parser = parse({
+    bom: true,
+    columns: (headers) => {
+      const availableColumns = new Set(headers);
+      const missingColumns = requiredColumns.filter(
+        (column) => !availableColumns.has(column),
+      );
+      if (missingColumns.length > 0) {
+        throw new Error(
+          `O arquivo ${fileName} não contém as colunas obrigatórias: ${missingColumns.join(", ")}.`,
+        );
+      }
+      return headers.map((column) =>
+        requiredColumnSet.has(column) ? column : false,
+      );
+    },
+    relax_column_count: true,
+    skip_empty_lines: true,
+    on_record: (row: Record<string, string>) => {
+      rowCount += 1;
+      callback(row);
+      return undefined;
+    },
+  });
+  stream.on("error", (error) => parser.destroy(error));
+
+  try {
+    // Stop-time records are consumed in the parser callback. Emitting 4.5M
+    // intermediate row objects through an async iterator made cold feed loads
+    // take minutes on Render's small instance.
+    parser.resume();
+    await pipeline(stream, parser);
+  } finally {
+    close();
+    console.info(
+      JSON.stringify({
+        event: "artesp_gtfs_csv_parsed",
+        fileName,
+        rowCount,
+        durationMs: Math.round(performance.now() - startedAt),
+      }),
+    );
+  }
+  return rowCount;
+}
+
 function isInBarueriServiceArea(latitude: number, longitude: number): boolean {
   return (
     latitude >= BARUERI_SERVICE_AREA.south &&
@@ -355,7 +411,11 @@ async function loadFeed(): Promise<GtfsFeed> {
   });
 
   const stopTimesByTrip = new Map<string, GtfsStopTime[]>();
-  await forEachCsvRow(archivePath, "stop_times.txt", (row) => {
+  await forEachCsvRowFast(
+    archivePath,
+    "stop_times.txt",
+    ["trip_id", "arrival_time", "departure_time", "stop_id", "stop_sequence"],
+    (row) => {
     if (!stops.has(row.stop_id) || !trips.has(row.trip_id)) return;
     const arrivalSeconds =
       parseGtfsTime(row.arrival_time) ?? parseGtfsTime(row.departure_time);
@@ -378,7 +438,8 @@ async function loadFeed(): Promise<GtfsFeed> {
       departureSeconds,
     });
     stopTimesByTrip.set(row.trip_id, tripTimes);
-  });
+    },
+  );
 
   const relevantShapeIds = new Set<string>();
   for (const tripId of stopTimesByTrip.keys()) {
@@ -386,22 +447,27 @@ async function loadFeed(): Promise<GtfsFeed> {
     if (shapeId) relevantShapeIds.add(shapeId);
   }
   const orderedShapes = new Map<string, Array<{ sequence: number; point: GeoPoint }>>();
-  await forEachCsvRow(archivePath, "shapes.txt", (row) => {
-    if (!relevantShapeIds.has(row.shape_id)) return;
-    const latitude = Number(row.shape_pt_lat);
-    const longitude = Number(row.shape_pt_lon);
-    const sequence = Number(row.shape_pt_sequence);
-    if (
-      !Number.isFinite(latitude) ||
-      !Number.isFinite(longitude) ||
-      !Number.isFinite(sequence)
-    ) {
-      return;
-    }
-    const points = orderedShapes.get(row.shape_id) ?? [];
-    points.push({ sequence, point: { latitude, longitude } });
-    orderedShapes.set(row.shape_id, points);
-  });
+  await forEachCsvRowFast(
+    archivePath,
+    "shapes.txt",
+    ["shape_id", "shape_pt_lat", "shape_pt_lon", "shape_pt_sequence"],
+    (row) => {
+      if (!relevantShapeIds.has(row.shape_id)) return;
+      const latitude = Number(row.shape_pt_lat);
+      const longitude = Number(row.shape_pt_lon);
+      const sequence = Number(row.shape_pt_sequence);
+      if (
+        !Number.isFinite(latitude) ||
+        !Number.isFinite(longitude) ||
+        !Number.isFinite(sequence)
+      ) {
+        return;
+      }
+      const points = orderedShapes.get(row.shape_id) ?? [];
+      points.push({ sequence, point: { latitude, longitude } });
+      orderedShapes.set(row.shape_id, points);
+    },
+  );
 
   for (const [tripId, times] of stopTimesByTrip) {
     times.sort((left, right) => left.sequence - right.sequence);

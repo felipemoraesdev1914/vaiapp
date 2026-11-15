@@ -55,6 +55,11 @@ function App() {
     searchAbortRef.current?.abort();
     const controller = new AbortController();
     searchAbortRef.current = controller;
+    let searchTimedOut = false;
+    const timeout = window.setTimeout(() => {
+      searchTimedOut = true;
+      controller.abort(new DOMException('A busca excedeu o limite de 12 segundos.', 'TimeoutError'));
+    }, 12_000);
     setSearchState({ status: 'loading' });
     setSelectedRouteId(null);
     setCenterSignal((value) => value + 1);
@@ -65,8 +70,16 @@ function App() {
       }, { signal: controller.signal });
       if (!controller.signal.aborted) setSearchState({ status: 'success', response: searchResponse });
     } catch (error) {
-      if (!controller.signal.aborted) setSearchState({ status: 'error', error });
+      if (searchTimedOut) {
+        setSearchState({
+          status: 'error',
+          error: new DOMException('O serviço de rotas não respondeu dentro do limite de 12 segundos.', 'TimeoutError'),
+        });
+      } else if (!controller.signal.aborted) {
+        setSearchState({ status: 'error', error });
+      }
     } finally {
+      window.clearTimeout(timeout);
       if (searchAbortRef.current === controller) searchAbortRef.current = null;
     }
   };

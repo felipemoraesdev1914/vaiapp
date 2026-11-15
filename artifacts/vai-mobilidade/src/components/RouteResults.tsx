@@ -27,6 +27,9 @@ type RouteResultsProps = {
 
 // Mensagens ao usuário em português. Detalhes técnicos ficam no console e nos logs do servidor.
 function errorMessage(error: unknown) {
+  if (error instanceof DOMException && error.name === 'TimeoutError') {
+    return 'A busca não respondeu em 12 segundos. O serviço pode estar iniciando; tente novamente.';
+  }
   // Erro HTTP da API: usa a mensagem amigável enviada pelo backend, se houver.
   if (error && typeof error === 'object' && 'status' in error && typeof error.status === 'number') {
     const data = 'data' in error ? (error as { data?: unknown }).data : undefined;
