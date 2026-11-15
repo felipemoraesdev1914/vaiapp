@@ -76,7 +76,7 @@ router.post("/routes/search", async (req, res): Promise<void> => {
         "Transit route search exceeded its deadline",
       );
       res.status(504).json({
-        error: "A busca de rotas demorou mais que o limite de 10 segundos. Tente novamente.",
+        error: "A busca de rotas demorou mais que o limite de 20 segundos. Tente novamente.",
       });
       return;
     }
