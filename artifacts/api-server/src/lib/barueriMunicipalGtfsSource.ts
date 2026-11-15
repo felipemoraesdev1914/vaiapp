@@ -144,6 +144,27 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
       const scriptSrcs = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map((match) => match[1]).slice(0, 30);
       const agencyId = html.match(/id=["']agencyId["'][^>]*value=["']([^"']+)["']/i)?.[1];
       const firstStopId = html.match(/data-stop-id=["']([^"']+)["']/i)?.[1];
+      const legacyPageResults = await Promise.all([
+        "https://info.cittamobi.com.br/m3p/embedded/predictionMap",
+        "https://info.cittamobi.com.br/m3p/embedded/predictionMap?city=Barueri",
+        "https://info.cittamobi.com.br/m3p/embedded/predictionMap?agencyId=" + agencyId,
+        "https://info.cittamobi.com.br/m3p/embedded/predictionMap?lat=-23.5&lng=-46.85",
+      ].map(async (url) => {
+        try {
+          const response = await fetch(url, {
+            signal: AbortSignal.timeout(4_000),
+            headers: { accept: "text/html", "user-agent": "Mozilla/5.0 VAI Mobilidade/1.0" },
+          });
+          const body = await response.text();
+          const a260Matches = [...body.matchAll(/.{0,100}A260.{0,180}/gi)].slice(0, 4).map((match) => match[0]);
+          const options = [...body.matchAll(/<option[^>]+value=["'](\d+)["'][^>]*>([^<]*)<\/option>/gi)]
+            .slice(0, 8)
+            .map((match) => ({ id: match[1], label: match[2] }));
+          return { url, status: response.status, htmlLength: body.length, a260Matches, options };
+        } catch (error) {
+          return { url, error: error instanceof Error ? error.message : String(error) };
+        }
+      }));
       const apiContexts = [...html.matchAll(/.{0,100}(?:CittamobiAPI|api\.cittamobi|linesroutes|m3p\/js).{0,160}/gi)]
         .slice(0, 30)
         .map((match) => match[0].replace(/\s+/g, " ").slice(0, 240));
@@ -201,6 +222,7 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
         scriptSrcs,
         agencyId,
         firstStopId,
+        legacyPageResults,
         apiContexts,
         apiProbeResults,
         coordinateContexts,
