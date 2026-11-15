@@ -299,7 +299,7 @@ function App() {
             />
             {response && <button type="button" className="save-route-action" onClick={saveCurrentJourney}><Star size={16} fill={favorites.some((item) => item.id === `${origin.coordinates?.latitude},${origin.coordinates?.longitude}:${destination.coordinates?.latitude},${destination.coordinates?.longitude}`) ? 'currentColor' : 'none'} /> {favorites.some((item) => item.id === `${origin.coordinates?.latitude},${origin.coordinates?.longitude}:${destination.coordinates?.latitude},${destination.coordinates?.longitude}`) ? 'Remover dos favoritos' : 'Salvar rota'}</button>}
           </div>
-        </div>)}
+        </div>}
       </main>
 
       {aboutOpen && (
