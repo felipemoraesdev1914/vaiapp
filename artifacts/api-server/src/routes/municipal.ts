@@ -6,6 +6,15 @@ const router: IRouter = Router();
 const routes = catalog.routes;
 const lines = [...new Set(routes.map((route) => route.lineCode))].sort();
 
+function stopHasCoordinates(stop: unknown): boolean {
+  if (!stop || typeof stop !== 'object') return false;
+  const record = stop as Record<string, unknown>;
+  const coordinates = record.coordinates && typeof record.coordinates === 'object'
+    ? record.coordinates as Record<string, unknown>
+    : record;
+  return Number.isFinite(coordinates.latitude) && Number.isFinite(coordinates.longitude);
+}
+
 router.get("/municipal/routes", (req, res) => {
   const requestedLine = typeof req.query.line === "string"
     ? req.query.line.trim().toUpperCase()
@@ -52,7 +61,12 @@ router.get("/municipal/lines", (_req, res) => {
         headsign: route.headsign,
         direction: route.direction,
         stopCount: route.stops.length,
+        itineraryComplete: route.stops.length >= 2,
+        coordinatesAvailable: route.stops.length > 0 && route.stops.every(stopHasCoordinates),
+        integrationStatus: route.integrationStatus ?? catalog.status,
         sourceUrl: route.sourceUrl,
+        sourceUrls: route.sourceUrls ?? [route.sourceUrl],
+        lastCheckedAt: route.observedAt ?? null,
         schedule: route.schedule,
       })),
     };
