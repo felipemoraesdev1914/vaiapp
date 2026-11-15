@@ -151,6 +151,13 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
         "/m3p/js/services/agency/v2/" + agencyId,
         "/m3p/js/services/" + agencyId,
         "/m3p/js/stops/service/v2/" + serviceId + "?agencyId=" + agencyId,
+        "/linesroutes/service/stops?serviceId=" + serviceId,
+        "/linesroutes/service/itinerary?serviceId=" + serviceId,
+        "/linesroutes/service/route?serviceId=" + serviceId,
+        "/linesroutes/service/map?serviceId=" + serviceId,
+        "/linesroutes/service/shape?serviceId=" + serviceId,
+        "/linesroutes/service/geometry?serviceId=" + serviceId,
+        "/linesroutes/service/stops/" + serviceId,
       ] : [];
       const apiProbeResults = await Promise.all(apiProbePaths.map(async (path) => {
         try {
