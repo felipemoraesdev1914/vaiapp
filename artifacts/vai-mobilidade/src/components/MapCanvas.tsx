@@ -107,7 +107,7 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
         <MapControls onFrameRoute={() => setLocalCenterSignal((value) => value + 1)} userLocation={userLocation} />
       </MapContainer>
       <div className="map-badge"><MapPin size={14} /> TRAJETO E PONTOS DE ÔNIBUS</div>
-      <div className="map-legend map-legend-vai"><span className="map-legend-bus" /> Linha de ônibus <span className="map-legend-walk" /> Caminhada <span className="map-legend-stop" /> Parada
+      <div className="map-legend map-legend-vai"><span className="map-legend-bus" /> Linha de ônibus <span className="map-legend-walk" /> Caminhada <span className="map-legend-stop" /> Parada</div>
       <span className="map-attribution" data-testid="text-map-attribution">
         <><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap</a> · <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a></>
       </span>
