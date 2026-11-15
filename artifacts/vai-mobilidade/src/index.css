@@ -378,3 +378,13 @@ button:focus-visible, input:focus-visible { outline: 3px solid hsl(var(--accent)
   .vai-stop-popup { min-width:225px; }
   .vai-map-data-warning { right:9px;top:54px;font-size:9px; }
 }
+
+
+/* Identidade visual do mapa VAI: cartografia clara, discreta e sem afetar rotas ou marcadores. */
+.vai-map { background:#f7f9f7; }
+.vai-map .leaflet-tile-pane { filter:brightness(1.10) saturate(.58) contrast(.94); }
+.vai-map .leaflet-tile { background:#f7f9f7; }
+.vai-map .leaflet-overlay-pane,
+.vai-map .leaflet-marker-pane,
+.vai-map .leaflet-shadow-pane,
+.vai-map .leaflet-popup-pane { filter:none; }
