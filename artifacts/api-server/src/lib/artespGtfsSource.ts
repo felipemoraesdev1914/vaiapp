@@ -599,14 +599,14 @@ async function loadFeed(): Promise<GtfsFeed> {
         .sort((left, right) => left.sequence - right.sequence)
         .map(({ point }) => point);
       if (orderedPoints.length <= MAX_SHAPE_POINTS_PER_ROUTE) {
-        return [shapeId, orderedPoints];
+        return [shapeId, orderedPoints] as const;
       }
       const stride = (orderedPoints.length - 1) / (MAX_SHAPE_POINTS_PER_ROUTE - 1);
       const simplified = Array.from(
         { length: MAX_SHAPE_POINTS_PER_ROUTE },
         (_, index) => orderedPoints[Math.round(index * stride)]!,
       );
-      return [shapeId, simplified];
+      return [shapeId, simplified] as const;
     }),
   );
 
