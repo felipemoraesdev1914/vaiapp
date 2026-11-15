@@ -13,7 +13,7 @@ const TRANSIT_DATA_UNAVAILABLE_MESSAGE =
   "Os horários oficiais de transporte não estão disponíveis agora. Tente novamente mais tarde.";
 const GENERIC_SERVICE_MESSAGE =
   "Não foi possível calcular as rotas agora. Tente novamente em instantes.";
-const ROUTE_SEARCH_DEADLINE_MS = 10_000;
+const ROUTE_SEARCH_DEADLINE_MS = 20_000;
 
 // Traduz falhas técnicas (rede, HTTP, arquivos) em mensagens seguras para o usuário.
 function userFacingServiceMessage(error: unknown): string {
