@@ -307,7 +307,7 @@ async function forEachCsvRowFast(
   const { stream, close } = await openEntry(archivePath, fileName);
   let pending = "";
   let columns: string[] | undefined;
-  let selectedIndexes: number[] = [];
+  let selectedColumns = new Map<number, string>();
   const processLine = (rawLine: string) => {
     const line = rawLine.endsWith("\r") ? rawLine.slice(0, -1) : rawLine;
     if (!columns) {
@@ -320,12 +320,11 @@ async function forEachCsvRowFast(
         );
       }
       columns = headers;
-      selectedIndexes = requiredColumns.map((column) => headers.indexOf(column));
+      selectedColumns = new Map(requiredColumns.map((column) => [headers.indexOf(column), column]));
       return;
     }
 
-    const values: string[] = new Array(selectedIndexes.length);
-    let selectedPosition = 0;
+    const row: Record<string, string> = {};
     let fieldIndex = 0;
     let fieldStart = 0;
     let quoted = false;
@@ -338,29 +337,27 @@ async function forEachCsvRowFast(
           quoted = !quoted;
         }
       } else if (character === "," && !quoted) {
-        if (selectedIndexes[selectedPosition] === fieldIndex) {
+        const column = selectedColumns.get(fieldIndex);
+        if (column) {
           let value = line.slice(fieldStart, index);
           if (value.startsWith('"') && value.endsWith('"')) {
             value = value.slice(1, -1).replace(/""/g, '"');
           }
-          values[selectedPosition] = value;
-          selectedPosition += 1;
+          row[column] = value;
         }
         fieldIndex += 1;
         fieldStart = index + 1;
       }
     }
-    if (selectedIndexes[selectedPosition] === fieldIndex) {
+    const finalColumn = selectedColumns.get(fieldIndex);
+    if (finalColumn) {
       let value = line.slice(fieldStart);
       if (value.startsWith('"') && value.endsWith('"')) {
         value = value.slice(1, -1).replace(/""/g, '"');
       }
-      values[selectedPosition] = value;
+      row[finalColumn] = value;
     }
-    const row: Record<string, string> = {};
-    for (let index = 0; index < requiredColumns.length; index += 1) {
-      row[requiredColumns[index]!] = values[index] ?? "";
-    }
+    for (const column of requiredColumns) row[column] ??= "";
     rowCount += 1;
     callback(row);
   };
