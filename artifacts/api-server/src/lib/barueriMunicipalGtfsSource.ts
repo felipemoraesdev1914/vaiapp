@@ -120,7 +120,10 @@ async function fetchJson(url: string): Promise<unknown> {
       "user-agent": "VAI Mobilidade/1.0 (municipal transit integration)",
     },
   });
-  if (!response.ok) throw new Error(`Cittamobi respondeu HTTP ${response.status}.`);
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Cittamobi respondeu HTTP ${response.status}: ${body.slice(0, 400)}`);
+  }
   return response.json();
 }
 
@@ -137,6 +140,28 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
     if (!pageResponse.ok) throw new Error(`Página da linha ${route.lineCode}: HTTP ${pageResponse.status}.`);
     const html = await pageResponse.text();
     const serviceId = serviceIdFromHtml(html) ?? source.pathname.match(/-([a-f0-9]{12})$/i)?.[1];
+    if (route.lineCode === "A260") {
+      const scriptPath = html.match(/<script[^>]+src=["']([^"']*route-line\\.js[^"']*)/i)?.[1];
+      let scriptContexts: string[] = [];
+      if (scriptPath) {
+        const scriptUrl = new URL(scriptPath, source.origin);
+        const scriptResponse = await fetch(scriptUrl, {
+          signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+          headers: { accept: "application/javascript", "user-agent": "VAI Mobilidade/1.0" },
+        });
+        const scriptText = scriptResponse.ok ? await scriptResponse.text() : "";
+        scriptContexts = [...scriptText.matchAll(/.{0,100}(?:stops\\/service|api\\.cittamobi|serviceId|agencyId).{0,180}/gi)]
+          .slice(0, 30)
+          .map((match) => match[0].replace(/\\s+/g, " ").slice(0, 260));
+      }
+      console.info(JSON.stringify({
+        event: "municipal_cittamobi_api_probe",
+        routeId: route.routeId,
+        serviceIdCandidate: serviceId,
+        scriptPath,
+        scriptContexts,
+      }));
+    }
     if (route.lineCode === "A260") {
       const contexts = [...html.matchAll(/.{0,90}(?:service|route|\bid\b).{0,130}/gi)]
         .slice(0, 35)
