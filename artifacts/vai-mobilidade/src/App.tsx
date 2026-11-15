@@ -144,6 +144,30 @@ function App() {
     else setDestination(place);
   };
 
+  const locateMapOnly = () => {
+    setLocationError('');
+    if (!('geolocation' in navigator)) {
+      setLocationError('Este navegador não disponibiliza localização.');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const heading = position.coords.heading;
+        setUserLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          accuracy: position.coords.accuracy,
+          heading: typeof heading === 'number' && Number.isFinite(heading) ? heading : null,
+        });
+      },
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) setLocationError('Permita o acesso à localização para encontrar pontos próximos.');
+        else setLocationError('Não foi possível localizar você agora. Tente novamente.');
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+    );
+  };
+
   const requestCurrentLocation = (onSuccess: (place: Place) => void) => {
     setLocationError('');
     if (!('geolocation' in navigator)) {
@@ -219,6 +243,7 @@ function App() {
               selectedRoute={selectedRoute}
               selectedLegIndex={selectedLegIndex}
               userLocation={userLocation}
+              onLocate={locateMapOnly}
             />
             <RouteResults
               response={response}
