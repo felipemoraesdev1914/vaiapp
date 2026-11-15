@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { LoaderCircle, MapPin, Navigation, X } from 'lucide-react';
+import {
+  normalizeSearchText,
+  rankPhotonFeatures,
+  TimedLruCache,
+  type PhotonFeature,
+  type PhotonSearchResult,
+} from '../lib/geocoding';
 import type { Place } from '../types/route';
-
-type PhotonFeature = {
-  type: 'Feature';
-  geometry: { type: string; coordinates: [number, number] };
-  properties: Record<string, unknown>;
-};
 
 type PhotonAutocompleteProps = {
   id: string;
@@ -18,45 +19,23 @@ type PhotonAutocompleteProps = {
   onChange: (place: Place) => void;
 };
 
-function propertyText(properties: Record<string, unknown>, key: string): string {
-  const value = properties[key];
-  return typeof value === 'string' ? value.trim() : '';
-}
+type AutocompleteOption = {
+  label: string;
+  place: Place;
+};
 
-function photonLabel(properties: Record<string, unknown>): string {
-  const street = propertyText(properties, 'street');
-  const houseNumber = propertyText(properties, 'housenumber');
-  const name = propertyText(properties, 'name');
-  // If Photon supplies a street address, show it first instead of the POI
-  // name (which may be a station, plaza or other nearby landmark).
-  const primary = street
-    ? [street, houseNumber].filter(Boolean).join(', ')
-    : name || houseNumber;
-  const locality = [
-    propertyText(properties, 'district'),
-    propertyText(properties, 'city') || propertyText(properties, 'locality'),
-    propertyText(properties, 'state'),
-    propertyText(properties, 'postcode'),
-  ];
-  return [...new Set([primary, ...locality].filter(Boolean))].join(', ');
-}
+const SEARCH_CACHE = new TimedLruCache<PhotonSearchResult[]>(10 * 60 * 1_000, 256);
 
-function photonRelevance(properties: Record<string, unknown>, query: string): number {
-  const street = propertyText(properties, 'street');
-  const houseNumber = propertyText(properties, 'housenumber');
-  const hasNumberAtEnd = /(?:,|\s)\d{1,5}\s*$/.test(query.trim());
-  let score = 0;
-  if (street) score += 5;
-  if (street && houseNumber) score += 5;
-  if (hasNumberAtEnd && houseNumber) score += 8;
-  if (hasNumberAtEnd && !houseNumber) score -= 8;
-  if (!street && propertyText(properties, 'name')) score -= hasNumberAtEnd ? 5 : 0;
-  return score;
+function autocompleteOptions(results: PhotonSearchResult[]): AutocompleteOption[] {
+  return results.map(({ label, coordinates }) => ({
+    label,
+    place: { label, coordinates },
+  }));
 }
 
 export function PhotonAutocomplete({ id, label, placeholder, value, icon, invalid, onChange }: PhotonAutocompleteProps) {
   const [query, setQuery] = useState(value.label);
-  const [results, setResults] = useState<Array<{ label: string; place: Place }>>([]);
+  const [results, setResults] = useState<AutocompleteOption[]>([]);
   const [loading, setLoading] = useState(false);
   const [requestError, setRequestError] = useState('');
   const [open, setOpen] = useState(false);
@@ -75,6 +54,15 @@ export function PhotonAutocomplete({ id, label, placeholder, value, icon, invali
       setLoading(false);
       return;
     }
+    const cacheKey = normalizeSearchText(term);
+    const cachedResults = SEARCH_CACHE.get(cacheKey);
+    if (cachedResults !== undefined) {
+      setResults(autocompleteOptions(cachedResults));
+      setLoading(false);
+      setOpen(true);
+      return;
+    }
+
     const controller = new AbortController();
     abortRef.current = controller;
     const timer = window.setTimeout(async () => {
@@ -86,20 +74,9 @@ export function PhotonAutocomplete({ id, label, placeholder, value, icon, invali
         const response = await fetch(`https://photon.komoot.io/api/?${params.toString()}`, { signal: controller.signal });
         if (!response.ok) throw new Error('Não foi possível consultar endereços agora.');
         const collection = await response.json() as { features?: PhotonFeature[] };
-        const mapped = (collection.features ?? []).flatMap((feature) => {
-          const properties = feature.properties ?? {};
-          const resultLabel = photonLabel(properties);
-          const coordinates = feature.geometry?.coordinates;
-          if (!resultLabel || !Array.isArray(coordinates) || coordinates.length < 2) return [];
-          const [longitude, latitude] = coordinates;
-          if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return [];
-          return [{
-            label: resultLabel,
-            place: { label: resultLabel, coordinates: { latitude, longitude } },
-            relevance: photonRelevance(properties, term),
-          }];
-        }).sort((left, right) => right.relevance - left.relevance);
-        setResults(mapped);
+        const mapped = rankPhotonFeatures(collection.features ?? [], term);
+        SEARCH_CACHE.set(cacheKey, mapped);
+        setResults(autocompleteOptions(mapped));
         setOpen(true);
       } catch (error) {
         if (error instanceof DOMException && error.name === 'AbortError') return;
@@ -119,7 +96,7 @@ export function PhotonAutocomplete({ id, label, placeholder, value, icon, invali
       window.clearTimeout(timer);
       controller.abort();
     };
-  }, [query, value.label]);
+  }, [query, value.coordinates?.latitude, value.coordinates?.longitude, value.label]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const next = event.target.value;
