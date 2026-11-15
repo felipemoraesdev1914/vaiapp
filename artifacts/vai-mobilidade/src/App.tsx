@@ -23,6 +23,7 @@ function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [searchState, setSearchState] = useState<SearchState>({ status: 'idle' });
   const searchAbortRef = useRef<AbortController | null>(null);
+  const apiWarmupRef = useRef<Promise<void>>(Promise.resolve());
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   // Índice da etapa escolhida na linha do tempo; null mostra a viagem inteira.
   const [selectedLegIndex, setSelectedLegIndex] = useState<number | null>(null);
@@ -36,10 +37,10 @@ function App() {
     const controller = new AbortController();
     const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
     const warmApi = () => {
-      void fetch(`${apiBaseUrl}/api/healthz`, {
+      apiWarmupRef.current = fetch(`${apiBaseUrl}/api/healthz`, {
         cache: 'no-store',
         signal: controller.signal,
-      }).catch(() => undefined);
+      }).then(() => undefined).catch(() => undefined);
     };
     // Wake the free API before the user searches and keep it warm while the
     // app stays open; returning to the foreground also refreshes the ping.
@@ -79,14 +80,19 @@ function App() {
     const controller = new AbortController();
     searchAbortRef.current = controller;
     let searchTimedOut = false;
-    const timeout = window.setTimeout(() => {
-      searchTimedOut = true;
-      controller.abort(new DOMException('A busca excedeu o limite de 25 segundos.', 'TimeoutError'));
-    }, 25_000);
+    let timeout: number | undefined;
     setSearchState({ status: 'loading' });
     setSelectedRouteId(null);
     setCenterSignal((value) => value + 1);
     try {
+      // Wait for the page-load health ping to finish waking the free API
+      // before starting the route calculation deadline.
+      await apiWarmupRef.current;
+      if (controller.signal.aborted) return;
+      timeout = window.setTimeout(() => {
+        searchTimedOut = true;
+        controller.abort(new DOMException('A busca excedeu o limite de 25 segundos.', 'TimeoutError'));
+      }, 25_000);
       const searchResponse = await searchTransitRoutes({
         origin: { label: origin.label, coordinates: origin.coordinates },
         destination: { label: destination.label, coordinates: destination.coordinates },
@@ -102,7 +108,7 @@ function App() {
         setSearchState({ status: 'error', error });
       }
     } finally {
-      window.clearTimeout(timeout);
+      if (timeout !== undefined) window.clearTimeout(timeout);
       if (searchAbortRef.current === controller) searchAbortRef.current = null;
     }
   };
