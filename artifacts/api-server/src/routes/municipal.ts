@@ -1,5 +1,6 @@
 import { Router, type IRouter } from "express";
 import catalog from "../data/barueri-cittamobi-routes.json";
+import { getBarueriMunicipalGtfsFeed } from "../lib/barueriMunicipalGtfsSource";
 
 const router: IRouter = Router();
 
@@ -14,6 +15,17 @@ function stopHasCoordinates(stop: unknown): boolean {
     : record;
   return Number.isFinite(coordinates.latitude) && Number.isFinite(coordinates.longitude);
 }
+
+router.get("/municipal/diagnostics", async (_req, res) => {
+  const feed = await getBarueriMunicipalGtfsFeed();
+  res.json({
+    source: feed.source,
+    routes: feed.routes.size,
+    stops: feed.stops.size,
+    trips: feed.trips.size,
+    shapes: feed.shapes.size,
+  });
+});
 
 router.get("/municipal/routes", (req, res) => {
   const requestedLine = typeof req.query.line === "string"
