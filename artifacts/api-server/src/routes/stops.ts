@@ -69,6 +69,8 @@ router.get("/stops", async (req, res): Promise<void> => {
   const south = validNumber(req.query.south);
   const east = validNumber(req.query.east);
   const north = validNumber(req.query.north);
+  const requestedLimit = validNumber(req.query.limit);
+  const limit = Math.min(120, Math.max(1, Math.floor(requestedLimit ?? 90)));
   if ([west, south, east, north].some((value) => value === undefined) ||
       east! <= west! || north! <= south! ||
       east! - west! > MAX_BOUNDS_SPAN || north! - south! > MAX_BOUNDS_SPAN) {
@@ -88,7 +90,7 @@ router.get("/stops", async (req, res): Promise<void> => {
         const db = (b.coordinates.latitude - centerLat) ** 2 + (b.coordinates.longitude - centerLng) ** 2;
         return da - db;
       })
-      .slice(0, 600)
+      .slice(0, limit)
       .map(publicStop);
     res.setHeader("Cache-Control", "public, max-age=30, stale-while-revalidate=60");
     res.json({ source: feed.source.name, updatedAt: feed.source.updatedAt, total: stops.length, stops });
