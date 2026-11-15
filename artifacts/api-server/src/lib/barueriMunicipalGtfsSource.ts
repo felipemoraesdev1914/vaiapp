@@ -141,27 +141,9 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
     const html = await pageResponse.text();
     const serviceId = serviceIdFromHtml(html) ?? source.pathname.match(/-([a-f0-9]{12})$/i)?.[1];
     if (route.lineCode === "A260") {
-      const cityResponse = await fetch("https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri", {
-        signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-        headers: { accept: "text/html", "user-agent": "VAI Mobilidade/1.0" },
-      });
-      const cityHtml = cityResponse.ok ? await cityResponse.text() : "";
-      const a260Options = [...cityHtml.matchAll(/<option[^>]+value=["']([^"']+)["'][^>]*>([^<]*A260[^<]*)<\/option>/gi)]
-        .map((match) => ({ value: match[1], label: match[2] }));
-      const a260Contexts = [...cityHtml.matchAll(/.{0,160}A260.{0,220}/gi)]
-        .slice(0, 12)
-        .map((match) => match[0].replace(/\s+/g, " ").slice(0, 340));
-      console.info(JSON.stringify({
-        event: "municipal_cittamobi_city_catalog_probe",
-        status: cityResponse.status,
-        htmlLength: cityHtml.length,
-        a260Options,
-        a260Contexts,
-      }));
-    }
-    if (route.lineCode === "A260") {
       const scriptSrcs = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map((match) => match[1]).slice(0, 30);
       const agencyId = html.match(/id=["']agencyId["'][^>]*value=["']([^"']+)["']/i)?.[1];
+      const firstStopId = html.match(/data-stop-id=["']([^"']+)["']/i)?.[1];
       const apiContexts = [...html.matchAll(/.{0,100}(?:CittamobiAPI|api\.cittamobi|linesroutes|m3p\/js).{0,160}/gi)]
         .slice(0, 30)
         .map((match) => match[0].replace(/\s+/g, " ").slice(0, 240));
@@ -177,6 +159,12 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
         "/linesroutes/service/shape?serviceId=" + serviceId,
         "/linesroutes/service/geometry?serviceId=" + serviceId,
         "/linesroutes/service/stops/" + serviceId,
+        "/linesroutes/stop/" + firstStopId,
+        "/linesroutes/stops/" + firstStopId,
+        "/linesroutes/stop/location?stopId=" + firstStopId,
+        "/linesroutes/stops/location?stopId=" + firstStopId,
+        "/m3p/js/stops/" + firstStopId,
+        "/m3p/js/stops/v2/" + firstStopId,
       ] : [];
       const apiProbeResults = await Promise.all(apiProbePaths.map(async (path) => {
         try {
@@ -212,6 +200,7 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
         scriptPath,
         scriptSrcs,
         agencyId,
+        firstStopId,
         apiContexts,
         apiProbeResults,
         coordinateContexts,
