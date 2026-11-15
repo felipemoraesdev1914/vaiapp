@@ -5,11 +5,10 @@ import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet';
 import type { Place } from '../types/route';
 import type { TransitRouteOption } from '@workspace/api-client-react';
 import { placeIcon } from './map/markers';
-import { RouteLayers, RouteStops } from './map/RouteLayers';
+import { RouteLayers, RouteStops, WalkingRouteLayer } from './map/RouteLayers';
 import { MapControls } from './map/MapControls';
 import { UserLocationLayer, type UserLocation } from './map/UserLocationLayer';
 import { getWalkingDirections } from '../lib/walking-directions';
-import { WalkingRouteLayer } from './map/WalkingRouteLayer';
 
 type MapCanvasProps = {
   origin?: Place;
