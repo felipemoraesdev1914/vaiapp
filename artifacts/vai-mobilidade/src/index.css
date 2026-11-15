@@ -321,3 +321,23 @@ button:focus-visible, input:focus-visible { outline: 3px solid hsl(var(--accent)
   .jt-meta { font-size:9.5px; }
   .map-frame { min-height:360px; height:52vh; max-height:none; }
 }
+
+
+/* Mapa claro e legível: ruas, nomes de vias e pontos de ônibus em primeiro plano. */
+.vai-map { background:#f4f6f5; }
+.vai-map .leaflet-tile-pane { filter:none; }
+.vai-map .leaflet-tile { filter:none; }
+.vai-map .leaflet-control-attribution { display:none; }
+.map-badge { background:rgba(255,255,255,.96); border-color:#dfe7e5; color:#29445b; box-shadow:0 4px 16px #17355318; }
+.map-legend-vai { left:16px; bottom:17px; gap:8px; padding:9px 11px; border:1px solid #e0e8e4; box-shadow:0 3px 12px #17355312; font-size:10px; }
+.map-legend-bus { width:18px; height:5px; border-radius:9px; background:#9bbf36; box-shadow:0 0 0 2px #fff; }
+.map-legend-walk { width:18px; border-top:3px dashed #627b91; }
+.map-legend-stop { width:9px; height:9px; border:2px solid #fff; border-radius:50%; background:#a6cf3e; box-shadow:0 0 0 1px #789a29; }
+.vai-stop-line { width:auto; min-width:30px; height:30px; padding:0 7px; display:flex; align-items:center; justify-content:center; gap:4px; border:2px solid #fff; border-radius:999px; background:#d9ef68; color:#203a52; box-shadow:0 2px 9px #17355344; white-space:nowrap; }
+.vai-stop-line svg { width:13px; height:13px; flex:none; }
+.vai-stop-line b { font:800 10px/1 var(--font-display); letter-spacing:-.2px; }
+.vai-stop-transfer { display:grid; place-items:center; }
+@media (max-width:680px) {
+  .map-badge { top:10px; left:10px; font-size:9px; padding:7px 9px; }
+  .map-legend-vai { left:10px; bottom:10px; gap:6px; font-size:9px; padding:7px 8px; }
+}
