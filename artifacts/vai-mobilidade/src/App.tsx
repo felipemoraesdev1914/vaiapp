@@ -32,7 +32,20 @@ function App() {
   const searchError = searchState.status === 'error' ? searchState.error : null;
   const selectedRoute = response?.routes.find((route) => route.id === selectedRouteId) ?? null;
 
-  useEffect(() => () => searchAbortRef.current?.abort(), []);
+  useEffect(() => {
+    const controller = new AbortController();
+    const apiBaseUrl = (import.meta.env.VITE_API_URL || '').replace(/\\/$/, '');
+    // Wake the free API while the user is choosing addresses, not when they
+    // press the route-search button.
+    void fetch(`${apiBaseUrl}/api/healthz`, {
+      cache: 'no-store',
+      signal: controller.signal,
+    }).catch(() => undefined);
+    return () => {
+      controller.abort();
+      searchAbortRef.current?.abort();
+    };
+  }, []);
 
   useEffect(() => {
     setSelectedRouteId(response?.routes.find((route) => route.recommended)?.id ?? response?.routes[0]?.id ?? null);
@@ -58,8 +71,8 @@ function App() {
     let searchTimedOut = false;
     const timeout = window.setTimeout(() => {
       searchTimedOut = true;
-      controller.abort(new DOMException('A busca excedeu o limite de 12 segundos.', 'TimeoutError'));
-    }, 12_000);
+      controller.abort(new DOMException('A busca excedeu o limite de 25 segundos.', 'TimeoutError'));
+    }, 25_000);
     setSearchState({ status: 'loading' });
     setSelectedRouteId(null);
     setCenterSignal((value) => value + 1);
@@ -73,7 +86,7 @@ function App() {
       if (searchTimedOut) {
         setSearchState({
           status: 'error',
-          error: new DOMException('O serviço de rotas não respondeu dentro do limite de 12 segundos.', 'TimeoutError'),
+          error: new DOMException('O serviço de rotas não respondeu dentro do limite de 25 segundos.', 'TimeoutError'),
         });
       } else if (!controller.signal.aborted) {
         setSearchState({ status: 'error', error });
