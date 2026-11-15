@@ -272,6 +272,30 @@ async function forEachCsvRow(
   return rowCount;
 }
 
+function parseCsvLine(line: string): string[] {
+  const fields: string[] = [];
+  let value = "";
+  let quoted = false;
+  for (let index = 0; index < line.length; index += 1) {
+    const character = line[index]!;
+    if (character === '"') {
+      if (quoted && line[index + 1] === '"') {
+        value += '"';
+        index += 1;
+      } else {
+        quoted = !quoted;
+      }
+    } else if (character === "," && !quoted) {
+      fields.push(value);
+      value = "";
+    } else {
+      value += character;
+    }
+  }
+  fields.push(value);
+  return fields;
+}
+
 async function forEachCsvRowFast(
   archivePath: string,
   fileName: string,
@@ -281,39 +305,79 @@ async function forEachCsvRowFast(
   const startedAt = performance.now();
   let rowCount = 0;
   const { stream, close } = await openEntry(archivePath, fileName);
-  const requiredColumnSet = new Set(requiredColumns);
-  const parser = parse({
-    bom: true,
-    columns: (headers) => {
+  let pending = "";
+  let columns: string[] | undefined;
+  let selectedIndexes: number[] = [];
+  const processLine = (rawLine: string) => {
+    const line = rawLine.endsWith("\r") ? rawLine.slice(0, -1) : rawLine;
+    if (!columns) {
+      const headers = parseCsvLine(line.replace(/^\\uFEFF/, ""));
       const availableColumns = new Set(headers);
-      const missingColumns = requiredColumns.filter(
-        (column) => !availableColumns.has(column),
-      );
+      const missingColumns = requiredColumns.filter((column) => !availableColumns.has(column));
       if (missingColumns.length > 0) {
         throw new Error(
           `O arquivo ${fileName} não contém as colunas obrigatórias: ${missingColumns.join(", ")}.`,
         );
       }
-      return headers.map((column) =>
-        requiredColumnSet.has(column) ? column : false,
-      );
-    },
-    relax_column_count: true,
-    skip_empty_lines: true,
-    on_record: (row: Record<string, string>) => {
-      rowCount += 1;
-      callback(row);
-      return undefined;
-    },
-  });
-  stream.on("error", (error) => parser.destroy(error));
+      columns = headers;
+      selectedIndexes = requiredColumns.map((column) => headers.indexOf(column));
+      return;
+    }
+
+    const values: string[] = new Array(selectedIndexes.length);
+    let selectedPosition = 0;
+    let fieldIndex = 0;
+    let fieldStart = 0;
+    let quoted = false;
+    for (let index = 0; index < line.length; index += 1) {
+      const character = line[index]!;
+      if (character === '"') {
+        if (quoted && line[index + 1] === '"') {
+          index += 1;
+        } else {
+          quoted = !quoted;
+        }
+      } else if (character === "," && !quoted) {
+        if (selectedIndexes[selectedPosition] === fieldIndex) {
+          let value = line.slice(fieldStart, index);
+          if (value.startsWith('"') && value.endsWith('"')) {
+            value = value.slice(1, -1).replace(/""/g, '"');
+          }
+          values[selectedPosition] = value;
+          selectedPosition += 1;
+        }
+        fieldIndex += 1;
+        fieldStart = index + 1;
+      }
+    }
+    if (selectedIndexes[selectedPosition] === fieldIndex) {
+      let value = line.slice(fieldStart);
+      if (value.startsWith('"') && value.endsWith('"')) {
+        value = value.slice(1, -1).replace(/""/g, '"');
+      }
+      values[selectedPosition] = value;
+    }
+    const row: Record<string, string> = {};
+    for (let index = 0; index < requiredColumns.length; index += 1) {
+      row[requiredColumns[index]!] = values[index] ?? "";
+    }
+    rowCount += 1;
+    callback(row);
+  };
 
   try {
-    // Stop-time records are consumed in the parser callback. Emitting 4.5M
-    // intermediate row objects through an async iterator made cold feed loads
-    // take minutes on Render's small instance.
-    parser.resume();
-    await pipeline(stream, parser);
+    for await (const chunk of stream) {
+      pending += typeof chunk === "string" ? chunk : Buffer.from(chunk).toString("utf8");
+      let newlineIndex = pending.indexOf("\n");
+      while (newlineIndex !== -1) {
+        const line = pending.slice(0, newlineIndex);
+        pending = pending.slice(newlineIndex + 1);
+        processLine(line);
+        newlineIndex = pending.indexOf("\n");
+      }
+    }
+    if (pending.length > 0) processLine(pending);
+    if (!columns) throw new Error(`O arquivo ${fileName} está vazio.`);
   } finally {
     close();
     console.info(
@@ -322,6 +386,7 @@ async function forEachCsvRowFast(
         fileName,
         rowCount,
         durationMs: Math.round(performance.now() - startedAt),
+        parser: "streaming-selected-columns",
       }),
     );
   }
