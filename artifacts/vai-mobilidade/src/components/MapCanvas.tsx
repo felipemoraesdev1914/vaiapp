@@ -51,7 +51,7 @@ function MapActions({ origin, destination, centerSignal, selectedRoute, selected
   const focusPoints = () => {
     if (points.length > 1) map.fitBounds(latLngBounds(points), { padding: FIT_PADDING, maxZoom: 15 });
     else if (points.length === 1) map.setView(points[0], 15);
-    else if (userLocation) map.setView([userLocation.latitude, userLocation.longitude], 16);
+    else if (userLocation) map.flyTo([userLocation.latitude, userLocation.longitude], 17, { duration: 0.8 });
     else map.setView(INITIAL_CENTER, 14);
   };
 
@@ -95,8 +95,8 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
     <section className="map-frame" aria-label="Mapa de Barueri" data-testid="map-frame">
       <MapContainer className="leaflet-map vai-map" center={INITIAL_CENTER} zoom={14} zoomControl={false} attributionControl={false} scrollWheelZoom>
         <TileLayer
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors'
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          attribution='© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a>'
         />
         <StopsLayer />
         {selectedRoute && <RouteLayers route={selectedRoute} selectedLegIndex={selectedLegIndex} />}
@@ -105,13 +105,13 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
         {originPosition && <Marker position={originPosition} icon={placeIcon('origin')} title="Origem" />}
         {destinationPosition && <Marker position={destinationPosition} icon={placeIcon('destination')} title="Destino" />}
         <UserLocationLayer location={userLocation} />
-        <MapActions origin={origin} destination={destination} centerSignal={signal} selectedRoute={selectedRoute} selectedLegIndex={selectedLegIndex} />
+        <MapActions origin={origin} destination={destination} centerSignal={signal} selectedRoute={selectedRoute} selectedLegIndex={selectedLegIndex} userLocation={userLocation} />
         <MapControls onFrameRoute={() => setLocalCenterSignal((value) => value + 1)} userLocation={userLocation} onLocate={onLocate} />
       </MapContainer>
       <div className="map-badge"><MapPin size={14} /> PONTOS DE ÔNIBUS PRÓXIMOS</div>
       <div className="map-legend map-legend-vai"><span className="map-legend-bus" /> Linha de ônibus <span className="map-legend-walk" /> Caminhada <span className="map-legend-stop" /> Parada</div>
       <span className="map-attribution" data-testid="text-map-attribution">
-        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors · © CARTO</a>
       </span>
     </section>
   );
