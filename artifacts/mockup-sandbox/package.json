@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "vite build --configLoader runner",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

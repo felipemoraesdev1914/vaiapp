@@ -17,6 +17,13 @@ out-tsc
 # dependencies
 node_modules
 
+# Local environment files (keep secrets out of Git)
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.*.example
+
 # IDEs and editors
 /.idea
 .project
