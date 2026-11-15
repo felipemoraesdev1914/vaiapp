@@ -420,7 +420,7 @@ button:focus-visible, input:focus-visible { outline: 3px solid hsl(var(--accent)
   .app-shell[data-mobile-view="planner"] .page { overflow-y:auto; overscroll-behavior:contain; padding:14px 13px 20px; }
   .app-shell[data-mobile-view="planner"] .workspace { display:flex; flex-direction:column; gap:12px; height:auto; min-height:0; }
   .app-shell[data-mobile-view="planner"] .planner-panel { display:flex; order:1; width:100%; padding:19px 16px; border:1px solid #e4eaee; border-radius:17px; box-shadow:0 5px 20px #17355309; }
-  .app-shell[data-mobile-view="planner"] .map-frame { display:none; }
+  .app-shell[data-mobile-view="planner"] .map-frame { visibility:hidden; pointer-events:none; }
   .app-shell[data-mobile-view="planner"] .result-section { display:block; order:2; width:100%; margin-bottom:10px; border-radius:15px; padding:14px; }
   .app-shell[data-mobile-view="planner"] .data-footnote { margin-top:16px; }
   .dialog-backdrop { z-index:1600; padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
