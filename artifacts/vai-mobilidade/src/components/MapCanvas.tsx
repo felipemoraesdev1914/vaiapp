@@ -8,6 +8,8 @@ import { placeIcon } from './map/markers';
 import { RouteLayers, RouteStops } from './map/RouteLayers';
 import { MapControls } from './map/MapControls';
 import { UserLocationLayer, type UserLocation } from './map/UserLocationLayer';
+import { getWalkingDirections } from '../lib/walking-directions';
+import { WalkingRouteLayer } from './map/WalkingRouteLayer';
 
 type MapCanvasProps = {
   origin?: Place;
@@ -65,7 +67,18 @@ function MapActions({ origin, destination, centerSignal, selectedRoute, selected
     const leg = selectedRoute.legs[selectedLegIndex];
     if (!leg) return;
     const pts = legPoints(leg);
-    if (pts.length > 1) map.fitBounds(latLngBounds(pts), { padding: FIT_PADDING, maxZoom: 16 });
+    if (pts.length > 1) {
+      map.fitBounds(latLngBounds(pts), { padding: FIT_PADDING, maxZoom: 17 });
+      return;
+    }
+    if (leg.mode === 'walk' && selectedLegIndex > 0) {
+      let active = true;
+      void getWalkingDirections(leg.from.coordinates, leg.to.coordinates).then((directions) => {
+        if (!active || !directions || directions.geometry.length < 2) return;
+        map.fitBounds(latLngBounds(directions.geometry.map((point) => [point.latitude, point.longitude] as LatLngExpression)), { padding: FIT_PADDING, maxZoom: 17 });
+      });
+      return () => { active = false; };
+    }
   }, [map, selectedLegIndex, selectedRoute]);
 
   return null;
@@ -80,10 +93,12 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
     <section className="map-frame" aria-label="Mapa de Barueri" data-testid="map-frame">
       <MapContainer className="leaflet-map vai-map" center={INITIAL_CENTER} zoom={13} zoomControl={false} attributionControl={false} scrollWheelZoom>
         <TileLayer
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>'
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          subdomains="abcd"
+          attribution='© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> · © <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a>'
         />
         {selectedRoute && <RouteLayers route={selectedRoute} selectedLegIndex={selectedLegIndex} />}
+        {selectedRoute && <WalkingRouteLayer route={selectedRoute} selectedLegIndex={selectedLegIndex} />}
         {selectedRoute && <RouteStops route={selectedRoute} selectedLegIndex={selectedLegIndex} />}
         {originPosition && <Marker position={originPosition} icon={placeIcon('origin')} title="Origem" />}
         {destinationPosition && <Marker position={destinationPosition} icon={placeIcon('destination')} title="Destino" />}
@@ -91,9 +106,10 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
         <MapActions origin={origin} destination={destination} centerSignal={signal} selectedRoute={selectedRoute} selectedLegIndex={selectedLegIndex} />
         <MapControls onFrameRoute={() => setLocalCenterSignal((value) => value + 1)} userLocation={userLocation} />
       </MapContainer>
-      <div className="map-badge"><MapPin size={14} /> MAPA DE BARUERI</div>
+      <div className="map-badge"><MapPin size={14} /> TRAJETO E PONTOS DE ÔNIBUS</div>
+      <div className="map-legend map-legend-vai"><span className="map-legend-bus" /> Linha de ônibus <span className="map-legend-walk" /> Caminhada <span className="map-legend-stop" /> Parada
       <span className="map-attribution" data-testid="text-map-attribution">
-        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>
+        <><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap</a> · <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a></>
       </span>
     </section>
   );
