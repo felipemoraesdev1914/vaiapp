@@ -6,6 +6,7 @@ import type { Place } from '../types/route';
 import type { TransitRouteOption } from '@workspace/api-client-react';
 import { placeIcon } from './map/markers';
 import { RouteLayers, RouteStops, WalkingRouteLayer } from './map/RouteLayers';
+import { StopsLayer } from './map/StopsLayer';
 import { MapControls } from './map/MapControls';
 import { UserLocationLayer, type UserLocation } from './map/UserLocationLayer';
 import { getWalkingDirections } from '../lib/walking-directions';
@@ -92,10 +93,10 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
     <section className="map-frame" aria-label="Mapa de Barueri" data-testid="map-frame">
       <MapContainer className="leaflet-map vai-map" center={INITIAL_CENTER} zoom={13} zoomControl={false} attributionControl={false} scrollWheelZoom>
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          subdomains="abcd"
-          attribution='© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> · © <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a>'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors'
         />
+        <StopsLayer />
         {selectedRoute && <RouteLayers route={selectedRoute} selectedLegIndex={selectedLegIndex} />}
         {selectedRoute && <WalkingRouteLayer route={selectedRoute} selectedLegIndex={selectedLegIndex} />}
         {selectedRoute && <RouteStops route={selectedRoute} selectedLegIndex={selectedLegIndex} />}
@@ -108,7 +109,7 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
       <div className="map-badge"><MapPin size={14} /> TRAJETO E PONTOS DE ÔNIBUS</div>
       <div className="map-legend map-legend-vai"><span className="map-legend-bus" /> Linha de ônibus <span className="map-legend-walk" /> Caminhada <span className="map-legend-stop" /> Parada</div>
       <span className="map-attribution" data-testid="text-map-attribution">
-        <><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap</a> · <a href="https://carto.com/attributions" target="_blank" rel="noreferrer">CARTO</a></>
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>
       </span>
     </section>
   );
