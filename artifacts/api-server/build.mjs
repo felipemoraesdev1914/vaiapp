@@ -4,11 +4,14 @@ import { fileURLToPath } from "node:url";
 import { build as esbuild } from "esbuild";
 import esbuildPluginPino from "esbuild-plugin-pino";
 import { rm } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 
 // Plugins (e.g. 'esbuild-plugin-pino') may use `require` to resolve dependencies
 globalThis.require = createRequire(import.meta.url);
 
 const artifactDir = path.dirname(fileURLToPath(import.meta.url));
+const execFileAsync = promisify(execFile);
 
 async function buildAll() {
   const distDir = path.resolve(artifactDir, "dist");
@@ -117,6 +120,25 @@ globalThis.__filename = __bannerUrl.fileURLToPath(import.meta.url);
 globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
     `,
     },
+  });
+
+  // Generate a regional feed snapshot at build time so cold starts do not
+  // need to parse millions of GTFS CSV rows on the free runtime instance.
+  const snapshotEntry = path.resolve(artifactDir, "src/scripts/buildGtfsSnapshot.ts");
+  const snapshotBundle = path.join(distDir, "build-gtfs-snapshot.mjs");
+  await esbuild({
+    entryPoints: [snapshotEntry],
+    platform: "node",
+    bundle: true,
+    format: "esm",
+    outfile: snapshotBundle,
+    logLevel: "info",
+    external: ["csv-parse", "yauzl"],
+  });
+  await execFileAsync(process.execPath, [snapshotBundle], {
+    cwd: path.resolve(artifactDir, "../.."),
+    env: process.env,
+    maxBuffer: 10 * 1024 * 1024,
   });
 }
 
