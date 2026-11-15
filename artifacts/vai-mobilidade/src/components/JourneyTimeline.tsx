@@ -58,7 +58,7 @@ function buildSteps(route: TransitRouteOption): Step[] {
       const meta = [`${leg.durationMinutes} min a pé`, distance].filter(Boolean).join(' · ');
       steps.push(index === 0
         ? { key: `walk-${index}`, kind: 'walk', legIndex: index, title: `Caminhe até ${leg.to.label}`, lines: [`Saindo de ${leg.from.label}`], meta }
-        : { key: `walk-${index}`, kind: 'walk-final', legIndex: index, title: 'Caminhe até o destino', lines: [`A partir de ${leg.from.label}`], meta });
+        : { key: `walk-${index}`, kind: 'walk-final', legIndex: index, title: `Desça no ponto ${leg.from.label}`, lines: [`Depois, caminhe até ${leg.to.label}`], meta });
     } else {
       steps.push({
         key: `bus-${index}`,
