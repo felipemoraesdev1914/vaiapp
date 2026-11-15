@@ -136,6 +136,19 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
     if (!pageResponse.ok) throw new Error(`Página da linha ${route.lineCode}: HTTP ${pageResponse.status}.`);
     const html = await pageResponse.text();
     const serviceId = serviceIdFromHtml(html) ?? source.pathname.match(/-([a-f0-9]{12})$/i)?.[1];
+    if (route.lineCode === "A260") {
+      const contexts = [...html.matchAll(/.{0,90}(?:service|route|\\\\bid\\\\b).{0,130}/gi)]
+        .slice(0, 35)
+        .map((match) => match[0].replace(/\\\\s+/g, " ").slice(0, 240));
+      console.info(JSON.stringify({
+        event: "municipal_cittamobi_page_probe",
+        routeId: route.routeId,
+        sourceUrl: route.sourceUrl,
+        htmlLength: html.length,
+        serviceIdCandidate: serviceId,
+        contexts,
+      }));
+    }
     if (!serviceId) {
       console.warn(JSON.stringify({ event: "municipal_route_id_missing", line: route.lineCode, routeId: route.routeId }));
       return undefined;
