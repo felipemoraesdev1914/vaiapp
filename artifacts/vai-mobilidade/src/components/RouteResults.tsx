@@ -58,7 +58,7 @@ export function RouteResults({ response, selectedRouteId, onSelectRoute, selecte
     ));
     if (sort === 'walking') return list.sort((a, b) => a.walkingMinutes - b.walkingMinutes || a.totalMinutes - b.totalMinutes);
     if (sort === 'transfers') return list.sort((a, b) => a.transferCount - b.transferCount || a.totalMinutes - b.totalMinutes);
-    return list.sort((a, b) => a.totalMinutes - b.totalMinutes);
+    return list.sort((a, b) => (a.totalMinutes + a.transferCount * 18) - (b.totalMinutes + b.transferCount * 18) || a.totalMinutes - b.totalMinutes);
   }, [durationLimit, response, sort, transferLimit, walkingLimit]);
   const hasFilters = durationLimit !== 'any' || walkingLimit !== 'any' || transferLimit !== 'any';
   const totalOptions = response?.routes.length ?? 0;
