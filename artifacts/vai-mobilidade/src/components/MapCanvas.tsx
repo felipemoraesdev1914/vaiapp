@@ -27,7 +27,7 @@ function legPoints(leg: TransitRouteOption['legs'][number]): LatLngExpression[] 
   return leg.geometry.map((point) => [point.latitude, point.longitude] as LatLngExpression);
 }
 
-function MapActions({ origin, destination, centerSignal, selectedRoute, selectedLegIndex }: MapCanvasProps) {
+function MapActions({ origin, destination, centerSignal, selectedRoute, selectedLegIndex, userLocation }: MapCanvasProps) {
   const map = useMap();
   const originLatitude = origin?.coordinates?.latitude;
   const originLongitude = origin?.coordinates?.longitude;
@@ -50,16 +50,17 @@ function MapActions({ origin, destination, centerSignal, selectedRoute, selected
   const focusPoints = () => {
     if (points.length > 1) map.fitBounds(latLngBounds(points), { padding: FIT_PADDING, maxZoom: 15 });
     else if (points.length === 1) map.setView(points[0], 15);
-    else map.setView(INITIAL_CENTER, 13);
+    else if (userLocation) map.setView([userLocation.latitude, userLocation.longitude], 16);
+    else map.setView(INITIAL_CENTER, 14);
   };
 
   useEffect(() => {
     focusPoints();
-  }, [map, points]);
+  }, [map, points, userLocation]);
 
   useEffect(() => {
     if (centerSignal > 0) focusPoints();
-  }, [centerSignal, map, points]);
+  }, [centerSignal, map, points, userLocation]);
 
   // Ao selecionar uma etapa na linha do tempo, a câmera acompanha o trecho correspondente.
   useEffect(() => {
@@ -91,7 +92,7 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
   const destinationPosition = destination?.coordinates ? [destination.coordinates.latitude, destination.coordinates.longitude] as [number, number] : undefined;
   return (
     <section className="map-frame" aria-label="Mapa de Barueri" data-testid="map-frame">
-      <MapContainer className="leaflet-map vai-map" center={INITIAL_CENTER} zoom={13} zoomControl={false} attributionControl={false} scrollWheelZoom>
+      <MapContainer className="leaflet-map vai-map" center={INITIAL_CENTER} zoom={14} zoomControl={false} attributionControl={false} scrollWheelZoom>
         <TileLayer
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors'
@@ -106,7 +107,7 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
         <MapActions origin={origin} destination={destination} centerSignal={signal} selectedRoute={selectedRoute} selectedLegIndex={selectedLegIndex} />
         <MapControls onFrameRoute={() => setLocalCenterSignal((value) => value + 1)} userLocation={userLocation} />
       </MapContainer>
-      <div className="map-badge"><MapPin size={14} /> TRAJETO E PONTOS DE ÔNIBUS</div>
+      <div className="map-badge"><MapPin size={14} /> PONTOS DE ÔNIBUS PRÓXIMOS</div>
       <div className="map-legend map-legend-vai"><span className="map-legend-bus" /> Linha de ônibus <span className="map-legend-walk" /> Caminhada <span className="map-legend-stop" /> Parada</div>
       <span className="map-attribution" data-testid="text-map-attribution">
         <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a>
