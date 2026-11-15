@@ -18,6 +18,7 @@ type MapCanvasProps = {
   selectedRoute?: TransitRouteOption | null;
   selectedLegIndex?: number | null;
   userLocation?: UserLocation | null;
+  onLocate?: () => void;
 };
 
 const INITIAL_CENTER: [number, number] = [-23.5113, -46.8765];
@@ -85,7 +86,7 @@ function MapActions({ origin, destination, centerSignal, selectedRoute, selected
   return null;
 }
 
-export function MapCanvas({ origin, destination, centerSignal, selectedRoute, selectedLegIndex = null, userLocation = null }: MapCanvasProps) {
+export function MapCanvas({ origin, destination, centerSignal, selectedRoute, selectedLegIndex = null, userLocation = null, onLocate = () => undefined }: MapCanvasProps) {
   const [localCenterSignal, setLocalCenterSignal] = useState(0);
   const signal = centerSignal + localCenterSignal;
   const originPosition = origin?.coordinates ? [origin.coordinates.latitude, origin.coordinates.longitude] as [number, number] : undefined;
@@ -105,7 +106,7 @@ export function MapCanvas({ origin, destination, centerSignal, selectedRoute, se
         {destinationPosition && <Marker position={destinationPosition} icon={placeIcon('destination')} title="Destino" />}
         <UserLocationLayer location={userLocation} />
         <MapActions origin={origin} destination={destination} centerSignal={signal} selectedRoute={selectedRoute} selectedLegIndex={selectedLegIndex} />
-        <MapControls onFrameRoute={() => setLocalCenterSignal((value) => value + 1)} userLocation={userLocation} />
+        <MapControls onFrameRoute={() => setLocalCenterSignal((value) => value + 1)} userLocation={userLocation} onLocate={onLocate} />
       </MapContainer>
       <div className="map-badge"><MapPin size={14} /> PONTOS DE ÔNIBUS PRÓXIMOS</div>
       <div className="map-legend map-legend-vai"><span className="map-legend-bus" /> Linha de ônibus <span className="map-legend-walk" /> Caminhada <span className="map-legend-stop" /> Parada</div>
