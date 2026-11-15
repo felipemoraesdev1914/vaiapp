@@ -7,6 +7,14 @@ import { ErrorBoundary } from '@/components/error-boundary';
 
 import './index.css';
 
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
+  window.addEventListener('load', () => {
+    void navigator.serviceWorker.register('/sw.js').catch((error) => {
+      console.warn('Não foi possível ativar o modo instalável do VAI.', error);
+    });
+  });
+}
+
 setBaseUrl(import.meta.env.VITE_API_URL || null);
 
 const queryClient = new QueryClient();
