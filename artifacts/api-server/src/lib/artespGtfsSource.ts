@@ -93,6 +93,7 @@ const PREBUILT_INDEX_PATH = path.join(
   "artesp-gtfs-index.json.gz",
 );
 const MAX_FEED_BYTES = 100 * 1024 * 1024;
+const MAX_SHAPE_POINTS_PER_ROUTE = 240;
 
 // This bounded index keeps the regional feed useful for Barueri while avoiding
 // loading every stop-time and shape in the state into the process heap.
@@ -593,13 +594,36 @@ async function loadFeed(): Promise<GtfsFeed> {
   }
 
   const shapes = new Map<string, GeoPoint[]>(
-    [...orderedShapes.entries()].map(([shapeId, points]) => [
-      shapeId,
-      points
+    [...orderedShapes.entries()].map(([shapeId, points]) => {
+      const orderedPoints = points
         .sort((left, right) => left.sequence - right.sequence)
-        .map(({ point }) => point),
-    ]),
+        .map(({ point }) => point);
+      if (orderedPoints.length <= MAX_SHAPE_POINTS_PER_ROUTE) {
+        return [shapeId, orderedPoints];
+      }
+      const stride = (orderedPoints.length - 1) / (MAX_SHAPE_POINTS_PER_ROUTE - 1);
+      const simplified = Array.from(
+        { length: MAX_SHAPE_POINTS_PER_ROUTE },
+        (_, index) => orderedPoints[Math.round(index * stride)]!,
+      );
+      return [shapeId, simplified];
+    }),
   );
+
+  // The router only needs trips that actually serve a stop in the regional
+  // index. Drop the rest of the statewide catalogue before creating the
+  // deploy snapshot to keep cold-start deserialization small.
+  const relevantRouteIds = new Set<string>();
+  for (const tripId of stopTimesByTrip.keys()) {
+    const trip = trips.get(tripId);
+    if (trip) relevantRouteIds.add(trip.routeId);
+  }
+  for (const tripId of trips.keys()) {
+    if (!stopTimesByTrip.has(tripId)) trips.delete(tripId);
+  }
+  for (const routeId of routes.keys()) {
+    if (!relevantRouteIds.has(routeId)) routes.delete(routeId);
+  }
 
   const feedInfo: Record<string, string> = {};
   await forEachCsvRow(archivePath, "feed_info.txt", (row) => {
