@@ -28,14 +28,16 @@ export function placeIcon(kind: 'origin' | 'destination') {
   }));
 }
 
-export function stopIcon(kind: 'stop' | 'transfer', lineCode?: string) {
+export function stopIcon(kind: 'stop' | 'transfer' | 'map-stop', lineCode?: string) {
   return cachedIcon(`stop-${kind}-${lineCode ?? ''}`, () => divIcon({
     className: '',
     html: kind === 'transfer'
       ? `<span class="vai-stop-marker vai-stop-transfer" aria-hidden="true">${TRANSFER_SVG}</span>`
-      : `<span class="vai-stop-marker vai-stop-line" aria-hidden="true">${BUS_SVG}<b>${(lineCode ?? '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 6)}</b></span>`,
-    iconSize: kind === 'transfer' ? [30, 30] : [lineCode ? 52 : 30, 30],
-    iconAnchor: kind === 'transfer' ? [15, 15] : [lineCode ? 26 : 15, 15],
+      : kind === 'map-stop'
+        ? `<span class="vai-stop-marker vai-stop-map" aria-hidden="true">${BUS_SVG}</span>`
+        : `<span class="vai-stop-marker vai-stop-line" aria-hidden="true">${BUS_SVG}<b>${(lineCode ?? '').replace(/[^a-zA-Z0-9]/g, '').slice(0, 6)}</b></span>`,
+    iconSize: kind === 'transfer' ? [30, 30] : kind === 'map-stop' ? [34, 38] : [lineCode ? 52 : 30, 30],
+    iconAnchor: kind === 'transfer' ? [15, 15] : kind === 'map-stop' ? [17, 34] : [lineCode ? 26 : 15, 15],
   }));
 }
 
