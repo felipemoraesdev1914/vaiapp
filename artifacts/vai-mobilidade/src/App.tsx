@@ -75,7 +75,7 @@ function App() {
       () => {
         // Sem permissão de localização, o mapa continua disponível e pode ser movido manualmente.
       },
-      { enableHighAccuracy: false, timeout: 8000, maximumAge: 120000 },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 },
     );
     return () => { active = false; };
   }, []);
@@ -164,7 +164,7 @@ function App() {
         if (error.code === error.PERMISSION_DENIED) setLocationError('Permita o acesso à localização para encontrar pontos próximos.');
         else setLocationError('Não foi possível localizar você agora. Tente novamente.');
       },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 },
     );
   };
 
@@ -207,7 +207,7 @@ function App() {
           setLocationError('Não foi possível obter sua localização. Digite a origem manualmente.');
         }
       },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 },
     );
   };
 
