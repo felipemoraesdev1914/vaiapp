@@ -199,6 +199,27 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
           return { path, error: error instanceof Error ? error.message : String(error) };
         }
       }));
+      const pageHostProbePaths = [
+        "/linesroutes/service/predictions?serviceId=" + serviceId + "&stopId=" + firstStopId,
+        "/linesroutes/service/stops?serviceId=" + serviceId,
+        "/linesroutes/service/itinerary?serviceId=" + serviceId,
+        "/linesroutes/service/route?serviceId=" + serviceId,
+        "/linesroutes/service/map?serviceId=" + serviceId,
+        "/linesroutes/service/shape?serviceId=" + serviceId,
+        "/m3p/js/stops/service/v2/" + serviceId,
+      ];
+      const pageHostProbeResults = await Promise.all(pageHostProbePaths.map(async (path) => {
+        try {
+          const response = await fetch(new URL(path, source.origin), {
+            signal: AbortSignal.timeout(3_000),
+            headers: { accept: "application/json", "user-agent": "Mozilla/5.0 VAI Mobilidade/1.0" },
+          });
+          return { path, status: response.status, contentType: response.headers.get("content-type"), body: (await response.text()).slice(0, 900) };
+        } catch (error) {
+          return { path, error: error instanceof Error ? error.message : String(error) };
+        }
+      }));
+      console.info(JSON.stringify({ event: "municipal_cittamobi_page_host_probe", routeId: route.routeId, pageHostProbeResults }));
       const coordinateContexts = [...html.matchAll(/.{0,80}(?:latitude|longitude|\blat\b|\blng\b).{0,100}/gi)]
         .slice(0, 20)
         .map((match) => match[0].replace(/\s+/g, " ").slice(0, 220));
