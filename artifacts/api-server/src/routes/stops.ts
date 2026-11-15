@@ -3,7 +3,7 @@ import { getArtespGtfsFeed, type GtfsFeed, type GtfsStop, type GtfsTrip, type Gt
 
 const router: IRouter = Router();
 const TIME_ZONE = "America/Sao_Paulo";
-const MAX_BOUNDS_SPAN = 0.3;
+const MAX_BOUNDS_SPAN = 1.2;
 const ARRIVAL_WINDOW_MS = 2 * 60 * 60 * 1_000;
 const ARRIVAL_LIMIT = 8;
 
@@ -119,7 +119,7 @@ router.get("/stops/:stopId/arrivals", async (req, res): Promise<void> => {
       const midnight = Date.parse(`${dateKey}T00:00:00-03:00`);
       for (const record of records) {
         if (!services.has(record.trip.serviceId)) continue;
-        const epoch = midnight + record.time.arrivalSeconds * 1_000;
+        const epoch = midnight + record.time.departureSeconds * 1_000;
         if (epoch < now - 60_000 || epoch > now + ARRIVAL_WINDOW_MS) continue;
         const route = feed.routes.get(record.trip.routeId);
         arrivals.push({
