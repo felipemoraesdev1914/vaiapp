@@ -1,9 +1,10 @@
 import { createWriteStream } from "node:fs";
 import { performance } from "node:perf_hooks";
-import { mkdir, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, rm, stat } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { Readable, type Readable as NodeReadable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import { parse } from "csv-parse";
@@ -87,8 +88,8 @@ const DATASET_API =
 const DATASET_HOST = "dadosabertos.artesp.sp.gov.br";
 const CACHE_DIRECTORY = path.join(tmpdir(), "vai-artesp-gtfs");
 const PREBUILT_INDEX_PATH = path.join(
-  process.cwd(),
-  "artifacts/api-server/dist/artesp-gtfs-index.json.gz",
+  path.dirname(fileURLToPath(import.meta.url)),
+  "artesp-gtfs-index.json.gz",
 );
 const MAX_FEED_BYTES = 100 * 1024 * 1024;
 
