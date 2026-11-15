@@ -135,7 +135,7 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
     });
     if (!pageResponse.ok) throw new Error(`Página da linha ${route.lineCode}: HTTP ${pageResponse.status}.`);
     const html = await pageResponse.text();
-    const serviceId = serviceIdFromHtml(html);
+    const serviceId = serviceIdFromHtml(html) ?? source.pathname.match(/-([a-f0-9]{12})$/i)?.[1];
     if (!serviceId) {
       console.warn(JSON.stringify({ event: "municipal_route_id_missing", line: route.lineCode, routeId: route.routeId }));
       return undefined;
