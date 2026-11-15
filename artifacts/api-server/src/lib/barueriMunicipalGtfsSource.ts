@@ -141,6 +141,10 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
     const html = await pageResponse.text();
     const serviceId = serviceIdFromHtml(html) ?? source.pathname.match(/-([a-f0-9]{12})$/i)?.[1];
     if (route.lineCode === "A260") {
+      const scriptSrcs = [...html.matchAll(/<script[^>]+src=["']([^"']+)["']/gi)].map((match) => match[1]).slice(0, 30);
+      const coordinateContexts = [...html.matchAll(/.{0,80}(?:latitude|longitude|\blat\b|\blng\b).{0,100}/gi)]
+        .slice(0, 20)
+        .map((match) => match[0].replace(/\s+/g, " ").slice(0, 220));
       const scriptPath = html.match(/<script[^>]+src=["']([^"']*route-line\.js[^"']*)/i)?.[1];
       let scriptContexts: string[] = [];
       if (scriptPath) {
@@ -159,6 +163,8 @@ async function fetchRouteData(route: MunicipalRoute): Promise<RouteData | undefi
         routeId: route.routeId,
         serviceIdCandidate: serviceId,
         scriptPath,
+        scriptSrcs,
+        coordinateContexts,
         scriptContexts,
       }));
     }
