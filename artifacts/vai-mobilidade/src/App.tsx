@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { X } from 'lucide-react';
+import { CircleHelp, Map as MapIcon, Route, X } from 'lucide-react';
 import { searchTransitRoutes, type TransitRouteOption, type TransitRouteSearchResponse } from '@workspace/api-client-react';
 import { BrandHeader } from './components/BrandHeader';
 import { JourneyPlanner } from './components/JourneyPlanner';
@@ -21,6 +21,7 @@ function App() {
   const [isLocating, setIsLocating] = useState(false);
   const [locationError, setLocationError] = useState('');
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [mobileView, setMobileView] = useState<'map' | 'planner'>('map');
   const [searchState, setSearchState] = useState<SearchState>({ status: 'idle' });
   const searchAbortRef = useRef<AbortController | null>(null);
   const apiWarmupRef = useRef<Promise<void>>(Promise.resolve());
@@ -212,7 +213,7 @@ function App() {
   };
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" data-mobile-view={mobileView}>
       <BrandHeader onAbout={() => setAboutOpen(true)} />
       <main className="page">
         <div className="intro">
@@ -277,6 +278,11 @@ function App() {
           </section>
         </div>
       )}
+      <nav className="mobile-tabbar" aria-label="Navegação principal">
+        <button type="button" className={mobileView === 'map' ? 'is-active' : ''} aria-current={mobileView === 'map' ? 'page' : undefined} onClick={() => setMobileView('map')}><MapIcon size={19} /><span>Mapa</span></button>
+        <button type="button" className={mobileView === 'planner' ? 'is-active' : ''} aria-current={mobileView === 'planner' ? 'page' : undefined} onClick={() => setMobileView('planner')}><Route size={19} /><span>Planejar</span></button>
+        <button type="button" onClick={() => setAboutOpen(true)}><CircleHelp size={19} /><span>Sobre</span></button>
+      </nav>
       <style>{`
         .dialog-backdrop { position:fixed; inset:0; z-index:20; padding:20px; background:#142b43a6; display:grid; place-items:center; }
         .about-dialog { position:relative; width:min(470px,100%); padding:30px; border-radius:19px; background:hsl(var(--card)); box-shadow:0 18px 70px #102a4638; }
