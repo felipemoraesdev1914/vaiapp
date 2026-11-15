@@ -3,6 +3,8 @@ import type { LatLngExpression } from 'leaflet';
 import { Marker, Polyline } from 'react-leaflet';
 import type { TransitRouteOption } from '@workspace/api-client-react';
 import { stopIcon } from './markers';
+import { useEffect, useState } from 'react';
+import { getWalkingDirections, type WalkingDirections } from '../../lib/walking-directions';
 
 // Cores já existentes na identidade do VAI: verde-limão e verde escuro. Caminhada usa cinza neutro.
 const BUS_LINE_COLORS = ['#a6cf3e', '#66802c'];
@@ -78,7 +80,7 @@ export function RouteStops({ route, selectedLegIndex }: RouteLayersProps) {
           <Marker
             key={`${route.id}-boarding-${index}`}
             position={[leg.from.coordinates.latitude, leg.from.coordinates.longitude]}
-            icon={stopIcon('stop')}
+            icon={stopIcon('stop', leg.lineCode ?? undefined)}
             opacity={opacity}
             title={`Parada de embarque: ${leg.boardingStop?.name ?? leg.from.label}`}
           />
@@ -102,6 +104,37 @@ export function RouteStops({ route, selectedLegIndex }: RouteLayersProps) {
         );
         return [boarding, alightingOrTransfer];
       })}
+    </>
+  );
+}
+
+
+// Busca o traçado real de caminhada para a etapa final; não desenha linhas retas artificiais.
+export function WalkingRouteLayer({ route, selectedLegIndex }: RouteLayersProps) {
+  const finalWalk = route.legs.find((leg, index) => index > 0 && leg.mode === 'walk');
+  const [directions, setDirections] = useState<WalkingDirections | undefined>();
+  useEffect(() => {
+    let active = true;
+    setDirections(undefined);
+    if (!finalWalk) return () => { active = false; };
+    void getWalkingDirections(finalWalk.from.coordinates, finalWalk.to.coordinates).then((result) => {
+      if (active) setDirections(result);
+    });
+    return () => { active = false; };
+  }, [finalWalk]);
+  if (!finalWalk || !directions || directions.geometry.length < 2) return null;
+  const index = route.legs.indexOf(finalWalk);
+  const active = selectedLegIndex === null || selectedLegIndex === index;
+  return (
+    <>
+      <Polyline
+        positions={directions.geometry.map((point) => [point.latitude, point.longitude] as LatLngExpression)}
+        pathOptions={{ color: '#ffffff', weight: active ? 8 : 6, opacity: active ? 0.95 : 0.35, lineCap: 'round', lineJoin: 'round', interactive: false }}
+      />
+      <Polyline
+        positions={directions.geometry.map((point) => [point.latitude, point.longitude] as LatLngExpression)}
+        pathOptions={{ color: '#627b91', weight: active ? 4 : 3, opacity: active ? 0.95 : 0.3, dashArray: '5 7', lineCap: 'round', lineJoin: 'round', interactive: false }}
+      />
     </>
   );
 }
