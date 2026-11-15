@@ -64,7 +64,7 @@ function StopPopup({ stop }: { stop: BusStop }) {
     <div className="vai-stop-popup">
       <div className="vai-stop-popup-head">
         <span className="vai-stop-popup-icon" aria-hidden="true">↗</span>
-        <div><span className="vai-stop-popup-kicker">PONTO DE ÔNIBUS</span><strong>{stop.name}</strong></div>
+        <div><span className="vai-stop-popup-kicker">PONTO DE ÔNIBUS</span><strong>Linhas e horários</strong></div>
       </div>
       <div className="vai-stop-arrivals-title"><span>Próximos ônibus</span><span className="vai-stop-live-dot" /></div>
       {loading && !data ? <div className="vai-stop-state">Consultando horários...</div> : null}
@@ -96,6 +96,7 @@ export function StopsLayer() {
   const [error, setError] = useState("");
   const requestRef = useRef<AbortController | null>(null);
   const timerRef = useRef<number | null>(null);
+  const selectedStopRef = useRef<BusStop | null>(null);
 
   const loadStops = useCallback(() => {
     const currentZoom = map.getZoom();
@@ -104,6 +105,7 @@ export function StopsLayer() {
     if (currentZoom < MIN_STOP_ZOOM) {
       setStops([]);
       setSelectedStopId(null);
+      selectedStopRef.current = null;
       setError("");
       return;
     }
@@ -125,8 +127,12 @@ export function StopsLayer() {
       if (!response.ok) throw new Error(body.error || "Não foi possível carregar os pontos.");
       if (!controller.signal.aborted) {
         const nextStops = Array.isArray(body.stops) ? body.stops.slice(0, MAX_VISIBLE_STOPS) : [];
-        setStops(nextStops);
-        setSelectedStopId((current) => nextStops.some((stop) => stop.id === current) ? current : null);
+        // Keep the selected stop mounted while the map refreshes its visible markers.
+        // Popup auto-pan can trigger moveend; dropping the selected marker here closed it immediately.
+        const selected = selectedStopRef.current;
+        setStops(selected && !nextStops.some((stop) => stop.id === selected.id)
+          ? [...nextStops, selected]
+          : nextStops);
         setError("");
       }
     }).catch((cause: unknown) => {
@@ -155,8 +161,8 @@ export function StopsLayer() {
     <>
       {stops.map((stop) => (
         <Marker key={stop.id} position={[stop.latitude, stop.longitude]} icon={stopIcon("map-stop")}
-          title={stop.name} eventHandlers={{ click: () => setSelectedStopId(stop.id) }}>
-          {selectedStopId === stop.id && <Popup minWidth={260} maxWidth={300} closeButton><StopPopup stop={stop} /></Popup>}
+          title={stop.name} eventHandlers={{ click: () => { selectedStopRef.current = stop; setSelectedStopId(stop.id); } }}>
+          {selectedStopId === stop.id && <Popup minWidth={260} maxWidth={300} closeButton autoPan={false} closeOnClick={false} autoClose={false}><StopPopup stop={stop} /></Popup>}
         </Marker>
       ))}
       {error && <div className="vai-map-data-warning" role="status">Não foi possível carregar os pontos agora</div>}
