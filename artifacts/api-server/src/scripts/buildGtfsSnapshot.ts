@@ -1,5 +1,6 @@
 import { mkdir, rename, rm, writeFile } from "node:fs/promises";
 import { gzipSync } from "node:zlib";
+import { serialize } from "node:v8";
 import path from "node:path";
 import { getArtespGtfsFeed } from "../lib/artespGtfsSource";
 
@@ -12,16 +13,7 @@ const temporaryPath = `${outputPath}.tmp`;
 async function main(): Promise<void> {
   const startedAt = Date.now();
   const feed = await getArtespGtfsFeed();
-  const snapshot = {
-    source: feed.source,
-    stops: [...feed.stops.values()],
-    routes: [...feed.routes.values()],
-    trips: [...feed.trips.values()],
-    stopTimesByTrip: [...feed.stopTimesByTrip.entries()],
-    calendar: [...feed.calendar.values()],
-    shapes: [...feed.shapes.entries()],
-  };
-  const compressed = gzipSync(Buffer.from(JSON.stringify(snapshot)), { level: 6 });
+  const compressed = gzipSync(serialize(feed), { level: 6 });
   await mkdir(path.dirname(outputPath), { recursive: true });
   await rm(temporaryPath, { force: true });
   await writeFile(temporaryPath, compressed);
