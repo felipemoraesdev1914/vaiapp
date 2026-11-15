@@ -91,21 +91,21 @@ function decodePolyline(encoded: string): GeoPoint[] {
 
 function serviceIdFromHtml(html: string): string | undefined {
   const patterns = [
-    /["']serviceId["']\\s*:\\s*["']?(\\d{3,})/i,
-    /["']service_id["']\\s*:\\s*["']?(\\d{3,})/i,
-    /["']idService["']\\s*:\\s*["']?(\\d{3,})/i,
-    /data-service-id=["'](\\d{3,})["']/i,
-    /\\/service\\/(?:v2\\/)?(\\d{3,})(?:["'/?]|$)/i,
+    /["']serviceId["']\s*:\s*["']?(\d{3,})/i,
+    /["']service_id["']\s*:\s*["']?(\d{3,})/i,
+    /["']idService["']\s*:\s*["']?(\d{3,})/i,
+    /data-service-id=["'](\d{3,})["']/i,
+    /\/service\/(?:v2\/)?(\d{3,})(?:["'/?]|$)/i,
   ];
   for (const pattern of patterns) {
     const match = html.match(pattern);
     if (match?.[1]) return match[1];
   }
   // Some page builds serialize route metadata under Next/Nuxt hydration data.
-  const scripts = html.match(/<script[^>]*>([\\s\\S]*?)<\\/script>/gi) ?? [];
+  const scripts = html.match(/<script[^>]*>([\s\S]*?)<\/script>/gi) ?? [];
   for (const script of scripts) {
     if (!/service|route/i.test(script)) continue;
-    const match = script.match(/(?:serviceId|service_id|idService)\\s*["']?\\s*:\\s*["']?(\\d{3,})/i);
+    const match = script.match(/(?:serviceId|service_id|idService)\s*["']?\s*:\s*["']?(\d{3,})/i);
     if (match?.[1]) return match[1];
   }
   return undefined;
@@ -196,7 +196,7 @@ async function mapWithConcurrency<T, R>(
 }
 
 function secondsFromClock(value: string | undefined): number | undefined {
-  if (!value || !/^\\d{1,2}:\\d{2}$/.test(value)) return undefined;
+  if (!value || !/^\d{1,2}:\d{2}$/.test(value)) return undefined;
   const [hours, minutes] = value.split(":").map(Number);
   if (!Number.isFinite(hours) || !Number.isFinite(minutes) || minutes > 59) return undefined;
   return hours * 3600 + minutes * 60;
