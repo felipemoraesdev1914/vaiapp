@@ -15,6 +15,8 @@ type ArrivalsResponse = {
 
 const API_BASE_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 const apiUrl = (path: string) => `${API_BASE_URL}/api${path}`;
+const MIN_STOP_ZOOM = 16;
+const MAX_VISIBLE_STOPS = 90;
 
 function formatTime(value: string): string {
   return new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit", timeZone: "America/Sao_Paulo" }).format(new Date(value));
@@ -40,9 +42,7 @@ function StopPopup({ stop }: { stop: BusStop }) {
     setError("");
     try {
       const response = await fetch(apiUrl(`/stops/${encodeURIComponent(stop.id)}/arrivals`), {
-        signal: controller.signal,
-        cache: "no-store",
-        headers: { accept: "application/json" },
+        signal: controller.signal, cache: "no-store", headers: { accept: "application/json" },
       });
       const body = await response.json() as ArrivalsResponse;
       if (!response.ok) throw new Error(body.error || "Não foi possível consultar os horários.");
@@ -57,10 +57,7 @@ function StopPopup({ stop }: { stop: BusStop }) {
   useEffect(() => {
     void load();
     const interval = window.setInterval(() => void load(), 60_000);
-    return () => {
-      window.clearInterval(interval);
-      controllerRef.current?.abort();
-    };
+    return () => { window.clearInterval(interval); controllerRef.current?.abort(); };
   }, [load]);
 
   return (
@@ -72,17 +69,15 @@ function StopPopup({ stop }: { stop: BusStop }) {
       <div className="vai-stop-arrivals-title"><span>Próximos ônibus</span><span className="vai-stop-live-dot" /></div>
       {loading && !data ? <div className="vai-stop-state">Consultando horários...</div> : null}
       {error ? <div className="vai-stop-state is-error">{error}</div> : null}
-      {data?.arrivals?.length ? (
-        <div className="vai-stop-arrivals">
-          {data.arrivals.slice(0, 6).map((arrival) => (
-            <div className="vai-stop-arrival" key={`${arrival.tripId}-${arrival.arrivalAt}`}>
-              <span className="vai-stop-line-code">{arrival.line}</span>
-              <span className="vai-stop-destination">{arrival.headsign}</span>
-              <span className="vai-stop-wait"><strong>{formatWait(arrival.minutesUntil)}</strong><small>{formatTime(arrival.arrivalAt)}</small></span>
-            </div>
-          ))}
-        </div>
-      ) : null}
+      {data?.arrivals?.length ? <div className="vai-stop-arrivals">
+        {data.arrivals.slice(0, 6).map((arrival) => (
+          <div className="vai-stop-arrival" key={`${arrival.tripId}-${arrival.arrivalAt}`}>
+            <span className="vai-stop-line-code">{arrival.line}</span>
+            <span className="vai-stop-destination">{arrival.headsign}</span>
+            <span className="vai-stop-wait"><strong>{formatWait(arrival.minutesUntil)}</strong><small>{formatTime(arrival.arrivalAt)}</small></span>
+          </div>
+        ))}
+      </div> : null}
       {data && !data.arrivals.length ? <div className="vai-stop-state">{data.message || "Nenhum ônibus previsto nas próximas 2 horas."}</div> : null}
       <div className="vai-stop-popup-foot">
         <span>Horários programados · ARTESP</span>
@@ -97,28 +92,41 @@ export function StopsLayer() {
   const map = useMap();
   const [stops, setStops] = useState<BusStop[]>([]);
   const [selectedStopId, setSelectedStopId] = useState<string | null>(null);
+  const [zoom, setZoom] = useState(() => map.getZoom());
   const [error, setError] = useState("");
   const requestRef = useRef<AbortController | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   const loadStops = useCallback(() => {
+    const currentZoom = map.getZoom();
+    setZoom(currentZoom);
+    requestRef.current?.abort();
+    if (currentZoom < MIN_STOP_ZOOM) {
+      setStops([]);
+      setSelectedStopId(null);
+      setError("");
+      return;
+    }
+
     const bounds = map.getBounds();
     const query = new URLSearchParams({
       west: bounds.getWest().toFixed(6),
       south: bounds.getSouth().toFixed(6),
       east: bounds.getEast().toFixed(6),
       north: bounds.getNorth().toFixed(6),
+      limit: String(MAX_VISIBLE_STOPS),
     });
-    requestRef.current?.abort();
     const controller = new AbortController();
     requestRef.current = controller;
     void fetch(apiUrl(`/stops?${query.toString()}`), {
-      signal: controller.signal,
-      headers: { accept: "application/json" },
+      signal: controller.signal, headers: { accept: "application/json" },
     }).then(async (response) => {
       const body = await response.json() as { stops?: BusStop[]; error?: string };
       if (!response.ok) throw new Error(body.error || "Não foi possível carregar os pontos.");
       if (!controller.signal.aborted) {
-        setStops(Array.isArray(body.stops) ? body.stops : []);
+        const nextStops = Array.isArray(body.stops) ? body.stops.slice(0, MAX_VISIBLE_STOPS) : [];
+        setStops(nextStops);
+        setSelectedStopId((current) => nextStops.some((stop) => stop.id === current) ? current : null);
         setError("");
       }
     }).catch((cause: unknown) => {
@@ -126,35 +134,32 @@ export function StopsLayer() {
     });
   }, [map]);
 
-  useMapEvents({
-    moveend: loadStops,
-    zoomend: loadStops,
-  });
+  const scheduleLoad = useCallback(() => {
+    if (timerRef.current !== null) window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(loadStops, 280);
+  }, [loadStops]);
+
+  useMapEvents({ moveend: scheduleLoad });
 
   useEffect(() => {
-    const timer = window.setTimeout(loadStops, 100);
+    scheduleLoad();
     return () => {
-      window.clearTimeout(timer);
+      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
       requestRef.current?.abort();
     };
-  }, [loadStops]);
+  }, [scheduleLoad]);
+
+  if (zoom < MIN_STOP_ZOOM) return null;
 
   return (
     <>
       {stops.map((stop) => (
-        <Marker
-          key={stop.id}
-          position={[stop.latitude, stop.longitude]}
-          icon={stopIcon("map-stop")}
-          title={stop.name}
-          eventHandlers={{ click: () => setSelectedStopId(stop.id) }}
-        >
-          {selectedStopId === stop.id && <Popup minWidth={260} maxWidth={300} closeButton>
-            <StopPopup stop={stop} />
-          </Popup>}
+        <Marker key={stop.id} position={[stop.latitude, stop.longitude]} icon={stopIcon("map-stop")}
+          title={stop.name} eventHandlers={{ click: () => setSelectedStopId(stop.id) }}>
+          {selectedStopId === stop.id && <Popup minWidth={260} maxWidth={300} closeButton><StopPopup stop={stop} /></Popup>}
         </Marker>
       ))}
-      {error && <div className="vai-map-data-warning" role="status">Pontos temporariamente indisponíveis</div>}
+      {error && <div className="vai-map-data-warning" role="status">Não foi possível carregar os pontos agora</div>}
     </>
   );
 }
