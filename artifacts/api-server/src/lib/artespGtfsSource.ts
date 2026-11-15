@@ -2,6 +2,7 @@ import { createWriteStream } from "node:fs";
 import { performance } from "node:perf_hooks";
 import { mkdir, readFile, rename, rm, stat } from "node:fs/promises";
 import { gunzipSync } from "node:zlib";
+import { deserialize } from "node:v8";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -405,40 +406,21 @@ function isInBarueriServiceArea(latitude: number, longitude: number): boolean {
   );
 }
 
-type SerializedGtfsFeed = {
-  source: GtfsFeed["source"];
-  stops: GtfsStop[];
-  routes: GtfsRoute[];
-  trips: GtfsTrip[];
-  stopTimesByTrip: Array<[string, GtfsStopTime[]]>;
-  calendar: GtfsCalendar[];
-  shapes: Array<[string, GeoPoint[]]>;
-};
-
 async function loadPrebuiltFeed(): Promise<GtfsFeed | undefined> {
   try {
     const compressed = await readFile(PREBUILT_INDEX_PATH);
-    const parsed = JSON.parse(gunzipSync(compressed).toString("utf8")) as SerializedGtfsFeed;
+    const feed = deserialize(gunzipSync(compressed)) as GtfsFeed;
     if (
-      !parsed.source?.version ||
-      !Array.isArray(parsed.stops) ||
-      !Array.isArray(parsed.routes) ||
-      !Array.isArray(parsed.trips) ||
-      !Array.isArray(parsed.stopTimesByTrip) ||
-      !Array.isArray(parsed.calendar) ||
-      !Array.isArray(parsed.shapes)
+      !feed.source?.version ||
+      !(feed.stops instanceof Map) ||
+      !(feed.routes instanceof Map) ||
+      !(feed.trips instanceof Map) ||
+      !(feed.stopTimesByTrip instanceof Map) ||
+      !(feed.calendar instanceof Map) ||
+      !(feed.shapes instanceof Map)
     ) {
       throw new Error("O índice GTFS pré-processado está incompleto.");
     }
-    const feed: GtfsFeed = {
-      source: parsed.source,
-      stops: new Map(parsed.stops.map((stop) => [stop.id, stop])),
-      routes: new Map(parsed.routes.map((route) => [route.id, route])),
-      trips: new Map(parsed.trips.map((trip) => [trip.id, trip])),
-      stopTimesByTrip: new Map(parsed.stopTimesByTrip),
-      calendar: new Map(parsed.calendar.map((entry) => [entry.serviceId, entry])),
-      shapes: new Map(parsed.shapes),
-    };
     console.info(
       JSON.stringify({
         event: "artesp_gtfs_prebuilt_loaded",
