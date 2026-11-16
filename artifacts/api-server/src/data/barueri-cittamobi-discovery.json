@@ -25,7 +25,8 @@
     "operatorIndexPages": [
       "https://bburbano.com.br/barueri/",
       "https://ralip.com.br/horarios-e-itinerarios/"
-    ]
+    ],
+    "lastDirectionalCoverageAuditAt": "2026-11-16"
   },
   "routes": [
     {
@@ -1741,5 +1742,151 @@
       "T652"
     ],
     "note": "The Prefeitura page lists lines by terminal, not as an exhaustive citywide register. Absence from these terminal tables is a discrepancy to review, not proof that a Cittamobi/municipal-operator line is intermunicipal or inactive. The same page names BB Transporte e Turismo LTDA and RALIP Transportes Rodoviários LTDA as municipal concessionaires."
+  },
+  "directionalCoverageAudit": {
+    "observedAt": "2026-11-16",
+    "singlePublishedDirectionLineCodes": [
+      "A162",
+      "A164C1",
+      "A164C2",
+      "A165C1",
+      "A165C2",
+      "A166C1",
+      "A166C2",
+      "A174",
+      "A217",
+      "T249",
+      "T652"
+    ],
+    "singlePublishedDirectionCount": 11,
+    "directions": [
+      {
+        "lineCode": "A162",
+        "routeId": "BARUERI-A162-CHACARAS-MARCO",
+        "headsign": "Chácaras Marco",
+        "operatorIndexLabel": "Terminal Barueri / Chácaras Marco Circular (via Jardim São Silvestre)",
+        "publishedDirection": "Centro para Chácaras Marco",
+        "stopCount": 14,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede",
+        "separateReversePageFound": false,
+        "classification": "operator-index-explicitly-circular"
+      },
+      {
+        "lineCode": "A217",
+        "routeId": "BARUERI-A217-TERMINAL-VALE-DO-SOL",
+        "headsign": "Terminal Barueri / Vale do sol",
+        "operatorIndexLabel": "Vale do Sol / Barueri Centro (via Avenida Exército Brasileiro)",
+        "publishedDirection": "Centro para Vale do Sol",
+        "stopCount": 24,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueriValedosol-6ad186647dda",
+        "separateReversePageFound": false,
+        "classification": "non-loop-return-direction-not-separately-published-follow-up"
+      },
+      {
+        "lineCode": "T249",
+        "routeId": "BARUERI-T249-ANTONIO-JOAO-GREEN-VALLEY",
+        "headsign": "Antonio João / Green Valley",
+        "operatorIndexLabel": "Estação Antonio João / Centro Comercial",
+        "publishedDirection": "Fazenda Militar para Green Valley",
+        "stopCount": 17,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7",
+        "separateReversePageFound": false,
+        "classification": "non-loop-return-direction-not-separately-published-follow-up"
+      },
+      {
+        "lineCode": "A164C1",
+        "routeId": "BARUERI-A164C1-TERMINAL-ENGENHO-NOVO-CIRCULAR-1",
+        "headsign": "Term. Barueri / Engenho Novo Circular 1",
+        "operatorIndexLabel": "Terminal Barueri / Engenho Novo via Rua Tietê",
+        "publishedDirection": "Circular com início e fim no Terminal Barueri",
+        "stopCount": 37,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C1-Term.BarueriEngenhoNovoCircular1-8a6ca968c844",
+        "separateReversePageFound": false,
+        "classification": "operator-index-circular-variant"
+      },
+      {
+        "lineCode": "A164C2",
+        "routeId": "BARUERI-A164C2-TERMINAL-ENGENHO-NOVO-CIRCULAR-2",
+        "headsign": "Term. Barueri / Engenho Novo Circular 2",
+        "operatorIndexLabel": "Terminal Barueri / Engenho Novo via Rua São Paulo",
+        "publishedDirection": "Circular com início e fim no Terminal Barueri",
+        "stopCount": 39,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A164C2-Term.BarueriEngenhoNovoCircular2-647107cdf93e",
+        "separateReversePageFound": false,
+        "classification": "operator-index-circular-variant"
+      },
+      {
+        "lineCode": "A166C1",
+        "routeId": "BARUERI-A166C1-JARDIM-CALIFORNIA-1",
+        "headsign": "Jd. Califórnia 1",
+        "operatorIndexLabel": "Terminal Barueri / Jardim Califórnia via Estrada dos Romeiros",
+        "publishedDirection": "Circular com início e fim no Terminal Barueri",
+        "stopCount": 41,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A166C1-Jd.California1-ea46098f14df",
+        "separateReversePageFound": false,
+        "classification": "single-published-variant-no-separate-return-page"
+      },
+      {
+        "lineCode": "A166C2",
+        "routeId": "BARUERI-A166C2-JARDIM-CALIFORNIA-2",
+        "headsign": "Jd. Califórnia 2",
+        "operatorIndexLabel": "Terminal Barueri / Jardim Califórnia via Estrada dos Altos",
+        "publishedDirection": "Circular com início no Terminal e retorno ao Centro",
+        "stopCount": 45,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A166C2-Jd.California2-35064410210e",
+        "separateReversePageFound": false,
+        "classification": "single-published-variant-no-separate-return-page"
+      },
+      {
+        "lineCode": "A165C1",
+        "routeId": "BARUERI-A165C1-fa3778fdd7c4",
+        "headsign": "Jd.Tupanci via São Luiz",
+        "operatorIndexLabel": "Terminal Barueri / Jardim São Luiz via Regina Alice",
+        "publishedDirection": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "stopCount": 54,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C1-Jd.TupanciviaSaoLuiz-fa3778fdd7c4",
+        "separateReversePageFound": false,
+        "classification": "single-published-variant-no-separate-return-page"
+      },
+      {
+        "lineCode": "A165C2",
+        "routeId": "BARUERI-A165C2-293405f8b285",
+        "headsign": "Jd. Tupanci via Porto",
+        "operatorIndexLabel": "Terminal Barueri / Jardim São Luiz via Vila Porto",
+        "publishedDirection": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "stopCount": 57,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C2-Jd.TupanciviaPorto-293405f8b285",
+        "separateReversePageFound": false,
+        "classification": "single-published-variant-no-separate-return-page"
+      },
+      {
+        "lineCode": "A174",
+        "routeId": "BARUERI-A174-640b99c01649",
+        "headsign": "Jd California / Estrada das Rosas",
+        "operatorIndexLabel": "Terminal Barueri / Jardim Califórnia via Estrada das Rosas",
+        "publishedDirection": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "stopCount": 42,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A174-JdCaliforniaEstradadasRosas-640b99c01649",
+        "separateReversePageFound": false,
+        "classification": "same-terminal-origin-destination-loop-candidate"
+      },
+      {
+        "lineCode": "T652",
+        "routeId": "BARUERI-T652-3e026f6d802a",
+        "headsign": "Engenho Novo / Tambore  P",
+        "operatorIndexLabel": "Engenho Novo / Tamboré via Rua da Prata",
+        "publishedDirection": "Rua Constantinopla, 582 para Alameda Inajá, 38-90 - Tamboré, Barueri - SP, 06460-055, Brasil",
+        "stopCount": 46,
+        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoTamboreP-3e026f6d802a",
+        "separateReversePageFound": false,
+        "classification": "non-loop-return-direction-not-separately-published-follow-up"
+      }
+    ],
+    "notes": [
+      "A single Cittamobi page does not prove that a line has no return service; it means no separate reverse page was found in the current two-page index during this audit.",
+      "A162 is explicitly described as circular by RALIP; do not synthesize a reverse direction.",
+      "A217, T249 and T652 have only one indexed Cittamobi direction and operator-index descriptions naming both endpoints; prioritize checking for separately published return pages.",
+      "A164C1/A164C2 are circular variants. A165C1/A165C2 and A166C1/A166C2 are separately coded variants and must not be merged into a synthetic reverse."
+    ]
   }
 }
