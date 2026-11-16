@@ -174,7 +174,9 @@
       "Atualização 14/11/2026: adicionados três itinerários completos da A268 a partir de PDFs públicos individuais do Cittamobi: Engenho Novo (19 paradas), Engenho Novo via Terminal Barueri (34) e Vale do Sol via Plataforma Campo Sales (26). As sequências e duplicações foram preservadas conforme os PDFs emitidos em 04/04/2026. Horários desses PDFs são antigos e não foram promovidos como quadro atual; coordenadas ainda pendentes. A rota Engenho Novo termina em Jardim Isaura, Santana de Parnaíba, embora seja publicada pela operadora municipal Benfica Municipal - Barueri.",
       "Atualização 14/11/2026: adicionados T651 Engenho Novo via Rua da Prata (61 paradas) e T254 Jd. Líbano via Zélia (41 paradas), com sequências completas transcritas dos PDFs públicos do Cittamobi emitidos em 04/04/2026. Repetições publicadas foram preservadas; horários antigos dos PDFs não foram tratados como atuais e coordenadas permanecem pendentes.",
       "Atualização 2026-11-14: 113 sentidos municipais publicados no catálogo Cittamobi foram conferidos; 69 incluídos e 38 atualizados com a sequência visível da página individual. A lista de paradas permanece sem coordenadas verificadas e continua fora do cálculo de rotas.",
-      "Atualização 2026-11-14: 113 sentidos municipais do índice Cittamobi foram conferidos; 0 incluídos e 113 atualizados com a sequência numerada da página individual. Em 6 sentido(s), a contagem da página atual divergiu do registro anterior; a página atual foi selecionada e a fonte anterior foi mantida em sourceUrls. 2 registro(s) de outras fontes foram preservados fora do índice atual. As paradas continuam sem coordenadas verificadas e fora do cálculo de rotas."
+      "Atualização 2026-11-14: 113 sentidos municipais do índice Cittamobi foram conferidos; 0 incluídos e 113 atualizados com a sequência numerada da página individual. Em 6 sentido(s), a contagem da página atual divergiu do registro anterior; a página atual foi selecionada e a fonte anterior foi mantida em sourceUrls. 2 registro(s) de outras fontes foram preservados fora do índice atual. As paradas continuam sem coordenadas verificadas e fora do cálculo de rotas.",
+      "Timetable audit 2026-11-16: T652 Engenho Novo / Tamboré page currently shows Monday-Friday 06:45–08:05 with 40-minute average frequency and no Saturday/Sunday service shown; no exact stop-passage times are published. The page does not display a separate timetable publication date, so 2026-11-16 is the observation date.",
+      "A162 Chácaras Marco page states its timetable was updated 07/11/2026 and shows one weekday departure at 15:28; Saturday and Sunday are not informed. The schedule observedAt was aligned to the page's stated update date."
     ],
     "operators": [
       "Benfica Municipal - Barueri",
@@ -184,7 +186,8 @@
     "indexPages": [
       "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri",
       "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2"
-    ]
+    ],
+    "lastTimetableAuditAt": "2026-11-16"
   },
   "routes": [
     {
@@ -1696,7 +1699,7 @@
       "direction": "Centro para Chácaras Marco",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede",
       "schedule": {
-        "observedAt": "2026-11-13",
+        "observedAt": "2026-11-07",
         "weekday": {
           "firstDeparture": "15:28",
           "lastDeparture": "15:28",
@@ -6184,7 +6187,18 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoTamboreP-3e026f6d802a"
-      ]
+      ],
+      "schedule": {
+        "observedAt": "2026-11-16",
+        "weekday": {
+          "firstDeparture": "06:45",
+          "lastDeparture": "08:05",
+          "averageHeadwayMinutes": 40
+        },
+        "saturday": null,
+        "sunday": null,
+        "precision": "weekday-operating-window-and-average-headway-from-current-cittamobi-table; no weekend operation shown"
+      }
     }
   ]
 }
