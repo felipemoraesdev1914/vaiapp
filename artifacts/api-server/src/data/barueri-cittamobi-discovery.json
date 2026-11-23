@@ -10,19 +10,23 @@
     "name": "Cittamobi public municipal line pages",
     "indexPages": [
       "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri",
-      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2"
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2",
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=3"
     ],
     "notes": [
       "Each entry is a direction-specific public line page, not a route inferred from the line code alone.",
-      "The ordered stop lists from every municipal route page currently linked by the public index are transcribed in the main route catalog; geographic validation remains pending.",
+      "Only directions with individually verified complete ordered stop lists are transcribed in the main route catalog; the 2026-11-23 three-page index audit found additional directions that remain in pendingDirections.",
       "No coordinates are claimed here. Geocoding and geographic validation remain pending.",
       "Municipal operator classification comes from the Cittamobi page label and should be cross-checked against the Prefeitura list.",
       "Cross-check 2026-11-16: BB and RALIP public Barueri municipal operator indexes were reviewed against the current Cittamobi two-page index and the Prefeitura terminal tables. A553 is an operator-index-only candidate with a 404 individual page and remains incomplete.",
       "The Prefeitura terminal tables currently list 42 distinct municipal codes; A162, A216C1, A631, T249, T253VP1, T651, T652 from the 49-code Cittamobi municipal inventory are not present in those terminal tables. The Prefeitura page is organized by terminal, so these absences require follow-up and are not proof of service cancellation or intermunicipal classification.",
-      "2026-11-23: Cittamobi's current Barueri index remains two pages with 113 indexed municipal directions across 49 codes. The existing catalog contains 115 complete direction records: 113 indexed pages plus two additional map-PDF-only directions (T241 Terminal Barueri and T651 Engenho Novo via Rua da Prata). No new complete direction was added this run.",
+      "Historical note superseded by the later 2026-11-23 recheck: the public Cittamobi Barueri index resolves to three pages and 150 unique municipal-labelled direction cards across 49 confirmed municipal codes plus the unverified A267 candidate. Three newly verified directions were added; 32 indexed direction pages remain pending or stale.",
       "2026-11-23 operator audit: BB Transporte's Barueri index still lists A553, but its linked individual route page returns HTTP 404; A553 is absent from the current Cittamobi index and Prefeitura terminal tables, so it remains an unverified operator-index candidate. RALIP's current municipal section lists its Barueri municipal services; its 463TRO entry is metropolitan and excluded. The Prefeitura page still identifies BB Transporte e Turismo LTDA and RALIP Transportes Rodoviários LTDA as the municipal concessionaires.",
       "2026-11-23 Prefeitura cross-check: the official terminal tables still list 42 distinct municipal line codes. The seven Cittamobi codes absent from those terminal tables remain A162, A216C1, A631, T249, T253VP1, T651 and T652; absence from terminal tables is not proof of cancellation or intermunicipal classification.",
-      "2026-11-23 targeted route audit: refreshed the current individual pages and dated timetable metadata for A160 variants, A168 Jd. Itaquiti via Campos Sales (Baia), A217, T249, T652 and T245 Tamboré (Inajá). The A160 Vale do sol via Zelia page reports 28 stops while the extracted ordered list exposes 27; its existing record is flagged incomplete pending recovery of the missing stop. No coordinates were added."
+      "2026-11-23 targeted route audit: refreshed the current individual pages and dated timetable metadata for A160 variants, A168 Jd. Itaquiti via Campos Sales (Baia), A217, T249, T652 and T245 Tamboré (Inajá). The A160 Vale do sol via Zelia page reports 28 stops while the extracted ordered list exposes 27; its existing record is flagged incomplete pending recovery of the missing stop. No coordinates were added.",
+      "2026-11-23 three-page coverage correction: page=3 is directly accessible and contains 27 municipal-labelled direction cards. Page 1 and page 2 overlap on A166C1/A166C2, giving 150 unique municipal-labelled direction cards across the three pages.",
+      "2026-11-23 coverage gap: three newly verified complete directions were added (T651 Engenho Novo via Brigadeiro Jordão, 17 stops; T651 Engenho Novo, 26 stops; T256 Pq. Ecológico, 2 stops), resulting in 118 route records and 3,640 stop records. Thirty-two other indexed direction pages remain in pendingDirections.",
+      "2026-11-23 new code candidate A267: four Cittamobi pages are labelled Benfica Municipal - Barueri, but A267 is absent from the current BB Barueri operator index and Prefeitura terminal tables. Keep A267 outside the confirmed municipalLineCodes and routing-ready catalog pending official classification."
     ],
     "lastCheckedAt": "2026-11-23",
     "lastOperatorIndexAuditAt": "2026-11-23",
@@ -396,8 +400,9 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A167-JardimdosAltos-c5fbcbf1ad8c",
-      "lastCheckedAt": "2026-11-14",
-      "integrationStatus": "stop-list-transcribed-coordinates-pending"
+      "lastCheckedAt": "2026-11-23",
+      "integrationStatus": "stop-list-transcribed-coordinates-pending",
+      "timetableObservedAt": "2026-11-21"
     },
     {
       "routeId": "BARUERI-A167-817e1e081828",
@@ -878,8 +883,9 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d",
-      "lastCheckedAt": "2026-11-14",
-      "integrationStatus": "stop-list-transcribed-coordinates-pending"
+      "lastCheckedAt": "2026-11-23",
+      "integrationStatus": "stop-list-transcribed-coordinates-pending",
+      "timetableObservedAt": "2026-11-19"
     },
     {
       "routeId": "BARUERI-T173-2dbcda11054e",
@@ -892,8 +898,9 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-Kartodromo.-2dbcda11054e",
-      "lastCheckedAt": "2026-11-14",
-      "integrationStatus": "stop-list-transcribed-coordinates-pending"
+      "lastCheckedAt": "2026-11-23",
+      "integrationStatus": "stop-list-transcribed-coordinates-pending",
+      "timetableObservedAt": "2026-11-21"
     },
     {
       "routeId": "BARUERI-T241-28ce3cc3d83a",
@@ -1656,15 +1663,65 @@
       "sourceUrl": "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovoviaRuadaPrata-9eb3c781dad7.pdf",
       "lastCheckedAt": null,
       "integrationStatus": "catalog-source-not-listed-in-current-index-manual-review"
+    },
+    {
+      "routeId": "BARUERI-T651-1d565cae92f9",
+      "lineCode": "T651",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Engenho Novo via Brigadeiro Jordão",
+      "direction": "Avenida Brigadeiro Manoel Rodrigues Jordão 1953, Silveira, Barueri - São Paulo, 06433-010, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+      "stopCount": 17,
+      "catalogStopCount": 17,
+      "itineraryComplete": true,
+      "coordinatesAvailable": false,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovoviaBrigadeiroJordao-1d565cae92f9",
+      "lastCheckedAt": "2026-11-23",
+      "timetableObservedAt": "2026-11-19",
+      "timetableStatus": "source table shows '-' for every day; no time window or headway was promoted",
+      "integrationStatus": "stop-list-transcribed-coordinates-pending"
+    },
+    {
+      "routeId": "BARUERI-T651-ae57de88d7d8",
+      "lineCode": "T651",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Engenho Novo",
+      "direction": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para Rua Constantinopla, 582",
+      "stopCount": 26,
+      "catalogStopCount": 26,
+      "itineraryComplete": true,
+      "coordinatesAvailable": false,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-ae57de88d7d8",
+      "lastCheckedAt": "2026-11-23",
+      "timetableObservedAt": "2026-11-19",
+      "timetableStatus": "source table shows '-' for every day; no time window or headway was promoted",
+      "integrationStatus": "stop-list-transcribed-coordinates-pending"
+    },
+    {
+      "routeId": "BARUERI-T256-5640b53f6b5a",
+      "lineCode": "T256",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Pq. Ecológico",
+      "direction": "Avenida Andrômeda, 3025 para Avenida Doutor Dib Sauaia Neto, 4967",
+      "stopCount": 2,
+      "catalogStopCount": 2,
+      "itineraryComplete": true,
+      "coordinatesAvailable": false,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a",
+      "lastCheckedAt": "2026-11-23",
+      "timetableObservedAt": "2026-11-19",
+      "timetableStatus": "source table shows '-' for every day; no time window or headway was promoted",
+      "integrationStatus": "stop-list-transcribed-coordinates-pending"
     }
   ],
   "catalogCounts": {
     "municipalLineCodes": 49,
-    "directionPagesInCittamobiIndex": 113,
+    "directionPagesInCittamobiIndex": 150,
     "sourceOnlyDirections": 2,
-    "catalogDirections": 115,
-    "stopRecords": 3595,
-    "directionsWithVerifiedCoordinates": 0
+    "catalogDirections": 118,
+    "stopRecords": 3640,
+    "directionsWithVerifiedCoordinates": 0,
+    "unverifiedMunicipalCandidates": 1,
+    "pendingIndexDirections": 32
   },
   "pendingDirections": [
     {
@@ -1713,6 +1770,705 @@
         "The linked Cittamobi map image was reviewed on 2026-11-23; it shows the route line and markers but no readable stop labels or addresses, so the missing stop cannot be identified from that image alone."
       ],
       "mapImageUrl": "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe.webp"
+    },
+    {
+      "candidateId": "BARUERI-A174-7b2365a94556",
+      "lineCode": "A174",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jd. California /",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A174-Jd.California-7b2365a94556",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 30 stops; crawl age about 3 months",
+      "itineraryStatus": "page reports 30 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 30,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "destination": "Rua Santa Úrsula, 251"
+    },
+    {
+      "candidateId": "BARUERI-A174-b04bc93b99c7",
+      "lineCode": "A174",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jd. California via Estrada das Rosas",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A174-Jd.CaliforniaviaEstradadasRosas-b04bc93b99c7",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 25 stops; crawl age about 3 months",
+      "itineraryStatus": "page reports 25 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 25,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-A212-7d52f78af714",
+      "lineCode": "A212",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Jardim Gabriela",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-JardimGabriela-7d52f78af714",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A212-9c98a7f2b916",
+      "lineCode": "A212",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-TerminalBarueri-9c98a7f2b916",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 47 stops; last crawl about 4 months ago",
+      "itineraryStatus": "page reports 47 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 47,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "Rua Beira Rio, 220 - Parque Viana, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-A216C1-88a83c68da76",
+      "lineCode": "A216C1",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jd. Paulista / Term. Barueri via Estr. Velha",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C1-Jd.PaulistaTerm.BarueriviaEstr.Velha-88a83c68da76",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A216C1-94d3ab6d1ae5",
+      "lineCode": "A216C1",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jd. Paulista / Term. Barueri via Estr. Velha",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C1-Jd.PaulistaTerm.BarueriviaEstr.Velha-94d3ab6d1ae5",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A216C2-5ca91cbdd6a0",
+      "lineCode": "A216C2",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jd. Votupoca / Campos Sales via Est. Velha",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C2-Jd.VotupocaCamposSalesviaEst.Velha-5ca91cbdd6a0",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A216C2-327710a09065",
+      "lineCode": "A216C2",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jd. Votupoca / Campos Sales via Est. Velha",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C2-Jd.VotupocaCamposSalesviaEst.Velha-327710a09065",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A217-3c50609e2cd5",
+      "lineCode": "A217",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueri-3c50609e2cd5",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-legacy-page-stale",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "legacy page crawled about 10 months ago; current fetch returns generic 46-line page without itinerary details",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A260-39ec71d50cbb",
+      "lineCode": "A260",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Pq. Imperial / Term. Barueri via Hospital",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-Pq.ImperialTerm.BarueriviaHospital-39ec71d50cbb",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 74 stops; full list requires transcription",
+      "itineraryStatus": "page reports 74 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 74,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "Terminal Rodoviário Gumercindo Modesto de Farias, 1340 - Parque Imperial, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-A267-bdef6fafdb3f",
+      "lineCode": "A267",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Paulista via Av. Brigadeiro Jorão",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-PaulistaviaAv.BrigadeiroJorao-bdef6fafdb3f",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "cittamobi-municipal-label-unconfirmed-by-operator-and-prefeitura",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "A267 not listed in current Prefeitura terminal tables; BB operator index does not list A267",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Cittamobi labels this page Benfica Municipal - Barueri, but A267 is absent from the current BB operator index and Prefeitura terminal tables.",
+        "Keep A267 as an unverified municipal-classification candidate, not a confirmed municipal code, until an official operator or Prefeitura source corroborates it."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A267-06fb18443491",
+      "lineCode": "A267",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Constran Alvorada",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvorada-06fb18443491",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "cittamobi-municipal-label-unconfirmed-by-operator-and-prefeitura",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "A267 not listed in current Prefeitura terminal tables; BB operator index does not list A267",
+      "individualPageStatus": "HTTP 200; page reports 14 stops; timetable table updated 2026-11-19 but all days show no interval",
+      "itineraryStatus": "page reports 14 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "table updated 2026-11-19; weekday, Saturday and Sunday interval not informed",
+      "stopCount": 14,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Cittamobi labels this page Benfica Municipal - Barueri, but A267 is absent from the current BB operator index and Prefeitura terminal tables.",
+        "Keep A267 as an unverified municipal-classification candidate; do not add it to the confirmed municipal code list or route catalog yet."
+      ],
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "destination": "Avenida Constran, Engenho Novo, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-A267-05f892412944",
+      "lineCode": "A267",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Eng. Novo (Constran) via Campos Sales",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-Eng.NovoConstranviaCamposSales-05f892412944",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "cittamobi-municipal-label-unconfirmed-by-operator-and-prefeitura",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "A267 not listed in current Prefeitura terminal tables; BB operator index does not list A267",
+      "individualPageStatus": "HTTP 200; page reports 19 stops; timetable table requires separate date/precision review",
+      "itineraryStatus": "page reports 19 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 19,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Cittamobi labels this page Benfica Municipal - Barueri, but A267 is absent from the current BB operator index and Prefeitura terminal tables.",
+        "Keep A267 as an unverified municipal-classification candidate; do not add it to the confirmed municipal code list or route catalog yet."
+      ],
+      "origin": "Avenida Constran, Engenho Novo, Barueri - SP",
+      "destination": "Rua Campos Sales 118, Centro, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-A267-1783e730746c",
+      "lineCode": "A267",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Constran Alvorada via Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvoradaviaTerminalBarueri-1783e730746c",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "cittamobi-municipal-label-unconfirmed-by-operator-and-prefeitura",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "A267 not listed in current Prefeitura terminal tables; BB operator index does not list A267",
+      "individualPageStatus": "HTTP 200; page reports 24 stops; timetable freshness requires review",
+      "itineraryStatus": "page reports 24 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 24,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Cittamobi labels this page Benfica Municipal - Barueri, but A267 is absent from the current BB operator index and Prefeitura terminal tables.",
+        "Keep A267 as an unverified municipal-classification candidate; do not add it to the confirmed municipal code list or route catalog yet."
+      ],
+      "origin": "Estrada Velha de Itapevi, Votupoca, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-A268-be905740f9ff",
+      "lineCode": "A268",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Vale do Sol via Brigadeiro Jordão",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A268-ValedoSolviaBrigadeiroJordao-be905740f9ff",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A268-d265967bdf26",
+      "lineCode": "A268",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Campo Sales (Baia)",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A268-CampoSalesBaia-d265967bdf26",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-legacy-page-stale",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "legacy page crawled about 9 months ago; current capture has only a generic 46-line page and no verified ordered stop list",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T173-5d43bc2cc63f",
+      "lineCode": "T173",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminalBarueri-5d43bc2cc63f",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "stale-duplicate-alias-of-existing-route",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone; same origin, destination and 18-stop count as existing T173 Terminal de Barueri page",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "duplicateOf": "BARUERI-T173-TERMINAL-DE-BARUERI"
+    },
+    {
+      "candidateId": "BARUERI-T173-565289d6bb77",
+      "lineCode": "T173",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Kartódromo",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-Kartodromo-565289d6bb77",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "stale-duplicate-alias-of-existing-route",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone; same origin, destination and 11-stop count as existing T173 Kartódromo page",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "duplicateOf": "BARUERI-T173-2dbcda11054e"
+    },
+    {
+      "candidateId": "BARUERI-T241-750c03075f6b",
+      "lineCode": "T241",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Jardim Líbano via Recanto Phrynéa",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T241-JardimLibanoviaRecantoPhrynea-750c03075f6b",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T245-ea588ede0e36",
+      "lineCode": "T245",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Vale do Sol / Mamore Tenis Clube",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ValedoSolMamoreTenisClube-ea588ede0e36",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 32 stops; complete ordered list not yet transcribed",
+      "itineraryStatus": "page reports 32 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 32,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "Alameda Mamoré, 302-440 - Alphaville Industrial, Barueri - SP",
+      "destination": "R. Mississipi, 450-470 - Vale do Sol, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-T245-68aba6c5717f",
+      "lineCode": "T245",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Vale do Sol",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ValedoSol-68aba6c5717f",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-404",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 404 Not Found",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T253-3405e604603c",
+      "lineCode": "T253",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Terminal Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T253-TerminalBarueri-3405e604603c",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-legacy-page-stale",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "legacy page crawled about 10 months ago; current fetch returns generic 46-line page without itinerary details",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T253-2455aff64e48",
+      "lineCode": "T253",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Tamboré via Term. Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T253-TamboreviaTerm.Barueri-2455aff64e48",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T253-7416fa7cef22",
+      "lineCode": "T253",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Líbano via Rua da Prata (Campos Sales)",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T253-LibanoviaRuadaPrataCamposSales-7416fa7cef22",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-410",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 410 Gone",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T254-4ea1077a5815",
+      "lineCode": "T254",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Tamboré via Mackenzie",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T254-TamboreviaMackenzie-4ea1077a5815",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 34 stops; complete ordered list not yet transcribed",
+      "itineraryStatus": "page reports 34 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 34,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "R. Yogiro Fugita, 75 - Centro, Barueri - SP",
+      "destination": "Alameda Araguaia, 3902-3922 - Alphaville Industrial, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-T254-e0efacf294e4",
+      "lineCode": "T254",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "Benfica Municipal - Barueri",
+      "headsign": "Ter. Barueri via Mackenzie",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T254-Ter.BarueriviaMackenzie-e0efacf294e4",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 36 stops; complete ordered list not yet transcribed",
+      "itineraryStatus": "page reports 36 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": 36,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "Tv. Porto Velho, 218 - Jardim do Líbano, Barueri - SP",
+      "destination": "R. Yogiro Fugita, 75 - Centro, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-T651-d368332b7948",
+      "lineCode": "T651",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jardim Mutinga via Antônio João",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-JardimMutingaviaAntonioJoao-d368332b7948",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 40 stops; complete ordered list not yet transcribed",
+      "itineraryStatus": "page reports 40 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "table assembled 2026-11-19; weekday, Saturday and Sunday intervals not informed",
+      "stopCount": 40,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ],
+      "origin": "Avenida Aníbal Correia, Votupoca, Barueri - SP",
+      "destination": "R. Mauro José da Silva, 307 - Jardim Mutinga, Barueri - SP"
+    },
+    {
+      "candidateId": "BARUERI-T651-b1ebf2e51ce9",
+      "lineCode": "T651",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Jardim Mutinga via Rua da Prata",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-JardimMutingaviaRuadaPrata-b1ebf2e51ce9",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-page-unavailable-http-404",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 404 Not Found",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T652-f45f34366a8b",
+      "lineCode": "T652",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Tamboré",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-Tambore-f45f34366a8b",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 53 stops; complete ordered list not yet transcribed",
+      "itineraryStatus": "page reports 53 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "table date and values require full page review",
+      "stopCount": 53,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T652-4823f4d11f2b",
+      "lineCode": "T652",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Engenho Novo",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovo-4823f4d11f2b",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "indexed-direction-needs-full-stop-transcription",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 200; page reports 39 stops; complete ordered list not yet transcribed",
+      "itineraryStatus": "page reports 39 stops; full ordered list not yet transcribed into the main route catalog",
+      "timetableStatus": "table date and values require full page review",
+      "stopCount": 39,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T652-d92d1fca9c38",
+      "lineCode": "T652",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Engenho Novo..",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovo..-d92d1fca9c38",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-legacy-page-unavailable-http-404",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 404 Not Found; source had been crawled about 10 months ago",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-T652-1d7ee0bfa3a0",
+      "lineCode": "T652",
+      "operator": "Ralip Municipal Barueri",
+      "operatorLabel": "Ralip Municipal Barueri",
+      "headsign": "Engenho Novo via BEngenho Novo virigadeiro Jordão",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoviaBEngenhoNovovirigadeiroJordao-1d7ee0bfa3a0",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "index-listed-legacy-page-unavailable-http-404",
+      "cittamobiIndexStatus": "listed-on-current-three-page-index",
+      "prefeituraStatus": "see current terminal-table cross-check; absence is not proof of cancellation",
+      "individualPageStatus": "HTTP 404 Not Found; source had been crawled about 10 months ago",
+      "itineraryStatus": "no current complete ordered stop list available from the linked individual page",
+      "timetableStatus": "not promoted; timetable freshness and precision still require individual revalidation",
+      "stopCount": null,
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "Preserve this direction separately; do not add it to the main route catalog until its complete ordered stop list is verified from the individual page or map PDF."
+      ]
     }
   ],
   "prefeituraCrossCheck": {
@@ -1771,7 +2527,15 @@
       "T651",
       "T652"
     ],
-    "note": "The Prefeitura page lists lines by terminal, not as an exhaustive citywide register. Absence from these terminal tables is a discrepancy to review, not proof that a Cittamobi/municipal-operator line is intermunicipal or inactive. The same page names BB Transporte e Turismo LTDA and RALIP Transportes Rodoviários LTDA as municipal concessionaires."
+    "note": "The Prefeitura page lists lines by terminal, not as an exhaustive citywide register. Absence from these terminal tables is a discrepancy to review, not proof that a Cittamobi/municipal-operator line is intermunicipal or inactive. The same page names BB Transporte e Turismo LTDA and RALIP Transportes Rodoviários LTDA as municipal concessionaires.",
+    "unverifiedMunicipalClassificationCandidates": [
+      "A267"
+    ],
+    "unverifiedCandidateNotes": [
+      "Cittamobi lists four A267 direction cards under Benfica Municipal - Barueri.",
+      "A267 is absent from the current BB operator index and from the Prefeitura terminal tables.",
+      "Do not classify A267 as confirmed municipal or intermunicipal until an official operator or Prefeitura source corroborates it."
+    ]
   },
   "directionalCoverageAudit": {
     "observedAt": "2026-11-23",
@@ -1783,12 +2547,9 @@
       "A165C2",
       "A166C1",
       "A166C2",
-      "A174",
-      "A217",
-      "T249",
-      "T652"
+      "T249"
     ],
-    "singlePublishedDirectionCount": 11,
+    "singlePublishedDirectionCount": 8,
     "directions": [
       {
         "lineCode": "A162",
@@ -1800,17 +2561,6 @@
         "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A162-ChacarasMarco-ca5a463d1ede",
         "separateReversePageFound": false,
         "classification": "operator-index-explicitly-circular"
-      },
-      {
-        "lineCode": "A217",
-        "routeId": "BARUERI-A217-TERMINAL-VALE-DO-SOL",
-        "headsign": "Terminal Barueri / Vale do sol",
-        "operatorIndexLabel": "Vale do Sol / Barueri Centro (via Avenida Exército Brasileiro)",
-        "publishedDirection": "Centro para Vale do Sol",
-        "stopCount": 24,
-        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueriValedosol-6ad186647dda",
-        "separateReversePageFound": false,
-        "classification": "non-loop-return-direction-not-separately-published-follow-up"
       },
       {
         "lineCode": "T249",
@@ -1888,28 +2638,6 @@
         "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C2-Jd.TupanciviaPorto-293405f8b285",
         "separateReversePageFound": false,
         "classification": "single-published-variant-no-separate-return-page"
-      },
-      {
-        "lineCode": "A174",
-        "routeId": "BARUERI-A174-640b99c01649",
-        "headsign": "Jd California / Estrada das Rosas",
-        "operatorIndexLabel": "Terminal Barueri / Jardim Califórnia via Estrada das Rosas",
-        "publishedDirection": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
-        "stopCount": 42,
-        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A174-JdCaliforniaEstradadasRosas-640b99c01649",
-        "separateReversePageFound": false,
-        "classification": "same-terminal-origin-destination-loop-candidate"
-      },
-      {
-        "lineCode": "T652",
-        "routeId": "BARUERI-T652-3e026f6d802a",
-        "headsign": "Engenho Novo / Tambore  P",
-        "operatorIndexLabel": "Engenho Novo / Tamboré via Rua da Prata",
-        "publishedDirection": "Rua Constantinopla, 582 para Alameda Inajá, 38-90 - Tamboré, Barueri - SP, 06460-055, Brasil",
-        "stopCount": 46,
-        "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoTamboreP-3e026f6d802a",
-        "separateReversePageFound": false,
-        "classification": "non-loop-return-direction-not-separately-published-follow-up"
       }
     ],
     "notes": [
@@ -1917,7 +2645,9 @@
       "A162 is explicitly described as circular by RALIP; do not synthesize a reverse direction.",
       "A217, T249 and T652 have only one indexed Cittamobi direction and operator-index descriptions naming both endpoints; prioritize checking for separately published return pages.",
       "A164C1/A164C2 are circular variants. A165C1/A165C2 and A166C1/A166C2 are separately coded variants and must not be merged into a synthetic reverse.",
-      "Rechecked 2026-11-23 against the current two-page Cittamobi index and the current BB/RALIP operator indexes: the same 11 line codes still have only one separately indexed direction. No reverse direction was synthesized."
+      "Rechecked 2026-11-23 against the current two-page Cittamobi index and the current BB/RALIP operator indexes: the same 11 line codes still have only one separately indexed direction. No reverse direction was synthesized.",
+      "Re-audited 2026-11-23 against all three index pages: A174, A217 and T652 now have additional separately indexed direction cards, some stale or inaccessible, so they are no longer counted as single-published-direction codes.",
+      "Current single-page codes are A162, A164C1, A164C2, A165C1, A165C2, A166C1, A166C2 and T249. Circular codes remain variants, not synthetic reverse routes."
     ]
   }
 }
