@@ -177,7 +177,8 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoviaBEngenhoNovovirigadeiroJordao-1d7ee0bfa3a0",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovoviaBrigadeiroJordao-1d565cae92f9",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-ae57de88d7d8",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a",
+      "https://bburbano.com.br/barueri/"
     ],
     "observedAt": "2026-11-14",
     "notes": [
@@ -220,7 +221,8 @@
       "2026-11-23 index re-audit: current Cittamobi Barueri index resolves to three pages with 150 unique municipal-labelled direction cards. Three complete directions were added from individual pages: T651 Engenho Novo via Brigadeiro Jordão (17 stops), T651 Engenho Novo (26 stops), and T256 Pq. Ecológico (2 stops).",
       "2026-11-23 coverage gap: 32 other indexed direction pages remain in discovery pending data. Some pages are HTTP 404/410 or legacy placeholders; others report complete stop counts but still require ordered transcription. No coordinates were invented and the routing engine still does not consume this catalog.",
       "2026-11-23 classification discrepancy: A267 appears under the Cittamobi label Benfica Municipal - Barueri but is absent from the current BB operator index and Prefeitura terminal tables; it remains an unverified candidate and is not included in this route catalog.",
-      "2026-11-23: A212 Jardim Gabriela (49 ordered stops) transcribed from the current individual Cittamobi page; timetable table dated 2026-11-19 contains '-' for all days, so no operating hours or headways were added. Coordinates remain unverified."
+      "2026-11-23: A212 Jardim Gabriela (49 ordered stops) transcribed from the current individual Cittamobi page; timetable table dated 2026-11-19 contains '-' for all days, so no operating hours or headways were added. Coordinates remain unverified.",
+      "2026-11-23: cross-checked Benfica/BBTT's official Barueri municipal line index. It lists A212 as Terminal Barueri / Jardim Gabriela, corroborating the municipal operator classification and the two separately published A212 directions. The operator index is a line inventory, not a stop-by-stop itinerary source."
     ],
     "operators": [
       "Benfica Municipal - Barueri",
