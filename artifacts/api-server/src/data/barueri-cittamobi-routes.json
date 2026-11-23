@@ -219,7 +219,8 @@
       "A160 Vale do sol via Zelia map image reviewed 2026-11-23. The map shows route geometry and stop markers but does not label the stop names/addresses, so it cannot resolve the 28-versus-27 text-list discrepancy or justify adding a guessed stop.",
       "2026-11-23 index re-audit: current Cittamobi Barueri index resolves to three pages with 150 unique municipal-labelled direction cards. Three complete directions were added from individual pages: T651 Engenho Novo via Brigadeiro Jordão (17 stops), T651 Engenho Novo (26 stops), and T256 Pq. Ecológico (2 stops).",
       "2026-11-23 coverage gap: 32 other indexed direction pages remain in discovery pending data. Some pages are HTTP 404/410 or legacy placeholders; others report complete stop counts but still require ordered transcription. No coordinates were invented and the routing engine still does not consume this catalog.",
-      "2026-11-23 classification discrepancy: A267 appears under the Cittamobi label Benfica Municipal - Barueri but is absent from the current BB operator index and Prefeitura terminal tables; it remains an unverified candidate and is not included in this route catalog."
+      "2026-11-23 classification discrepancy: A267 appears under the Cittamobi label Benfica Municipal - Barueri but is absent from the current BB operator index and Prefeitura terminal tables; it remains an unverified candidate and is not included in this route catalog.",
+      "2026-11-23: A212 Jardim Gabriela (49 ordered stops) transcribed from the current individual Cittamobi page; timetable table dated 2026-11-19 contains '-' for all days, so no operating hours or headways were added. Coordinates remain unverified."
     ],
     "operators": [
       "Benfica Municipal - Barueri",
@@ -6405,6 +6406,70 @@
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a"
+      ]
+    },
+    {
+      "routeId": "BARUERI-A212-JARDIM-GABRIELA",
+      "lineCode": "A212",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Jardim Gabriela",
+      "direction": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para Rua Beira Rio, 220 - Parque Viana, Barueri - SP, 06414-100, Brasil",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-JardimGabriela-7d52f78af714",
+      "observedAt": "2026-11-23",
+      "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Avenida Arnaldo Rodrigues Bittencourt, 4",
+        "Av. Henriqueta Mendes Guerra, 158",
+        "Av. Henriqueta Mendes Guerra, 556 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 826 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Av. Henriqueta Mendes Guerra, 1168 - Vila Sao Joao, Barueri - SP, Brasil",
+        "Avenida Henriqueta Mendes Guerra, 1410",
+        "Avenida Vinte e Seis de Março, 1572",
+        "Rua Fernão Dias Paes Leme, 257",
+        "Rua Fernão Dias Paes Leme, 566",
+        "Rua Benedito de Paula Marcondes, 130",
+        "Rua Benedito de Paula Marcondes, 529",
+        "Avenida Sebastião Jordão, 808-826 - Centro, Jandira - SP, Brasil",
+        "Avenida Zélia, 128 - Parque dos Camargos, Barueri - SP, Brasil",
+        "Rua Lenita, 192",
+        "Rua Karina, 333",
+        "Rua Gisele, 347",
+        "Rua Gisele, 512",
+        "Rua Gisele, 630",
+        "Rua Lenita, 834",
+        "Rua Maisa, 2",
+        "Rua Glória, 446",
+        "Rua Glória, 323",
+        "Rua Glória, 194",
+        "Rua Elizabete, 266",
+        "Rua Elizabete, 100 - Parque dos Camargos, Barueri - SP, Brasil",
+        "Estrada Velha de Itapevi, 3802",
+        "Estrada Velha de Itapevi, 4296",
+        "Avenida Aníbal Correia, 2434",
+        "Avenida Aníbal Correia, 2361",
+        "Avenida Aníbal Correia, 2270",
+        "Av. Aníbal Correia, 2231",
+        "Avenida Aníbal Correia, 2025",
+        "Avenida Aníbal Correia, 1841",
+        "Avenida Aníbal Correia, 1465",
+        "Avenida Aníbal Correia, 1289",
+        "Avenida Aníbal Correia, 1217-1287 - Parque Viana, Barueri - SP, 06447-010, Brasil",
+        "Rua Seringueira, 20",
+        "Rua Seringueira, 162",
+        "Estrada dos Pinheiros, 823",
+        "Estrada dos Pinheiros, 656",
+        "Rua Amoreira, 46",
+        "Rua Amoreira, 180",
+        "Rua Cerejeira, 380",
+        "Rua Urânia, 240",
+        "Estrada dos Pinheiros, 171",
+        "Av. Aníbal Correia, 431 - Parque Viana, Barueri - SP, Brasil",
+        "Avenida Aníbal Correia, 96",
+        "Rua Beira Rio, 220 - Parque Viana, Barueri - SP, 06414-100, Brasil"
+      ],
+      "sourceUrls": [
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-JardimGabriela-7d52f78af714"
       ]
     }
   ]
