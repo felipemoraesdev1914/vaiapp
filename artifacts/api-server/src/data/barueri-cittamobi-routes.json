@@ -178,7 +178,8 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovoviaBrigadeiroJordao-1d565cae92f9",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-ae57de88d7d8",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a",
-      "https://bburbano.com.br/barueri/"
+      "https://bburbano.com.br/barueri/",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T242-TerminalBarueri-b3d8ce2db46e"
     ],
     "observedAt": "2026-11-14",
     "notes": [
@@ -222,7 +223,8 @@
       "2026-11-23 coverage gap: 32 other indexed direction pages remain in discovery pending data. Some pages are HTTP 404/410 or legacy placeholders; others report complete stop counts but still require ordered transcription. No coordinates were invented and the routing engine still does not consume this catalog.",
       "2026-11-23 classification discrepancy: A267 appears under the Cittamobi label Benfica Municipal - Barueri but is absent from the current BB operator index and Prefeitura terminal tables; it remains an unverified candidate and is not included in this route catalog.",
       "2026-11-23: A212 Jardim Gabriela (49 ordered stops) transcribed from the current individual Cittamobi page; timetable table dated 2026-11-19 contains '-' for all days, so no operating hours or headways were added. Coordinates remain unverified.",
-      "2026-11-23: cross-checked Benfica/BBTT's official Barueri municipal line index. It lists A212 as Terminal Barueri / Jardim Gabriela, corroborating the municipal operator classification and the two separately published A212 directions. The operator index is a line inventory, not a stop-by-stop itinerary source."
+      "2026-11-23: cross-checked Benfica/BBTT's official Barueri municipal line index. It lists A212 as Terminal Barueri / Jardim Gabriela, corroborating the municipal operator classification and the two separately published A212 directions. The operator index is a line inventory, not a stop-by-stop itinerary source.",
+      "2026-11-23 targeted audit: refreshed T154, T256, T131 and T412 timetable observations from individual Cittamobi pages/search summaries dated 2026-11-21. Reconciled T242 Terminal Barueri's ordered stop list against its individual page (39 stops; duplicate Estrada Municipal Antônio João stop retained) and recorded its 2026-11-21 timetable. No new direction IDs were found in this audit; these routes already existed."
     ],
     "operators": [
       "Benfica Municipal - Barueri",
@@ -3770,7 +3772,7 @@
       "headsign": "Term. Barueri via Antônio João",
       "direction": "Condomínio Edifício Orion - Av. Patos, 99 - Aldeia da Serra, Barueri - SP, 06429-120, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T131-Term.BarueriviaAntonioJoao-2e850b2bab9d",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "Condomínio Edifício Orion - Av. Patos, 99 - Aldeia da Serra, Barueri - SP, 06429-120, Brasil",
@@ -3794,7 +3796,42 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T131-Term.BarueriviaAntonioJoao-2e850b2bab9d"
-      ]
+      ],
+      "timetableObservedAt": "2026-11-21",
+      "timetable": {
+        "sourcePrecision": "operating windows and average headway by weekday",
+        "observedAt": "2026-11-21",
+        "days": {
+          "sunday": {
+            "operatingWindow": "05:45-22:45",
+            "averageHeadwayMinutes": 78
+          },
+          "monday": {
+            "operatingWindow": "05:41-23:46",
+            "averageHeadwayMinutes": 37
+          },
+          "tuesday": {
+            "operatingWindow": "05:41-23:46",
+            "averageHeadwayMinutes": 37
+          },
+          "wednesday": {
+            "operatingWindow": "05:41-23:46",
+            "averageHeadwayMinutes": 37
+          },
+          "thursday": {
+            "operatingWindow": "05:41-23:46",
+            "averageHeadwayMinutes": 37
+          },
+          "friday": {
+            "operatingWindow": "05:41-23:46",
+            "averageHeadwayMinutes": 37
+          },
+          "saturday": {
+            "operatingWindow": "05:45-22:30",
+            "averageHeadwayMinutes": 71
+          }
+        }
+      }
     },
     {
       "routeId": "BARUERI-T131-59cc93f16b02",
@@ -3844,7 +3881,7 @@
       "headsign": "Jd Mutinga",
       "direction": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para R. Antônio Benedito Ferreira, 80 - Jardim Mutinga, Barueri - SP, 06463-350, Brasil",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T154-JdMutinga-fa505c7ef58f",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
@@ -3898,7 +3935,35 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T154-JdMutinga-fa505c7ef58f"
-      ]
+      ],
+      "timetableObservedAt": "2026-11-21",
+      "timetable": {
+        "sourcePrecision": "operating windows from current search summary; exact daily headway not available in returned snippet",
+        "observedAt": "2026-11-21",
+        "days": {
+          "monday": {
+            "operatingWindow": "04:15-23:30"
+          },
+          "tuesday": {
+            "operatingWindow": "04:15-23:30"
+          },
+          "wednesday": {
+            "operatingWindow": "04:15-23:30"
+          },
+          "thursday": {
+            "operatingWindow": "04:15-23:30"
+          },
+          "friday": {
+            "operatingWindow": "04:15-23:30"
+          },
+          "saturday": {
+            "operatingWindow": "04:15-23:10"
+          },
+          "sunday": {
+            "operatingWindow": "05:00-22:30"
+          }
+        }
+      }
     },
     {
       "routeId": "BARUERI-T154-e60b22165f3f",
@@ -3907,7 +3972,7 @@
       "headsign": "Ter. Barueri",
       "direction": "R. Antônio Benedito Ferreira, 80 - Jardim Mutinga, Barueri - SP, 06463-350, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T154-Ter.Barueri-e60b22165f3f",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "R. Antônio Benedito Ferreira, 80 - Jardim Mutinga, Barueri - SP, 06463-350, Brasil",
@@ -3951,7 +4016,42 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T154-Ter.Barueri-e60b22165f3f"
-      ]
+      ],
+      "timetableObservedAt": "2026-11-21",
+      "timetable": {
+        "sourcePrecision": "operating windows and average headway by weekday; search index's latest individual page summary",
+        "observedAt": "2026-11-21",
+        "days": {
+          "monday": {
+            "operatingWindow": "04:59-23:15",
+            "averageHeadwayMinutes": 45
+          },
+          "tuesday": {
+            "operatingWindow": "04:59-23:15",
+            "averageHeadwayMinutes": 43
+          },
+          "wednesday": {
+            "operatingWindow": "04:59-23:15",
+            "averageHeadwayMinutes": 43
+          },
+          "thursday": {
+            "operatingWindow": "04:59-23:15",
+            "averageHeadwayMinutes": 43
+          },
+          "friday": {
+            "operatingWindow": "04:59-23:15",
+            "averageHeadwayMinutes": 43
+          },
+          "saturday": {
+            "operatingWindow": "04:45-23:45",
+            "averageHeadwayMinutes": 51
+          },
+          "sunday": {
+            "operatingWindow": "05:45-23:10",
+            "averageHeadwayMinutes": 95
+          }
+        }
+      }
     },
     {
       "routeId": "BARUERI-T172-0661b20722cf",
@@ -4207,12 +4307,12 @@
       "headsign": "Terminal Barueri",
       "direction": "Tv. Porto Velho, 218 - Jardim do Líbano, Barueri - SP, 06448-150, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T242-TerminalBarueri-b3d8ce2db46e",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "Tv. Porto Velho, 218 - Jardim do Líbano, Barueri - SP, 06448-150, Brasil",
         "R. Belém, 98 - Votupoca, Barueri - SP, Brasil",
-        "Estrada das Pitas, 633",
+        "Estr. das Pitas, 634-978 - Parque Viana, Barueri - SP, 06449-300, Brasil",
         "R. Jambeiro 37 - Chácara do Peroba Barueri - SP 06449-265 Brasil",
         "Rua Jambeiro, 186",
         "Rua Macieira, 163",
@@ -4237,7 +4337,7 @@
         "Av. Brg. Manoel Rodrigues Jordão, 1831 - Jardim Silveira, Barueri - SP, 06433-010, Brasil",
         "Avenida Brigadeiro Manoel Rodrigues Jordão, 1586 - Jardim Silveira, Barueri - SP, 06433-010, Brasil",
         "Avenida Brigadeiro Manoel Rodrigues Jordão, 1426",
-        "Avenida Brigadeiro Manoel Rodrigues Jordão, 1142",
+        "Rua Maria Siqueira, 2",
         "Avenida Brigadeiro Manoel Rodrigues Jordão, 1016",
         "Avenida Brigadeiro Manoel Rodrigues Jordão, 828",
         "Avenida Brigadeiro Manoel Rodrigues Jordão, 423",
@@ -4252,7 +4352,42 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T242-TerminalBarueri-b3d8ce2db46e"
-      ]
+      ],
+      "timetableObservedAt": "2026-11-21",
+      "timetable": {
+        "sourcePrecision": "operating windows and average headway by weekday",
+        "observedAt": "2026-11-21",
+        "days": {
+          "sunday": {
+            "operatingWindow": "05:30-22:50",
+            "averageHeadwayMinutes": 54
+          },
+          "monday": {
+            "operatingWindow": "04:00-23:00",
+            "averageHeadwayMinutes": 31
+          },
+          "tuesday": {
+            "operatingWindow": "04:00-23:00",
+            "averageHeadwayMinutes": 31
+          },
+          "wednesday": {
+            "operatingWindow": "04:00-23:00",
+            "averageHeadwayMinutes": 31
+          },
+          "thursday": {
+            "operatingWindow": "04:00-23:00",
+            "averageHeadwayMinutes": 31
+          },
+          "friday": {
+            "operatingWindow": "04:00-23:00",
+            "averageHeadwayMinutes": 31
+          },
+          "saturday": {
+            "operatingWindow": "04:00-22:30",
+            "averageHeadwayMinutes": 52
+          }
+        }
+      }
     },
     {
       "routeId": "BARUERI-T243-9dac7e1ef1d1",
@@ -5444,7 +5579,7 @@
       "headsign": "Terminal Barueri",
       "direction": "Avenida Andrômeda, 3025 para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-TerminalBarueri-2f8a6a3fcead",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "Avenida Andrômeda, 3025",
@@ -5469,7 +5604,42 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-TerminalBarueri-2f8a6a3fcead"
-      ]
+      ],
+      "timetableObservedAt": "2026-11-21",
+      "timetable": {
+        "sourcePrecision": "operating windows and average headway by weekday",
+        "observedAt": "2026-11-21",
+        "days": {
+          "sunday": {
+            "operatingWindow": "05:50-23:20",
+            "averageHeadwayMinutes": 50
+          },
+          "monday": {
+            "operatingWindow": "05:52-23:41",
+            "averageHeadwayMinutes": 23
+          },
+          "tuesday": {
+            "operatingWindow": "05:52-23:41",
+            "averageHeadwayMinutes": 24
+          },
+          "wednesday": {
+            "operatingWindow": "05:52-23:41",
+            "averageHeadwayMinutes": 23
+          },
+          "thursday": {
+            "operatingWindow": "05:52-23:41",
+            "averageHeadwayMinutes": 23
+          },
+          "friday": {
+            "operatingWindow": "05:52-23:41",
+            "averageHeadwayMinutes": 23
+          },
+          "saturday": {
+            "operatingWindow": "05:56-23:41",
+            "averageHeadwayMinutes": 34
+          }
+        }
+      }
     },
     {
       "routeId": "BARUERI-T256-f1bd30dff7c8",
@@ -5478,7 +5648,7 @@
       "headsign": "Complexo Empresarial Green Valley",
       "direction": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para Avenida Andrômeda, 3025",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-ComplexoEmpresarialGreenValley-f1bd30dff7c8",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
@@ -5496,7 +5666,42 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-ComplexoEmpresarialGreenValley-f1bd30dff7c8"
-      ]
+      ],
+      "timetableObservedAt": "2026-11-21",
+      "timetable": {
+        "sourcePrecision": "operating windows and average headway by weekday",
+        "observedAt": "2026-11-21",
+        "days": {
+          "sunday": {
+            "operatingWindow": "05:30-23:00",
+            "averageHeadwayMinutes": 50
+          },
+          "monday": {
+            "operatingWindow": "05:25-23:16",
+            "averageHeadwayMinutes": 17
+          },
+          "tuesday": {
+            "operatingWindow": "05:25-23:16",
+            "averageHeadwayMinutes": 17
+          },
+          "wednesday": {
+            "operatingWindow": "05:25-23:16",
+            "averageHeadwayMinutes": 17
+          },
+          "thursday": {
+            "operatingWindow": "05:25-23:16",
+            "averageHeadwayMinutes": 17
+          },
+          "friday": {
+            "operatingWindow": "05:25-23:16",
+            "averageHeadwayMinutes": 17
+          },
+          "saturday": {
+            "operatingWindow": "05:30-23:15",
+            "averageHeadwayMinutes": 34
+          }
+        }
+      }
     },
     {
       "routeId": "BARUERI-T256-111774c76f9f",
@@ -5782,7 +5987,7 @@
       "headsign": "Jd. Belval",
       "direction": "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil para R. Princesa Isabel, 173-195 - Jardim Belval, Barueri - SP, Brasil",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T412-Jd.Belval-6c17c9070833",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil",
@@ -5811,7 +6016,42 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T412-Jd.Belval-6c17c9070833"
-      ]
+      ],
+      "timetableObservedAt": "2026-11-21",
+      "timetable": {
+        "sourcePrecision": "operating windows and average headway by weekday",
+        "observedAt": "2026-11-21",
+        "days": {
+          "sunday": {
+            "operatingWindow": null,
+            "averageHeadwayMinutes": null
+          },
+          "monday": {
+            "operatingWindow": "06:56-23:05",
+            "averageHeadwayMinutes": 60
+          },
+          "tuesday": {
+            "operatingWindow": "06:56-23:05",
+            "averageHeadwayMinutes": 60
+          },
+          "wednesday": {
+            "operatingWindow": "06:56-23:05",
+            "averageHeadwayMinutes": 53
+          },
+          "thursday": {
+            "operatingWindow": "06:56-23:05",
+            "averageHeadwayMinutes": 60
+          },
+          "friday": {
+            "operatingWindow": "06:56-23:05",
+            "averageHeadwayMinutes": 60
+          },
+          "saturday": {
+            "operatingWindow": "06:44-22:47",
+            "averageHeadwayMinutes": 80
+          }
+        }
+      }
     },
     {
       "routeId": "BARUERI-T412-792a51d76210",
