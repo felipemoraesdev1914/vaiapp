@@ -63,7 +63,6 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A111-EstacaoAntonioJoao-eda48fd24ea0",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A113-TerminalBarueri-433fc3d28115",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A113-VilaMarcia-4b32c8c36df6",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Eng.NovoAv.Constran-a1afd2c232e9",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C1-Jd.TupanciviaSaoLuiz-fa3778fdd7c4",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A165C2-Jd.TupanciviaPorto-293405f8b285",
@@ -105,7 +104,6 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T244-TamboreviaAldeiadeBarueri-6c0087621d37",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ParqueImperialviaEstacaoAntonioJoao-a8d3f94e2248",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ValedoSolviaEstacaoAntonioJoao-e3521e60516d",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-TamboreInaja-a40fdfaf3712",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T246-Tambore-9c631c6e3d7b",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T247-Tambore-70b0985191f4",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T247-Jd.Libano-a7bbbe47e8de",
@@ -143,7 +141,43 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-JdMutingaP-f67bfc5c7c40",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-JdMutinga-EngenhoNovo-d13b299601c8",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoTamboreP-3e026f6d802a",
-      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe.webp"
+      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe.webp",
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=3",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A174-Jd.California-7b2365a94556",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A174-Jd.CaliforniaviaEstradadasRosas-b04bc93b99c7",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-JardimGabriela-7d52f78af714",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-TerminalBarueri-9c98a7f2b916",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C1-Jd.PaulistaTerm.BarueriviaEstr.Velha-88a83c68da76",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C1-Jd.PaulistaTerm.BarueriviaEstr.Velha-94d3ab6d1ae5",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C2-Jd.VotupocaCamposSalesviaEst.Velha-5ca91cbdd6a0",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A216C2-Jd.VotupocaCamposSalesviaEst.Velha-327710a09065",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueri-3c50609e2cd5",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A260-Pq.ImperialTerm.BarueriviaHospital-39ec71d50cbb",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-PaulistaviaAv.BrigadeiroJorao-bdef6fafdb3f",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvorada-06fb18443491",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-Eng.NovoConstranviaCamposSales-05f892412944",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvoradaviaTerminalBarueri-1783e730746c",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A268-ValedoSolviaBrigadeiroJordao-be905740f9ff",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A268-CampoSalesBaia-d265967bdf26",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminalBarueri-5d43bc2cc63f",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-Kartodromo-565289d6bb77",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T241-JardimLibanoviaRecantoPhrynea-750c03075f6b",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ValedoSolMamoreTenisClube-ea588ede0e36",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-ValedoSol-68aba6c5717f",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T253-TerminalBarueri-3405e604603c",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T253-TamboreviaTerm.Barueri-2455aff64e48",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T253-LibanoviaRuadaPrataCamposSales-7416fa7cef22",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T254-TamboreviaMackenzie-4ea1077a5815",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T254-Ter.BarueriviaMackenzie-e0efacf294e4",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-JardimMutingaviaAntonioJoao-d368332b7948",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-JardimMutingaviaRuadaPrata-b1ebf2e51ce9",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-Tambore-f45f34366a8b",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovo-4823f4d11f2b",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovo..-d92d1fca9c38",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoviaBEngenhoNovovirigadeiroJordao-1d7ee0bfa3a0",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovoviaBrigadeiroJordao-1d565cae92f9",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-ae57de88d7d8",
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a"
     ],
     "observedAt": "2026-11-14",
     "notes": [
@@ -182,7 +216,10 @@
       "A160 Vale do sol via Zelia: current Cittamobi page summary reports 28 stops, but the extracted ordered itinerary exposes 27 stop labels, matching the 27-stop stored list. Marked for reconciliation; do not invent or duplicate a 28th stop. The timetable is updated 2026-11-21 and shows weekday 05:22-22:48 with 38 minutes Monday and 37 minutes Tuesday-Friday; no weekend operation is shown.",
       "Targeted timetable refresh 2026-11-23: A217, T249, T652, T245 Tamboré (Inajá), A160 Vale do sol via Zelia, A160 Vale do sol via centro, and A168 Jd. Itaquiti via Campos Sales (Baia) have tables dated 2026-11-21. A160 Eng. Novo (Av. Constran) and A160 Engenho Novo via Term. Barueri retain tables dated 2026-11-07. Frequencies remain average intervals, not exact stop-passage times.",
       "The A160 Constran and T245 Tamboré (Inajá) current production Cittamobi URLs replace preview-host URLs in the current source-page inventory; the preview URLs remain in the individual records' sourceUrls history.",
-      "A160 Vale do sol via Zelia map image reviewed 2026-11-23. The map shows route geometry and stop markers but does not label the stop names/addresses, so it cannot resolve the 28-versus-27 text-list discrepancy or justify adding a guessed stop."
+      "A160 Vale do sol via Zelia map image reviewed 2026-11-23. The map shows route geometry and stop markers but does not label the stop names/addresses, so it cannot resolve the 28-versus-27 text-list discrepancy or justify adding a guessed stop.",
+      "2026-11-23 index re-audit: current Cittamobi Barueri index resolves to three pages with 150 unique municipal-labelled direction cards. Three complete directions were added from individual pages: T651 Engenho Novo via Brigadeiro Jordão (17 stops), T651 Engenho Novo (26 stops), and T256 Pq. Ecológico (2 stops).",
+      "2026-11-23 coverage gap: 32 other indexed direction pages remain in discovery pending data. Some pages are HTTP 404/410 or legacy placeholders; others report complete stop counts but still require ordered transcription. No coordinates were invented and the routing engine still does not consume this catalog.",
+      "2026-11-23 classification discrepancy: A267 appears under the Cittamobi label Benfica Municipal - Barueri but is absent from the current BB operator index and Prefeitura terminal tables; it remains an unverified candidate and is not included in this route catalog."
     ],
     "operators": [
       "Benfica Municipal - Barueri",
@@ -1079,7 +1116,7 @@
       "direction": "Centro para Residencial Morada dos Lagos",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A167-JardimdosAltos-c5fbcbf1ad8c",
       "schedule": {
-        "observedAt": "2026-04-04",
+        "observedAt": "2026-11-21",
         "weekday": {
           "firstDeparture": "04:35",
           "lastDeparture": "23:35",
@@ -1115,7 +1152,7 @@
         "Estrada Doutor Cícero Borges de Morais, 2886",
         "Estr. do Itaqui, 426-576 - Res. Morada dos Lagos, Barueri - SP, Brasil"
       ],
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-RalipMunicipalBarueri-A167-JardimdosAltos-c5fbcbf1ad8c.pdf",
@@ -1787,11 +1824,23 @@
       "direction": "Jardim Itaquiti para Centro",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d",
       "schedule": {
-        "observedAt": "2026-11-13",
-        "weekday": null,
-        "saturday": null,
-        "sunday": null,
-        "precision": "no-schedule-table-confirmed-in-this-capture"
+        "observedAt": "2026-11-19",
+        "weekday": {
+          "firstDeparture": "05:16",
+          "lastDeparture": "22:35",
+          "averageHeadwayMinutes": 41
+        },
+        "saturday": {
+          "firstDeparture": "05:16",
+          "lastDeparture": "22:39",
+          "averageHeadwayMinutes": 57
+        },
+        "sunday": {
+          "firstDeparture": "06:05",
+          "lastDeparture": "22:40",
+          "averageHeadwayMinutes": 52
+        },
+        "precision": "published-daily-operation-window-and-average-headway"
       },
       "stops": [
         "Estrada do Ingai, 200 - Jardim Itaquiti, Barueri - SP, Brasil",
@@ -1813,7 +1862,7 @@
         "Av. Vinte e Seis de Março, 317 - Centro, Barueri - SP, Brasil",
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
       ],
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-TerminaldeBarueri.-14708f67cd9d"
@@ -3944,7 +3993,7 @@
       "headsign": "Kartódromo.",
       "direction": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para Estr. dos Alpes, 2658 - Jardim Itaquiti, Barueri - SP, Brasil",
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-Kartodromo.-2dbcda11054e",
-      "observedAt": "2026-11-14",
+      "observedAt": "2026-11-23",
       "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
       "stops": [
         "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
@@ -3961,7 +4010,26 @@
       ],
       "sourceUrls": [
         "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T173-Kartodromo.-2dbcda11054e"
-      ]
+      ],
+      "schedule": {
+        "observedAt": "2026-11-21",
+        "weekday": {
+          "firstDeparture": "04:55",
+          "lastDeparture": "22:10",
+          "averageHeadwayMinutes": 41
+        },
+        "saturday": {
+          "firstDeparture": "05:00",
+          "lastDeparture": "22:24",
+          "averageHeadwayMinutes": 58
+        },
+        "sunday": {
+          "firstDeparture": "05:30",
+          "lastDeparture": "22:20",
+          "averageHeadwayMinutes": 53
+        },
+        "precision": "published-daily-operation-window-and-average-headway"
+      }
     },
     {
       "routeId": "BARUERI-T241-28ce3cc3d83a",
@@ -6227,6 +6295,117 @@
         "sunday": null,
         "precision": "weekday first/last departure and 40-minute average headway; Saturday/Sunday not shown; timetable updated 2026-11-21"
       }
+    },
+    {
+      "routeId": "BARUERI-T651-1d565cae92f9",
+      "lineCode": "T651",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Engenho Novo via Brigadeiro Jordão",
+      "direction": "Avenida Brigadeiro Manoel Rodrigues Jordão 1953, Silveira, Barueri - São Paulo, 06433-010, Brasil para R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovoviaBrigadeiroJordao-1d565cae92f9",
+      "schedule": {
+        "observedAt": "2026-11-19",
+        "weekday": null,
+        "saturday": null,
+        "sunday": null,
+        "precision": "published timetable table updated 2026-11-19; every day row shows '-' and no operating window or headway is provided"
+      },
+      "stops": [
+        "Avenida Brigadeiro Manoel Rodrigues Jordão 1953, Silveira, Barueri - São Paulo, 06433-010, Brasil",
+        "Av. Brg. Manoel Rodrigues Jordão, 1831 - Jardim Silveira, Barueri - SP, 06433-010, Brasil",
+        "Avenida Brigadeiro Manoel Rodrigues Jordão, 1586 - Jardim Silveira, Barueri - SP, 06433-010, Brasil",
+        "Avenida Brigadeiro Manoel Rodrigues Jordão, 1426",
+        "Av. Brg. Manoel Rodrigues Jordão, 1282 - Jardim Silveira, Barueri - SP, 06433-010, Brasil",
+        "Avenida Brigadeiro Manoel Rodrigues Jordão, 1142",
+        "Avenida Brigadeiro Manoel Rodrigues Jordão, 1016",
+        "Avenida Brigadeiro Manoel Rodrigues Jordão, 828",
+        "Rua Deputado Emílio Carlos, 119-221 - Jardim Silveira, Barueri - SP, 06434-070, Brasil",
+        "Rua Luís Gonzaga Fernandes Vergara, 141",
+        "Avenida Presidente Washington Luis, 27 - Jardim Silveira, Barueri - SP, Brasil",
+        "Avenida Municipal, 185",
+        "R. Interna Grupo Bandeirante, 13 - Vila Nova, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 1155 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 535 - Centro, Barueri - SP, Brasil",
+        "Av. Vinte e Seis de Março, 317 - Centro, Barueri - SP, Brasil",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil"
+      ],
+      "observedAt": "2026-11-23",
+      "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
+      "sourceUrls": [
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovoviaBrigadeiroJordao-1d565cae92f9"
+      ]
+    },
+    {
+      "routeId": "BARUERI-T651-ae57de88d7d8",
+      "lineCode": "T651",
+      "operator": "Ralip Municipal Barueri",
+      "headsign": "Engenho Novo",
+      "direction": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para Rua Constantinopla, 582",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-ae57de88d7d8",
+      "schedule": {
+        "observedAt": "2026-11-19",
+        "weekday": null,
+        "saturday": null,
+        "sunday": null,
+        "precision": "published timetable table updated 2026-11-19; every day row shows '-' and no operating window or headway is provided"
+      },
+      "stops": [
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil",
+        "Estrada dos Romeiros",
+        "Estrada dos Romeiros - Vila Creti, Barueri - SP, República Federativa do Brasil",
+        "Estrada dos Romeiros, 131",
+        "Estr. dos Romeiros, 262",
+        "Acesso para Av Srg. José Siqueira",
+        "Estrada dos Romeiros 1650, Cruz Preta, Barueri - São Paulo, 06417-000, Brasil",
+        "Rua Almeida, 66",
+        "Avenida Calil Mohamad Rahal, 88",
+        "R. São Paulo, 175-199 - Vila Engenho Novo, Barueri - SP, 06415-070, Brasil",
+        "Rua São Paulo, 270",
+        "Rua São Paulo, 504",
+        "Rua São Paulo, 630",
+        "R. José Bonifácio, 333",
+        "Av. Capitão Francisco César, 1224 - Vila Pindorama, Barueri - SP, 06415-000, Brasil",
+        "Rua Capitão Francisco César, 1362",
+        "Av. Capitão Francisco César, 1620 - Vila Pindorama, Barueri - SP, 06416-000, Brasil",
+        "Rua Cafelândia, 84",
+        "Rua Cafelândia, 208",
+        "R. Zeca, 68 - Vila Engenho Novo, Barueri - SP, 06416-200, Brasil",
+        "R. Zeca, 129 - Vila Engenho Novo, Barueri - SP, 06416-200, Brasil",
+        "Rua Veneza, 787",
+        "R. Veneza, 952 - Jardim Isaura, Santana de Parnaíba - SP, 06516-055, Brasil",
+        "R. Veneza, 1189 - Jardim Isaura, Santana de Parnaíba - SP, 06516-055, Brasil",
+        "Rua Constantinopla, 582"
+      ],
+      "observedAt": "2026-11-23",
+      "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
+      "sourceUrls": [
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-ae57de88d7d8"
+      ]
+    },
+    {
+      "routeId": "BARUERI-T256-5640b53f6b5a",
+      "lineCode": "T256",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Pq. Ecológico",
+      "direction": "Avenida Andrômeda, 3025 para Avenida Doutor Dib Sauaia Neto, 4967",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a",
+      "schedule": {
+        "observedAt": "2026-11-19",
+        "weekday": null,
+        "saturday": null,
+        "sunday": null,
+        "precision": "published timetable table updated 2026-11-19; every day row shows '-' and no operating window or headway is provided"
+      },
+      "stops": [
+        "Avenida Andrômeda, 3025",
+        "Avenida Doutor Dib Sauaia Neto, 4967"
+      ],
+      "observedAt": "2026-11-23",
+      "integrationStatus": "catalog-only-needs-verified-stop-coordinates",
+      "sourceUrls": [
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T256-Pq.Ecologico-5640b53f6b5a"
+      ]
     }
   ]
 }
