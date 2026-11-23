@@ -142,7 +142,8 @@
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T642-JardimdosAltosviaSta.CeciliaeJd.Tupanci-2ce923e895df",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-EngenhoNovo-JdMutingaP-f67bfc5c7c40",
       "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T651-JdMutinga-EngenhoNovo-d13b299601c8",
-      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoTamboreP-3e026f6d802a"
+      "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoTamboreP-3e026f6d802a",
+      "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe.webp"
     ],
     "observedAt": "2026-11-14",
     "notes": [
@@ -180,7 +181,8 @@
       "Targeted individual-page revalidation 2026-11-23: A160 Eng. Novo (Av. Constran) 16 stops; A160 Engenho Novo via Term. Barueri 16; A160 Vale do sol via centro 14; A168 Jd. Itaquiti via Campos Sales (Baia) 24; A217 24; T249 17; T652 46; T245 Tamboré (Inajá) 54. Their source pages and timetable metadata were refreshed where a dated timetable was visible.",
       "A160 Vale do sol via Zelia: current Cittamobi page summary reports 28 stops, but the extracted ordered itinerary exposes 27 stop labels, matching the 27-stop stored list. Marked for reconciliation; do not invent or duplicate a 28th stop. The timetable is updated 2026-11-21 and shows weekday 05:22-22:48 with 38 minutes Monday and 37 minutes Tuesday-Friday; no weekend operation is shown.",
       "Targeted timetable refresh 2026-11-23: A217, T249, T652, T245 Tamboré (Inajá), A160 Vale do sol via Zelia, A160 Vale do sol via centro, and A168 Jd. Itaquiti via Campos Sales (Baia) have tables dated 2026-11-21. A160 Eng. Novo (Av. Constran) and A160 Engenho Novo via Term. Barueri retain tables dated 2026-11-07. Frequencies remain average intervals, not exact stop-passage times.",
-      "The A160 Constran and T245 Tamboré (Inajá) current production Cittamobi URLs replace preview-host URLs in the current source-page inventory; the preview URLs remain in the individual records' sourceUrls history."
+      "The A160 Constran and T245 Tamboré (Inajá) current production Cittamobi URLs replace preview-host URLs in the current source-page inventory; the preview URLs remain in the individual records' sourceUrls history.",
+      "A160 Vale do sol via Zelia map image reviewed 2026-11-23. The map shows route geometry and stop markers but does not label the stop names/addresses, so it cannot resolve the 28-versus-27 text-list discrepancy or justify adding a guessed stop."
     ],
     "operators": [
       "Benfica Municipal - Barueri",
@@ -3036,7 +3038,8 @@
         "R. Mississipi, 423 - Vale do Sol, Barueri - SP, Brasil"
       ],
       "sourceUrls": [
-        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe"
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe",
+        "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe.webp"
       ],
       "schedule": {
         "observedAt": "2026-11-21",
