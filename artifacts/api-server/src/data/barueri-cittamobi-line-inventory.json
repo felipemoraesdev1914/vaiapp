@@ -7,9 +7,11 @@
   "source": {
     "name": "Cittamobi - catálogo público de linhas de Barueri",
     "pages": [
-      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri"
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri",
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2",
+      "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=3"
     ],
-    "observedAt": "2026-11-13",
+    "observedAt": "2026-11-23",
     "notes": [
       "Códigos agrupados por categoria conforme os rótulos exibidos no catálogo público.",
       "A presença de um código no inventário confirma apenas sua listagem no catálogo, não a validação do itinerário, sentido, operação atual ou coordenadas.",
@@ -19,14 +21,17 @@
       "Inventário de códigos revisado para refletir os códigos efetivamente exibidos nas duas páginas do catálogo. Códigos de extensões/sufixos não exibidos foram removidos.",
       "A página de catálogo foi inspecionada diretamente: os códigos municipais e intermunicipais são os listados no catálogo em duas páginas. Foram removidas URLs de páginas individuais que não tinham sido verificadas por abertura direta; apenas itinerários com fonte individual confirmada devem entrar no catálogo de rotas.",
       "Cross-check 2026-11-16: BB's Barueri operator index lists A553 (Rua Braz Cubas / Terminal Pq. Imperial), but its linked individual route page returns HTTP 404; it is stored only as an incomplete operator-index candidate, not as a confirmed current route.",
-      "The Prefeitura terminal tables list 42 distinct municipal line codes. These are not exhaustive; A162, A216C1, A631, T249, T253VP1, T651, T652 in the Cittamobi municipal inventory are absent from the current terminal tables and remain a review discrepancy."
+      "The Prefeitura terminal tables list 42 distinct municipal line codes. These are not exhaustive; A162, A216C1, A631, T249, T253VP1, T651, T652 in the Cittamobi municipal inventory are absent from the current terminal tables and remain a review discrepancy.",
+      "Correction 2026-11-23: the current public Barueri index now resolves to three pages (page=1, page=2, page=3); the earlier 2026-11-13 observation that page=3 redirected to page=2 is historical and no longer describes the current index.",
+      "2026-11-23 direction audit: 150 unique municipal-labelled direction cards were counted across the three index pages after de-duplicating A166C1/A166C2 overlap between pages 1 and 2. The confirmed municipal code list remains 49; A267 is a new Cittamobi municipal-label candidate but is not corroborated by BB or Prefeitura and remains unconfirmed.",
+      "The main route catalog now contains 118 complete directions and 3,640 stop records. Thirty-two indexed direction pages remain pending transcription, source recovery, duplicate resolution, or official municipal classification. No coordinates are claimed."
     ],
     "operatorPages": [
       "https://bburbano.com.br/barueri/",
       "https://ralip.com.br/horarios-e-itinerarios/"
     ],
     "prefeituraCrossCheckUrl": "https://portal.barueri.sp.gov.br/cidadao/transporte/transporte",
-    "lastCrossCheckedAt": "2026-11-16"
+    "lastCrossCheckedAt": "2026-11-23"
   },
   "municipalLineCodes": [
     "A111",
@@ -107,8 +112,13 @@
   "counts": {
     "municipalCodes": 49,
     "intermunicipalCodes": 23,
-    "totalDistinctCodes": 72,
-    "pendingOperatorCandidates": 1
+    "totalDistinctCodes": 73,
+    "pendingOperatorCandidates": 1,
+    "unverifiedMunicipalCandidates": 1,
+    "indexedMunicipalDirectionCards": 150,
+    "catalogDirections": 118,
+    "stopRecords": 3640,
+    "pendingIndexDirections": 32
   },
   "discoveredItineraries": [
     {
@@ -120,7 +130,7 @@
       "individualPageUrl": "https://bburbano.com.br/linha-a553-rua-braz-cubas-terminal-pq-imperial/",
       "observedAt": "2026-11-16",
       "discoveryStatus": "operator-index-only-unverified-current-service",
-      "cittamobiIndexStatus": "not-listed-on-current-two-page-index",
+      "cittamobiIndexStatus": "not-listed-on-current-three-page-index",
       "prefeituraStatus": "not-listed-in-current-terminal-line-tables",
       "individualPageStatus": "HTTP 404 when checked on 2026-11-16",
       "itineraryStatus": "incomplete-no-verified-ordered-stop-list",
@@ -129,9 +139,71 @@
       "routingReady": false,
       "notes": [
         "The BB operator's Barueri line index lists A553, but its linked individual route page returned HTTP 404.",
-        "The current two-page Cittamobi Barueri index does not list A553.",
+        "The current three-page Cittamobi Barueri index does not list A553.",
         "The current Prefeitura terminal tables do not list A553, although the Prefeitura identifies BB Transporte e Turismo as a municipal concessionaire.",
         "Keep this as a pending operator-index candidate; do not add it to the routing-ready route catalog unless a current complete individual itinerary or map PDF is verified."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A267-CITTAMOBI-ONLY",
+      "lineCode": "A267",
+      "operator": "Benfica Municipal - Barueri",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linhas/estado/sao-paulo/barueri?page=2",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "cittamobi-municipal-label-unconfirmed-by-operator-and-prefeitura",
+      "operatorIndexStatus": "not listed on current BB Barueri index",
+      "prefeituraStatus": "not found in current Prefeitura terminal tables",
+      "directions": [
+        {
+          "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-PaulistaviaAv.BrigadeiroJorao-bdef6fafdb3f",
+          "pageStatus": "HTTP 410 Gone",
+          "stopCount": null
+        },
+        {
+          "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvorada-06fb18443491",
+          "pageStatus": "HTTP 200; full stop list pending transcription",
+          "stopCount": 14
+        },
+        {
+          "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-Eng.NovoConstranviaCamposSales-05f892412944",
+          "pageStatus": "HTTP 200; full stop list pending transcription",
+          "stopCount": 19
+        },
+        {
+          "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvoradaviaTerminalBarueri-1783e730746c",
+          "pageStatus": "HTTP 200; full stop list pending transcription",
+          "stopCount": 24
+        }
+      ],
+      "itineraryStatus": "incomplete-classification-and-stop-transcription-pending",
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "The four Cittamobi pages are labelled Benfica Municipal - Barueri.",
+        "The current BB operator index and Prefeitura terminal tables do not corroborate A267.",
+        "Keep A267 out of confirmed municipalLineCodes until an official operator or Prefeitura source confirms municipal service."
+      ]
+    }
+  ],
+  "unverifiedMunicipalCandidates": [
+    {
+      "lineCode": "A267",
+      "cittamobiOperatorLabel": "Benfica Municipal - Barueri",
+      "directionPages": [
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-PaulistaviaAv.BrigadeiroJorao-bdef6fafdb3f",
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvorada-06fb18443491",
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-Eng.NovoConstranviaCamposSales-05f892412944",
+        "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A267-ConstranAlvoradaviaTerminalBarueri-1783e730746c"
+      ],
+      "operatorIndexStatus": "not listed on current BB Barueri index",
+      "prefeituraStatus": "not found in current Prefeitura terminal tables",
+      "classificationStatus": "unverified-cittamobi-municipal-label-only",
+      "routingReady": false,
+      "observedAt": "2026-11-23",
+      "notes": [
+        "The four Cittamobi pages are labelled Benfica Municipal - Barueri.",
+        "The current BB operator index and Prefeitura terminal tables do not corroborate A267.",
+        "Keep A267 out of confirmed municipalLineCodes until an official operator or Prefeitura source confirms municipal service."
       ]
     }
   ]
