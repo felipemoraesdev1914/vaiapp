@@ -27,7 +27,8 @@
       "2026-11-23 three-page coverage correction: page=3 is directly accessible and contains 27 municipal-labelled direction cards. Page 1 and page 2 overlap on A166C1/A166C2, giving 150 unique municipal-labelled direction cards across the three pages.",
       "2026-11-23 coverage gap: three newly verified complete directions were added (T651 Engenho Novo via Brigadeiro Jordão, 17 stops; T651 Engenho Novo, 26 stops; T256 Pq. Ecológico, 2 stops), resulting in 118 route records and 3,640 stop records. Thirty-two other indexed direction pages remain in pendingDirections.",
       "2026-11-23 new code candidate A267: four Cittamobi pages are labelled Benfica Municipal - Barueri, but A267 is absent from the current BB Barueri operator index and Prefeitura terminal tables. Keep A267 outside the confirmed municipalLineCodes and routing-ready catalog pending official classification.",
-      "2026-11-23: A212 Jardim Gabriela is now included in the main catalog after transcription of all 49 ordered stops from its individual Cittamobi page. Its 2026-11-19 timetable table contains no published times or frequencies."
+      "2026-11-23: A212 Jardim Gabriela is now included in the main catalog after transcription of all 49 ordered stops from its individual Cittamobi page. Its 2026-11-19 timetable table contains no published times or frequencies.",
+      "2026-11-23 operator-index cross-check: the official BB/Benfica Barueri page lists A212 (Terminal Barueri / Jardim Gabriela) and A553 (Rua Braz Cubas / Terminal Pq. Imperial) among its Barueri lines. A553 is now classified as a confirmed municipal operator-index discovery, but remains incomplete because its individual itinerary is unavailable."
     ],
     "lastCheckedAt": "2026-11-23",
     "lastOperatorIndexAuditAt": "2026-11-23",
@@ -1762,8 +1763,11 @@
         "The current two-page Cittamobi Barueri index does not list A553.",
         "The current Prefeitura terminal tables do not list A553, although the Prefeitura identifies BB Transporte e Turismo as a municipal concessionaire.",
         "Keep this as a pending operator-index candidate; do not add it to the routing-ready route catalog unless a current complete individual itinerary or map PDF is verified.",
-        "Rechecked 2026-11-23: BB still lists A553, but the linked individual itinerary remains HTTP 404; current Cittamobi and Prefeitura terminal lists still do not publish it."
-      ]
+        "Rechecked 2026-11-23: BB still lists A553, but the linked individual itinerary remains HTTP 404; current Cittamobi and Prefeitura terminal lists still do not publish it.",
+        "Checked 2026-11-23: BB/Benfica's official Barueri municipal line index still lists A553 – Rua Braz Cubas / Terminal Pq. Imperial. Municipal operator classification is confirmed, but the linked individual itinerary is unavailable and no complete stop list is verified; keep it pending."
+      ],
+      "operatorClassification": "municipal-confirmed-by-BB-operator-index",
+      "operatorIndexStatus": "listed-on-current-BB-Barueri-municipal-line-index"
     },
     {
       "candidateId": "BARUERI-A160-780d4a6f29fe-STOP-COUNT-MISMATCH",
