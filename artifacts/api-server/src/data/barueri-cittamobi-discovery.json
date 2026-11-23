@@ -26,7 +26,8 @@
       "2026-11-23 targeted route audit: refreshed the current individual pages and dated timetable metadata for A160 variants, A168 Jd. Itaquiti via Campos Sales (Baia), A217, T249, T652 and T245 Tamboré (Inajá). The A160 Vale do sol via Zelia page reports 28 stops while the extracted ordered list exposes 27; its existing record is flagged incomplete pending recovery of the missing stop. No coordinates were added.",
       "2026-11-23 three-page coverage correction: page=3 is directly accessible and contains 27 municipal-labelled direction cards. Page 1 and page 2 overlap on A166C1/A166C2, giving 150 unique municipal-labelled direction cards across the three pages.",
       "2026-11-23 coverage gap: three newly verified complete directions were added (T651 Engenho Novo via Brigadeiro Jordão, 17 stops; T651 Engenho Novo, 26 stops; T256 Pq. Ecológico, 2 stops), resulting in 118 route records and 3,640 stop records. Thirty-two other indexed direction pages remain in pendingDirections.",
-      "2026-11-23 new code candidate A267: four Cittamobi pages are labelled Benfica Municipal - Barueri, but A267 is absent from the current BB Barueri operator index and Prefeitura terminal tables. Keep A267 outside the confirmed municipalLineCodes and routing-ready catalog pending official classification."
+      "2026-11-23 new code candidate A267: four Cittamobi pages are labelled Benfica Municipal - Barueri, but A267 is absent from the current BB Barueri operator index and Prefeitura terminal tables. Keep A267 outside the confirmed municipalLineCodes and routing-ready catalog pending official classification.",
+      "2026-11-23: A212 Jardim Gabriela is now included in the main catalog after transcription of all 49 ordered stops from its individual Cittamobi page. Its 2026-11-19 timetable table contains no published times or frequencies."
     ],
     "lastCheckedAt": "2026-11-23",
     "lastOperatorIndexAuditAt": "2026-11-23",
@@ -1711,14 +1712,30 @@
       "timetableObservedAt": "2026-11-19",
       "timetableStatus": "source table shows '-' for every day; no time window or headway was promoted",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
+    },
+    {
+      "routeId": "BARUERI-A212-JARDIM-GABRIELA",
+      "lineCode": "A212",
+      "operator": "Benfica Municipal - Barueri",
+      "headsign": "Jardim Gabriela",
+      "direction": "R. Yogiro Fugita, 75 - Centro, Barueri - SP, 06401-010, Brasil para Rua Beira Rio, 220 - Parque Viana, Barueri - SP, 06414-100, Brasil",
+      "stopCount": 49,
+      "catalogStopCount": 49,
+      "itineraryComplete": true,
+      "coordinatesAvailable": false,
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A212-JardimGabriela-7d52f78af714",
+      "lastCheckedAt": "2026-11-23",
+      "timetableObservedAt": "2026-11-19",
+      "timetableStatus": "Published table lists weekdays, Saturday and Sunday, but all time and frequency cells are '-' (not informed); no times added.",
+      "integrationStatus": "stop-list-transcribed-coordinates-pending"
     }
   ],
   "catalogCounts": {
     "municipalLineCodes": 49,
     "directionPagesInCittamobiIndex": 150,
     "sourceOnlyDirections": 2,
-    "catalogDirections": 118,
-    "stopRecords": 3640,
+    "catalogDirections": 119,
+    "stopRecords": 3689,
     "directionsWithVerifiedCoordinates": 0,
     "unverifiedMunicipalCandidates": 1,
     "pendingIndexDirections": 32
