@@ -1709,8 +1709,10 @@
       "notes": [
         "This is a revalidation issue for an existing A160 direction, not a new line code or a newly published direction.",
         "The Cittamobi page summary and metadata report 28 stops, but the rendered ordered stop list exposes 27 address labels, matching the existing 27-stop catalog entry.",
-        "Do not invent, duplicate, or geocode a guessed 28th stop. Recover the missing stop from the rendered map/PDF or an authoritative operator source before marking the itinerary complete."
-      ]
+        "Do not invent, duplicate, or geocode a guessed 28th stop. Recover the missing stop from the rendered map/PDF or an authoritative operator source before marking the itinerary complete.",
+        "The linked Cittamobi map image was reviewed on 2026-11-23; it shows the route line and markers but no readable stop labels or addresses, so the missing stop cannot be identified from that image alone."
+      ],
+      "mapImageUrl": "https://linhas.cittamobi.com.br/maps/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe.webp"
     }
   ],
   "prefeituraCrossCheck": {
