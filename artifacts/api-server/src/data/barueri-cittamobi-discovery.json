@@ -5,7 +5,7 @@
   "city": "Barueri",
   "state": "SP",
   "country": "BR",
-  "observedAt": "2026-11-14",
+  "observedAt": "2026-11-23",
   "source": {
     "name": "Cittamobi public municipal line pages",
     "indexPages": [
@@ -18,15 +18,21 @@
       "No coordinates are claimed here. Geocoding and geographic validation remain pending.",
       "Municipal operator classification comes from the Cittamobi page label and should be cross-checked against the Prefeitura list.",
       "Cross-check 2026-11-16: BB and RALIP public Barueri municipal operator indexes were reviewed against the current Cittamobi two-page index and the Prefeitura terminal tables. A553 is an operator-index-only candidate with a 404 individual page and remains incomplete.",
-      "The Prefeitura terminal tables currently list 42 distinct municipal codes; A162, A216C1, A631, T249, T253VP1, T651, T652 from the 49-code Cittamobi municipal inventory are not present in those terminal tables. The Prefeitura page is organized by terminal, so these absences require follow-up and are not proof of service cancellation or intermunicipal classification."
+      "The Prefeitura terminal tables currently list 42 distinct municipal codes; A162, A216C1, A631, T249, T253VP1, T651, T652 from the 49-code Cittamobi municipal inventory are not present in those terminal tables. The Prefeitura page is organized by terminal, so these absences require follow-up and are not proof of service cancellation or intermunicipal classification.",
+      "2026-11-23: Cittamobi's current Barueri index remains two pages with 113 indexed municipal directions across 49 codes. The existing catalog contains 115 complete direction records: 113 indexed pages plus two additional map-PDF-only directions (T241 Terminal Barueri and T651 Engenho Novo via Rua da Prata). No new complete direction was added this run.",
+      "2026-11-23 operator audit: BB Transporte's Barueri index still lists A553, but its linked individual route page returns HTTP 404; A553 is absent from the current Cittamobi index and Prefeitura terminal tables, so it remains an unverified operator-index candidate. RALIP's current municipal section lists its Barueri municipal services; its 463TRO entry is metropolitan and excluded. The Prefeitura page still identifies BB Transporte e Turismo LTDA and RALIP Transportes Rodoviários LTDA as the municipal concessionaires.",
+      "2026-11-23 Prefeitura cross-check: the official terminal tables still list 42 distinct municipal line codes. The seven Cittamobi codes absent from those terminal tables remain A162, A216C1, A631, T249, T253VP1, T651 and T652; absence from terminal tables is not proof of cancellation or intermunicipal classification.",
+      "2026-11-23 targeted route audit: refreshed the current individual pages and dated timetable metadata for A160 variants, A168 Jd. Itaquiti via Campos Sales (Baia), A217, T249, T652 and T245 Tamboré (Inajá). The A160 Vale do sol via Zelia page reports 28 stops while the extracted ordered list exposes 27; its existing record is flagged incomplete pending recovery of the missing stop. No coordinates were added."
     ],
-    "lastCheckedAt": "2026-11-14",
-    "lastOperatorIndexAuditAt": "2026-11-16",
+    "lastCheckedAt": "2026-11-23",
+    "lastOperatorIndexAuditAt": "2026-11-23",
     "operatorIndexPages": [
       "https://bburbano.com.br/barueri/",
       "https://ralip.com.br/horarios-e-itinerarios/"
     ],
-    "lastDirectionalCoverageAuditAt": "2026-11-16"
+    "lastDirectionalCoverageAuditAt": "2026-11-23",
+    "lastIndexCheckedAt": "2026-11-23",
+    "lastTargetedRouteAuditAt": "2026-11-23"
   },
   "routes": [
     {
@@ -152,7 +158,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Eng.NovoAv.Constran-a1afd2c232e9",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -166,7 +172,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-EngenhoNovoviaTerm.Barueri-5ebacb41465f",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -175,13 +181,13 @@
       "operator": "Benfica Municipal - Barueri",
       "headsign": "Vale do sol via Zelia.",
       "direction": "Rua Campos Sales 118, Centro, Barueri - São Paulo, 06401-000, Brasil para R. Mississipi, 423 - Vale do Sol, Barueri - SP, Brasil",
-      "stopCount": 27,
+      "stopCount": 28,
       "catalogStopCount": 27,
-      "itineraryComplete": true,
+      "itineraryComplete": false,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe",
-      "lastCheckedAt": "2026-11-14",
-      "integrationStatus": "stop-list-transcribed-coordinates-pending"
+      "lastCheckedAt": "2026-11-23",
+      "integrationStatus": "stop-count-mismatch-needs-reconciliation"
     },
     {
       "routeId": "BARUERI-A160-VALE-DO-SOL-VIA-CENTRO",
@@ -194,7 +200,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-Valedosolviacentro-e1c77acfa1fb",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -432,7 +438,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-A168-Jd.ItaquitiviaCamposSalesBaia-025700a1a36b",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -658,7 +664,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A217-TerminalBarueriValedosol-6ad186647dda",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -1042,7 +1048,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T245-TamboreInaja-a40fdfaf3712",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -1116,7 +1122,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-T249-AntonioJoaoGreenValley-bf42311d2aa7",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -1620,7 +1626,7 @@
       "itineraryComplete": true,
       "coordinatesAvailable": false,
       "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-RalipMunicipalBarueri-T652-EngenhoNovoTamboreP-3e026f6d802a",
-      "lastCheckedAt": "2026-11-14",
+      "lastCheckedAt": "2026-11-23",
       "integrationStatus": "stop-list-transcribed-coordinates-pending"
     },
     {
@@ -1668,11 +1674,11 @@
       "operatorLabel": "Linha A553 – Rua Braz Cubas / Terminal Pq. Imperial",
       "sourceUrl": "https://bburbano.com.br/barueri/",
       "individualPageUrl": "https://bburbano.com.br/linha-a553-rua-braz-cubas-terminal-pq-imperial/",
-      "observedAt": "2026-11-16",
+      "observedAt": "2026-11-23",
       "discoveryStatus": "operator-index-only-unverified-current-service",
       "cittamobiIndexStatus": "not-listed-on-current-two-page-index",
       "prefeituraStatus": "not-listed-in-current-terminal-line-tables",
-      "individualPageStatus": "HTTP 404 when checked on 2026-11-16",
+      "individualPageStatus": "HTTP 404 when rechecked on 2026-11-23",
       "itineraryStatus": "incomplete-no-verified-ordered-stop-list",
       "timetableStatus": "not-available-on-accessible-operator-index",
       "coordinatesAvailable": false,
@@ -1681,13 +1687,35 @@
         "The BB operator's Barueri line index lists A553, but its linked individual route page returned HTTP 404.",
         "The current two-page Cittamobi Barueri index does not list A553.",
         "The current Prefeitura terminal tables do not list A553, although the Prefeitura identifies BB Transporte e Turismo as a municipal concessionaire.",
-        "Keep this as a pending operator-index candidate; do not add it to the routing-ready route catalog unless a current complete individual itinerary or map PDF is verified."
+        "Keep this as a pending operator-index candidate; do not add it to the routing-ready route catalog unless a current complete individual itinerary or map PDF is verified.",
+        "Rechecked 2026-11-23: BB still lists A553, but the linked individual itinerary remains HTTP 404; current Cittamobi and Prefeitura terminal lists still do not publish it."
+      ]
+    },
+    {
+      "candidateId": "BARUERI-A160-780d4a6f29fe-STOP-COUNT-MISMATCH",
+      "lineCode": "A160",
+      "operator": "Benfica Municipal - Barueri",
+      "operatorLabel": "A160 Vale do sol via Zelia.",
+      "sourceUrl": "https://linhas.cittamobi.com.br/linha/transporte_publico-Barueri-BenficaMunicipal-Barueri-A160-ValedosolviaZelia.-780d4a6f29fe",
+      "observedAt": "2026-11-23",
+      "discoveryStatus": "existing-indexed-direction-stop-count-mismatch-needs-reconciliation",
+      "cittamobiIndexStatus": "listed-on-current-two-page-index",
+      "prefeituraStatus": "A160-listed-in-current-terminal-tables",
+      "individualPageStatus": "HTTP 200; page summary reports 28 stops but extracted ordered itinerary exposes 27 stop labels",
+      "itineraryStatus": "incomplete-count-mismatch-one-stop-not-located",
+      "timetableStatus": "weekday 05:22-22:48; frequency 38 minutes Monday and 37 minutes Tuesday-Friday; no weekend operation shown; timetable updated 2026-11-21",
+      "coordinatesAvailable": false,
+      "routingReady": false,
+      "notes": [
+        "This is a revalidation issue for an existing A160 direction, not a new line code or a newly published direction.",
+        "The Cittamobi page summary and metadata report 28 stops, but the rendered ordered stop list exposes 27 address labels, matching the existing 27-stop catalog entry.",
+        "Do not invent, duplicate, or geocode a guessed 28th stop. Recover the missing stop from the rendered map/PDF or an authoritative operator source before marking the itinerary complete."
       ]
     }
   ],
   "prefeituraCrossCheck": {
     "sourceUrl": "https://portal.barueri.sp.gov.br/cidadao/transporte/transporte",
-    "observedAt": "2026-11-16",
+    "observedAt": "2026-11-23",
     "municipalCodesListedInCurrentTerminalTables": [
       "A111",
       "A112",
@@ -1744,7 +1772,7 @@
     "note": "The Prefeitura page lists lines by terminal, not as an exhaustive citywide register. Absence from these terminal tables is a discrepancy to review, not proof that a Cittamobi/municipal-operator line is intermunicipal or inactive. The same page names BB Transporte e Turismo LTDA and RALIP Transportes Rodoviários LTDA as municipal concessionaires."
   },
   "directionalCoverageAudit": {
-    "observedAt": "2026-11-16",
+    "observedAt": "2026-11-23",
     "singlePublishedDirectionLineCodes": [
       "A162",
       "A164C1",
@@ -1886,7 +1914,8 @@
       "A single Cittamobi page does not prove that a line has no return service; it means no separate reverse page was found in the current two-page index during this audit.",
       "A162 is explicitly described as circular by RALIP; do not synthesize a reverse direction.",
       "A217, T249 and T652 have only one indexed Cittamobi direction and operator-index descriptions naming both endpoints; prioritize checking for separately published return pages.",
-      "A164C1/A164C2 are circular variants. A165C1/A165C2 and A166C1/A166C2 are separately coded variants and must not be merged into a synthetic reverse."
+      "A164C1/A164C2 are circular variants. A165C1/A165C2 and A166C1/A166C2 are separately coded variants and must not be merged into a synthetic reverse.",
+      "Rechecked 2026-11-23 against the current two-page Cittamobi index and the current BB/RALIP operator indexes: the same 11 line codes still have only one separately indexed direction. No reverse direction was synthesized."
     ]
   }
 }
